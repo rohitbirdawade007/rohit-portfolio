@@ -13,7 +13,9 @@ const ResearchSection = () => {
   const [research, setResearch] = useState<Research[]>([]);
 
   useEffect(() => {
-    getResearchList().then(setResearch).catch(console.error);
+    getResearchList()
+      .then(data => setResearch(Array.isArray(data) ? data : []))
+      .catch(console.error);
   }, []);
 
   return (

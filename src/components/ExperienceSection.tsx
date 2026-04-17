@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Briefcase, Calendar, ChevronRight } from "lucide-react";
-import { getExperience } from "@/services/api";
+import { getExperiences } from "@/services/api";
 
 interface Experience {
   _id: string;
@@ -15,7 +15,9 @@ const ExperienceSection = () => {
   const [experience, setExperience] = useState<Experience[]>([]);
 
   useEffect(() => {
-    getExperience().then(setExperience).catch(console.error);
+    getExperiences()
+      .then(data => setExperience(Array.isArray(data) ? data : []))
+      .catch(console.error);
   }, []);
 
   return (

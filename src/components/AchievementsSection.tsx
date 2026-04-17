@@ -17,7 +17,9 @@ const AchievementsSection = () => {
   const [achievements, setAchievements] = useState<Achievement[]>([]);
 
   useEffect(() => {
-    getAchievements().then(setAchievements).catch(console.error);
+    getAchievements()
+      .then(data => setAchievements(Array.isArray(data) ? data : []))
+      .catch(console.error);
   }, []);
 
   const renderGrid = (title: string, items: Achievement[], emoji: string) => (
