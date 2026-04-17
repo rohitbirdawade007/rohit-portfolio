@@ -60,6 +60,7 @@ const AboutSection = () => {
           </div>
 
           {/* Value Cards */}
+          <div className="lg:col-span-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-4">
             {values.map((v, i) => (
               <div 
                 key={i} 
