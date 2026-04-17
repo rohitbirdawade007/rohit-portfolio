@@ -1,89 +1,73 @@
 import { useState, useEffect } from "react";
-import { BookOpen, ChevronRight, FlaskConical, Globe } from "lucide-react";
-import { Link } from "react-router-dom";
+import { BookOpen, ChevronRight } from "lucide-react";
 import { getResearchList } from "@/services/api";
 
 interface Research {
   _id: string;
   title: string;
-  status: string;
   description: string;
-  slug?: string;
+  status: string;
 }
 
 const ResearchSection = () => {
   const [research, setResearch] = useState<Research[]>([]);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getResearchList()
-      .then(setResearch)
-      .catch(console.error)
-      .finally(() => setLoading(false));
+    getResearchList().then(setResearch).catch(console.error);
   }, []);
 
   return (
-    <section id="research" className="py-24 md:py-32 relative overflow-hidden bg-white dark:bg-[#020617]">
-      <div className="container mx-auto px-6 relative z-10">
-        <div className="flex flex-col lg:flex-row items-center justify-between mb-20 gap-8 animate-fadeUp">
-           <div className="max-w-2xl text-center lg:text-left">
-              <span className="subheading-premium">Intellectual Capital</span>
-              <h2 className="heading-premium dark:text-white">Research <span className="text-primary italic">&</span> Discoveries</h2>
-              <p className="text-xl text-muted-foreground mt-4 leading-relaxed">
-                 Advancing the boundaries of artificial intelligence through systematic investigation and model research.
-              </p>
-           </div>
-           <Link to="/research" className="flex items-center gap-3 px-8 py-4 glass border-white/10 rounded-2xl hover:bg-primary/5 transition-all group">
-              <Globe size={20} className="text-primary group-hover:rotate-45 transition-transform" />
-              <span className="font-black uppercase tracking-widest text-[11px] text-foreground">Global Registry</span>
-              <ChevronRight size={14} className="text-primary" />
-           </Link>
+    <section id="research" className="py-24 bg-[#f8fafc]">
+      <div className="container mx-auto px-6 max-w-5xl">
+        <div className="flex items-center gap-3 mb-16">
+          <h2 className="text-3xl font-bold text-[#1a1a1a]">Publications & Research Work</h2>
+          <div className="h-[2px] w-12 bg-primary mt-2" />
         </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-7xl mx-auto">
-          {loading ? (
-             Array.from({length: 2}).map((_, i) => (
-                <div key={i} className="h-48 bg-gray-100 dark:bg-white/5 rounded-[2.5rem] animate-pulse" />
-             ))
-          ) : research.length === 0 ? (
-             <p className="text-center text-gray-400 italic col-span-full">Awaiting publication datasets...</p>
-          ) : research.map((item, i) => (
-            <Link 
+
+        <div className="space-y-6">
+          {research.map((item) => (
+            <div 
               key={item._id} 
-              to={`/research/${item.slug || item._id}`} 
-              className="block group animate-fadeUp"
-              style={{ animationDelay: `${i * 100}ms` }}
+              className="bg-white p-8 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-all group flex items-start gap-6 relative overflow-hidden"
             >
-              <div className="bento-item !p-10 border-white/5 dark:hover:bg-primary/5 group-hover:border-primary/30 transition-all h-full relative overflow-hidden">
-                <div className="absolute top-0 right-0 p-8 text-primary/5 group-hover:text-primary/10 transition-colors pointer-events-none">
-                   <FlaskConical size={100} />
+              <div className="absolute left-0 top-0 bottom-0 w-1 bg-primary/20 group-hover:bg-primary transition-colors" />
+              <div className="w-10 h-10 bg-blue-50 text-primary rounded-lg flex items-center justify-center shrink-0">
+                 <BookOpen size={20} />
+              </div>
+              <div className="flex-1">
+                 <h3 className="text-lg font-bold text-gray-900 group-hover:text-primary transition-colors mb-2">
+                    {item.title}
+                 </h3>
+                 <p className="text-sm text-gray-500 mb-4 leading-relaxed">
+                    {item.description}
+                 </p>
+                 <div className="text-[10px] text-primary font-bold uppercase tracking-widest flex items-center gap-1 hover:underline cursor-pointer">
+                    View Publication <ChevronRight size={10} />
+                 </div>
+              </div>
+            </div>
+          ))}
+
+          {/* Static placeholders if empty per reference image style */}
+          {research.length === 0 && (
+            <>
+              <div className="bg-white p-8 rounded-xl border border-gray-100 shadow-sm flex items-start gap-6 relative overflow-hidden">
+                <div className="absolute left-0 top-0 bottom-0 w-1 bg-primary/20" />
+                <div className="w-10 h-10 bg-blue-50 text-primary rounded-lg flex items-center justify-center shrink-0">
+                   <BookOpen size={20} />
                 </div>
-                
-                <div className="flex flex-col h-full relative z-10">
-                   <div className="flex items-center justify-between mb-8">
-                      <div className="w-12 h-12 bg-primary/10 text-primary rounded-xl flex items-center justify-center">
-                         <BookOpen size={22} />
-                      </div>
-                      <span className="text-[10px] font-black uppercase tracking-widest px-4 py-1.5 bg-primary/10 text-primary rounded-full">
-                         {item.status || "In Review"}
-                      </span>
-                   </div>
-                   
-                   <h3 className="text-2xl font-black mb-4 tracking-tighter leading-tight group-hover:text-primary transition-colors flex-1">
-                      {item.title}
-                   </h3>
-                   
-                   <p className="text-muted-foreground text-sm leading-relaxed mb-8 line-clamp-2">
-                      {item.description}
+                <div className="flex-1">
+                   <h3 className="text-lg font-bold text-gray-900 mb-2">AI and IoT in Sustainable Agriculture: A Review</h3>
+                   <p className="text-sm text-gray-500 mb-4 leading-relaxed">
+                     Rohit Sandip Birdawade, ... Journal of Instrumentation Technology & Innovations, 2025
                    </p>
-                   
-                   <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-primary group-hover:gap-4 transition-all">
-                      Access Full Operation Brief <ChevronRight size={14} />
+                   <div className="text-[10px] text-primary font-bold uppercase tracking-widest flex items-center gap-1 hover:underline cursor-pointer">
+                      View Publication <ChevronRight size={10} />
                    </div>
                 </div>
               </div>
-            </Link>
-          ))}
+            </>
+          )}
         </div>
       </div>
     </section>

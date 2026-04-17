@@ -1,26 +1,16 @@
 import { useState, useEffect } from "react";
 import { API_URL } from "@/services/api";
-import { Code2, Server, Database, Globe, Brain, Cloud, Smartphone, Layout } from "lucide-react";
 
 interface Skill {
   _id: string;
   name: string;
   description: string;
+  proficiency: number;
 }
-
-const iconMap: Record<string, any> = {
-  "Frontend": <Globe size={20} />,
-  "Backend": <Server size={20} />,
-  "Database": <Database size={20} />,
-  "AI": <Brain size={20} />,
-  "Cloud": <Cloud size={20} />,
-  "Mobile": <Smartphone size={20} />,
-  "UI/UX": <Layout size={20} />,
-  "Default": <Code2 size={20} />
-};
 
 const SkillsSection = () => {
   const [skills, setSkills] = useState<Skill[]>([]);
+  const [activeCategory, setActiveCategory] = useState("Languages");
 
   useEffect(() => {
     const fetchSkills = async () => {
@@ -35,45 +25,94 @@ const SkillsSection = () => {
     fetchSkills();
   }, []);
 
-  const getIcon = (name: string, desc: string) => {
-    const searchStr = (name + " " + desc).toLowerCase();
-    if (searchStr.includes("front") || searchStr.includes("react") || searchStr.includes("next")) return iconMap["Frontend"];
-    if (searchStr.includes("back") || searchStr.includes("node") || searchStr.includes("python")) return iconMap["Backend"];
-    if (searchStr.includes("sql") || searchStr.includes("db") || searchStr.includes("mongo")) return iconMap["Database"];
-    if (searchStr.includes("ai") || searchStr.includes("ml") || searchStr.includes("intelligence")) return iconMap["AI"];
-    if (searchStr.includes("aws") || searchStr.includes("cloud") || searchStr.includes("docker")) return iconMap["Cloud"];
-    if (searchStr.includes("ios") || searchStr.includes("android") || searchStr.includes("mobile")) return iconMap["Mobile"];
-    if (searchStr.includes("design") || searchStr.includes("ui") || searchStr.includes("ux")) return iconMap["UI/UX"];
-    return iconMap["Default"];
-  };
+  const categories = ["Languages", "AI & Machine Learning", "Tools & Technologies", "Other Skills"];
+
+  const filteredSkills = skills.filter(skill => {
+    const desc = (skill.name + " " + skill.description).toLowerCase();
+    if (activeCategory === "Languages") return desc.includes("python") || desc.includes("c++") || desc.includes("c") || desc.includes("html") || desc.includes("css") || desc.includes("java");
+    if (activeCategory === "AI & Machine Learning") return desc.includes("ai") || desc.includes("ml") || desc.includes("learning") || desc.includes("data");
+    if (activeCategory === "Tools & Technologies") return desc.includes("notebook") || desc.includes("jupyter") || desc.includes("arduino") || desc.includes("raspberry");
+    return true;
+  });
 
   return (
-    <section id="skills" className="py-24 md:py-32 relative overflow-hidden bg-white dark:bg-[#020617]">
-      <div className="container mx-auto px-6 relative z-10">
-        <div className="max-w-4xl mb-20 animate-fadeUp">
-          <span className="subheading-premium">Technical Core</span>
-          <h2 className="heading-premium dark:text-white">Professional <span className="text-primary italic">Expertise</span></h2>
+    <section id="skills" className="py-24 bg-white">
+      <div className="container mx-auto px-6 max-w-6xl">
+        <div className="flex items-center gap-3 mb-16">
+          <h2 className="text-3xl font-bold text-[#1a1a1a]">Skills & Expertise</h2>
+          <div className="h-[2px] w-12 bg-primary mt-2" />
         </div>
-        
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-6 max-w-7xl mx-auto">
-          {skills.length === 0 && <p className="text-center text-gray-400 italic col-span-full">Awaiting tech stack...</p>}
-          {skills.map((skill, index) => (
-            <div 
-              key={skill._id} 
-              className="bento-item hover-spotlight !p-6 border-white/10 dark:hover:bg-primary/5 group animate-fadeUp h-full"
-              style={{ animationDelay: `${index * 50}ms` }}
+
+        {/* Categories Tabs */}
+        <div className="flex flex-wrap justify-center gap-4 mb-16 bg-gray-50 p-2 rounded-xl">
+          {categories.map((cat) => (
+            <button
+              key={cat}
+              onClick={() => setActiveCategory(cat)}
+              className={`px-8 py-3 rounded-lg text-xs font-bold transition-all ${
+                activeCategory === cat 
+                  ? "bg-white text-primary shadow-sm" 
+                  : "text-gray-400 hover:text-gray-600"
+              }`}
             >
-              <div className="flex items-center gap-4">
-                <div className="w-10 h-10 flex items-center justify-center bg-primary/5 text-primary rounded-xl group-hover:bg-primary group-hover:text-white transition-all duration-500 shadow-sm shrink-0">
-                  {getIcon(skill.name, skill.description)}
-                </div>
-                <div>
-                  <h4 className="text-lg font-black tracking-tighter group-hover:text-primary transition-colors">{skill.name}</h4>
-                  <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-black opacity-60 line-clamp-1">{skill.description}</p>
-                </div>
+              {cat}
+            </button>
+          ))}
+        </div>
+
+        {/* Progress Bars Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-10 mb-24">
+          {filteredSkills.length === 0 && <p className="col-span-full text-center text-gray-400 italic">No skills found in this registry...</p>}
+          {filteredSkills.map((skill) => (
+            <div key={skill._id} className="space-y-4">
+              <div className="flex justify-between items-end">
+                <span className="font-bold text-gray-800">{skill.name}</span>
+                <span className="text-[10px] font-bold text-gray-400">{skill.proficiency}%</span>
+              </div>
+              <div className="h-2 w-full bg-gray-100 rounded-full overflow-hidden">
+                <div 
+                  className="h-full bg-primary rounded-full transition-all duration-1000 ease-out"
+                  style={{ width: `${skill.proficiency}%` }}
+                />
               </div>
             </div>
           ))}
+        </div>
+
+        {/* Certifications (Reference Image Style) */}
+        <div className="text-center mb-16">
+           <h3 className="text-2xl font-bold text-gray-900">Certifications</h3>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-24">
+           {[
+             "AI model-building workshop by NEXT WAVE (20/1/2024)",
+             "HTML & CSS For Web Development by Skill Academy",
+             "Free Live Course on Mastering Battery Management Systems",
+             "Three Days of National Online Workshops on Research Paper Writing & Publishing"
+           ].map((cert, i) => (
+             <div key={i} className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm flex items-center gap-6 group hover:shadow-md transition-all">
+                <div className="w-10 h-10 bg-blue-50 text-primary border border-blue-100 rounded-lg flex items-center justify-center font-bold shrink-0">
+                   {i + 1}
+                </div>
+                <p className="text-sm font-medium text-gray-700 leading-relaxed text-left">{cert}</p>
+             </div>
+           ))}
+        </div>
+
+        {/* Bottom Technologies Cloud */}
+        <div className="text-center mb-12">
+           <h3 className="text-xl font-bold text-gray-900 mb-10">Technologies I Work With</h3>
+           <div className="flex flex-wrap justify-center gap-3 max-w-4xl mx-auto">
+              {[
+                "Python", "TensorFlow", "PyTorch", "scikit-learn", "Pandas", "NumPy", "Jupyter", 
+                "Google Colab", "Matplotlib", "Seaborn", "CNN", "LSTM", "Computer Vision", 
+                "NLP", "Raspberry Pi", "Arduino", "IoT", "C++", "C", "Git", "HTML", "CSS"
+              ].map((tech) => (
+                <span key={tech} className="px-6 py-2 bg-primary text-white text-xs font-bold rounded-full shadow-sm hover:scale-110 hover:-rotate-3 transition-transform cursor-default">
+                   {tech}
+                </span>
+              ))}
+           </div>
         </div>
       </div>
     </section>
