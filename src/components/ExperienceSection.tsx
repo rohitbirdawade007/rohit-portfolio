@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { CalendarIcon, BriefcaseIcon, ChevronRight, Building2, MapPin } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
 import { getExperiences } from "@/services/api";
 
@@ -27,60 +26,71 @@ const ExperienceSection = () => {
   }, []);
 
   return (
-    <section id="experience" className="section-padding bg-white dark:bg-gray-950 transition-colors">
-      <div className="container mx-auto px-4 max-w-6xl">
-        <div className="text-center max-w-3xl mx-auto mb-20 animate-fadeUp">
-          <h2 className="section-heading !mb-4">Professional Experience</h2>
-          <p className="text-lg text-muted-foreground">
-            A track record of delivering high-quality solutions across various industries and technical environments.
+    <section id="experience" className="py-24 md:py-32 relative overflow-hidden bg-[#0a0a0a] text-white">
+      {/* Background Decor */}
+      <div className="absolute top-1/2 left-0 w-[400px] h-[400px] bg-primary/5 rounded-full blur-[100px] -translate-x-1/2 -translate-y-1/2" />
+
+      <div className="container mx-auto px-6 relative z-10">
+        <div className="max-w-4xl mb-24 animate-fadeUp">
+          <span className="subheading-premium text-primary/80">Career Timeline</span>
+          <h2 className="heading-premium text-white">Professional <span className="text-primary italic">Trajectory</span></h2>
+          <p className="text-xl text-white/50 mt-6 leading-relaxed max-w-xl">
+             A record of industrial excellence and technical leadership in intelligent system development.
           </p>
         </div>
         
-        <div className="grid grid-cols-1 gap-8">
+        <div className="space-y-12 max-w-7xl mx-auto">
           {loading ? (
              <div className="space-y-8">
-                {Array.from({length: 3}).map((_, i) => (
-                   <div key={i} className="h-48 bg-muted/50 rounded-[2.5rem] animate-pulse" />
+                {Array.from({length: 2}).map((_, i) => (
+                   <div key={i} className="h-64 bg-white/5 rounded-[3rem] animate-pulse" />
                 ))}
              </div>
           ) : experiences.length === 0 ? (
-             <p className="text-center text-gray-400 italic">No experience added yet.</p>
+             <p className="text-center text-white/30 italic">No historical records found.</p>
           ) : (
-            experiences.map((experience, index) => (
+            experiences.map((exp, index) => (
               <div 
-                key={experience._id} 
+                key={exp._id} 
                 className="group relative animate-fadeUp"
                 style={{ animationDelay: `${index * 150}ms` }}
               >
-                <div className="glass-card p-8 md:p-12 rounded-[3rem] hover:border-primary/20 transition-all duration-500 overflow-hidden relative">
-                  {/* Background decoration */}
-                  <div className="absolute top-0 right-0 p-12 opacity-[0.03] group-hover:opacity-[0.08] transition-opacity pointer-events-none">
-                    <BriefcaseIcon size={200} />
+                <div className="glass p-8 md:p-12 rounded-[3.5rem] border-white/5 bg-white/2 hover:border-primary/30 transition-all duration-700 overflow-hidden relative">
+                  <div className="absolute -top-10 -right-10 p-12 opacity-[0.02] group-hover:opacity-[0.05] transition-opacity pointer-events-none">
+                    <BriefcaseIcon size={250} />
                   </div>
 
-                  <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8 relative z-10">
-                    <div className="flex-1 space-y-4">
-                      <div className="flex items-center gap-3">
-                        <span className="w-12 h-12 bg-primary/10 rounded-2xl flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all duration-500">
-                          <Building2 size={24} />
-                        </span>
+                  <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-12 relative z-10">
+                    <div className="flex-1 space-y-6">
+                      <div className="flex items-center gap-5">
+                        <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all duration-500 shadow-sm">
+                          <Building2 size={28} />
+                        </div>
                         <div>
-                          <h3 className="text-2xl md:text-3xl font-black text-gray-900 dark:text-white tracking-tight leading-tight">
-                            {experience.role}
+                          <h3 className="text-3xl md:text-4xl font-black text-white tracking-tighter leading-tight group-hover:text-primary transition-colors">
+                            {exp.role}
                           </h3>
-                          <p className="text-primary font-bold text-lg">{experience.company}</p>
+                          <div className="flex flex-wrap items-center gap-3 mt-1">
+                             <p className="text-white/80 font-bold text-lg">{exp.company}</p>
+                             <span className="w-1 h-1 rounded-full bg-white/20 hidden sm:block" />
+                             {exp.location && (
+                                <div className="flex items-center gap-1.5 text-xs font-black uppercase tracking-widest text-white/40">
+                                   <MapPin size={12} /> {exp.location}
+                                </div>
+                             )}
+                          </div>
                         </div>
                       </div>
                       
-                      <p className="text-gray-600 dark:text-gray-400 text-lg leading-relaxed line-clamp-2 max-w-3xl">
-                        {experience.description}
+                      <p className="text-white/50 text-base md:text-lg leading-relaxed max-w-4xl line-clamp-3">
+                        {exp.description}
                       </p>
 
-                      <div className="flex flex-wrap gap-2 pt-2">
-                        {experience.techStack?.slice(0, 6).map((skill, skillIndex) => (
+                      <div className="flex flex-wrap gap-3 pt-2">
+                        {exp.techStack?.slice(0, 8).map((skill, si) => (
                           <span 
-                            key={skillIndex} 
-                            className="text-xs font-bold px-4 py-1.5 bg-muted rounded-xl text-muted-foreground border border-border group-hover:border-primary/20 transition-colors"
+                            key={si} 
+                            className="text-[10px] font-black uppercase tracking-widest px-4 py-2 bg-white/5 rounded-xl text-white/60 border border-white/5 group-hover:border-primary/20 transition-all"
                           >
                             {skill}
                           </span>
@@ -88,24 +98,21 @@ const ExperienceSection = () => {
                       </div>
                     </div>
                     
-                    <div className="flex flex-col shrink-0 lg:text-right gap-4">
-                      <div className="inline-flex items-center gap-3 px-6 py-3 bg-muted/50 rounded-2xl border border-border lg:justify-end">
-                        <CalendarIcon size={18} className="text-primary" />
-                        <span className="text-foreground font-black tracking-tight">{experience.duration}</span>
+                    <div className="flex flex-col shrink-0 lg:text-right gap-6 pt-6 lg:pt-0 border-t lg:border-t-0 border-white/5">
+                      <div className="flex flex-col gap-1">
+                         <span className="text-[10px] font-black uppercase tracking-[0.3em] text-white/30">Service Duration</span>
+                         <div className="text-2xl font-black text-white tracking-tighter flex items-center lg:justify-end gap-2">
+                            <CalendarIcon size={20} className="text-primary" />
+                            {exp.duration}
+                         </div>
                       </div>
                       
-                      {experience.location && (
-                        <div className="flex items-center gap-2 text-sm font-semibold text-muted-foreground lg:justify-end">
-                          <MapPin size={16} />
-                          <span>{experience.location}</span>
-                        </div>
-                      )}
-
                       <Link 
-                        to={`/experience/${experience.slug || experience._id}`} 
-                        className="inline-flex items-center gap-2 font-bold text-primary hover:text-primary/80 transition-all lg:justify-end group/link"
+                        to={`/experience/${exp.slug || exp._id}`} 
+                        className="group/link inline-flex items-center gap-3 px-8 py-4 bg-white/5 hover:bg-white/10 rounded-2xl border border-white/10 text-xs font-black uppercase tracking-widest text-white transition-all lg:justify-center overflow-hidden relative"
                       >
-                        Deep Dive <ChevronRight size={20} className="group-hover/link:translate-x-1 transition-transform" />
+                        <div className="absolute inset-x-0 bottom-0 h-[2px] bg-primary scale-x-0 group-hover/link:scale-x-100 transition-transform" />
+                        Operation Brief <ChevronRight size={16} className="group-hover/link:translate-x-1 transition-transform" />
                       </Link>
                     </div>
                   </div>

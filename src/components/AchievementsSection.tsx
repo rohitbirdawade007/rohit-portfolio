@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Award, Check, Trophy, Medal, BookOpen, Star, Loader2, Calendar } from "lucide-react";
+import { Award, Trophy, Medal, BookOpen, Star, Sparkles, ChevronRight, Calendar } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { getAchievements } from "@/services/api";
 
@@ -10,7 +10,6 @@ interface Achievement {
   date: string;
   type: "award" | "certification" | "workshop" | "competition" | "paper" | "leadership";
   description?: string;
-  images?: string[];
   image?: string;
   category: "achievements" | "cocurricular" | "extracurricular";
 }
@@ -29,81 +28,65 @@ const AchievementsSection = () => {
 
   const getIcon = (type: string) => {
     switch (type) {
-      case "award":        return <Trophy size={22} />;
-      case "competition":  return <Medal size={22} />;
-      case "paper":        return <BookOpen size={22} />;
-      case "leadership":   return <Star size={22} />;
-      case "certification":return <Award size={22} />;
-      default:             return <Check size={22} />;
+      case "award":        return <Trophy size={20} />;
+      case "competition":  return <Medal size={20} />;
+      case "paper":        return <BookOpen size={20} />;
+      case "leadership":   return <Star size={20} />;
+      case "certification":return <Award size={20} />;
+      default:             return <Sparkles size={20} />;
     }
   };
 
-  const byCategory = {
-    achievements:    achievements.filter(a => a.category === "achievements"),
-    cocurricular:    achievements.filter(a => a.category === "cocurricular"),
-    extracurricular: achievements.filter(a => a.category === "extracurricular"),
-  };
-
-  if (loading) return (
-    <section id="achievements" className="section-padding bg-white dark:bg-gray-950 transition-colors">
-      <div className="container mx-auto px-4 flex flex-col items-center gap-6">
-        <Loader2 className="animate-spin text-primary" size={48} />
-        <p className="text-muted-foreground font-bold uppercase tracking-widest text-sm">Curating Excellence...</p>
-      </div>
-    </section>
-  );
-
-  const renderSection = (title: string, Icon: any, items: Achievement[]) => {
+  const renderGrid = (title: string, items: Achievement[]) => {
     if (items.length === 0) return null;
     return (
       <div className="mb-24 animate-fadeUp">
         <div className="flex items-center gap-4 mb-12">
-           <div className="w-12 h-12 bg-primary/10 text-primary rounded-2xl flex items-center justify-center">
-              {Icon}
-           </div>
-           <h3 className="text-3xl font-black tracking-tight">{title}</h3>
+           <div className="w-[2px] h-10 bg-primary" />
+           <h3 className="text-3xl font-black uppercase tracking-tighter dark:text-white leading-[0.8] italic">
+             {title}
+           </h3>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {items.map((a, i) => (
             <div 
               key={a._id} 
               onClick={() => navigate(`/achievements/${a._id}`)}
-              className="glass-card group p-8 rounded-[2.5rem] cursor-pointer hover:border-primary/30 transition-all duration-500 animate-fadeUp"
+              className="bento-item border-white/5 dark:hover:bg-primary/5 cursor-pointer group transition-all duration-700 animate-fadeUp relative overflow-hidden h-full flex flex-col"
               style={{ animationDelay: `${i * 100}ms` }}
             >
-              <div className="flex items-start justify-between mb-6">
-                 <div className="p-3 bg-primary/10 text-primary rounded-2xl group-hover:scale-110 transition-transform">
+              <div className="flex items-start justify-between mb-8">
+                 <div className="w-12 h-12 bg-primary/10 text-primary rounded-xl flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all shadow-sm">
                     {getIcon(a.type)}
                  </div>
-                 <div className="px-3 py-1 bg-muted rounded-lg text-[10px] font-black uppercase tracking-widest text-muted-foreground border border-border">
+                 <span className="text-[9px] font-black uppercase tracking-[0.2em] px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg text-muted-foreground group-hover:text-white transition-colors">
                     {a.type}
-                 </div>
+                 </span>
               </div>
 
-              {/* Achievement Image Preview */}
               {a.image && (
-                <div className="mb-6 rounded-2xl overflow-hidden h-48 bg-gray-100 dark:bg-gray-800 border border-border group-hover:border-primary/20 transition-all">
+                <div className="mb-8 rounded-2xl overflow-hidden h-48 bg-white/2 border border-white/5 group-hover:border-primary/20 transition-all shadow-inner">
                   <img 
-                    src={a.image.startsWith('http') || a.image.startsWith('/lovable-uploads') ? a.image : `http://localhost:5000${a.image}`} 
+                    src={a.image.startsWith('http') ? a.image : `https://rohit-portfolio-qgd8.onrender.com${a.image}`} 
                     alt={a.title} 
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" 
+                    className="w-full h-full object-cover grayscale-[30%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700" 
                   />
                 </div>
               )}
 
-              <h4 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors line-clamp-2 leading-tight">
+              <h4 className="text-2xl font-black mb-3 tracking-tighter leading-tight group-hover:text-primary transition-colors line-clamp-2">
                 {a.title}
               </h4>
-              <p className="text-primary font-bold text-sm mb-4 line-clamp-1">{a.organization}</p>
+              <p className="text-primary/70 font-black text-xs uppercase tracking-widest mb-6">{a.organization}</p>
               
-              <div className="mt-auto pt-6 border-t border-border flex items-center justify-between">
-                <div className="flex items-center gap-2 text-xs font-bold text-muted-foreground">
-                  <Calendar size={14} className="text-primary" />
-                  <span>{a.date}</span>
+              <div className="mt-auto pt-6 border-t border-white/5 flex items-center justify-between">
+                <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-muted-foreground group-hover:text-white transition-colors">
+                  <Calendar size={12} className="text-primary/50" />
+                  {a.date}
                 </div>
-                <span className="text-xs font-black text-primary opacity-0 group-hover:opacity-100 transition-opacity">
-                  VIEW DETAILS →
-                </span>
+                <div className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all transform group-hover:translate-x-1">
+                   <ChevronRight size={14} />
+                </div>
               </div>
             </div>
           ))}
@@ -112,24 +95,31 @@ const AchievementsSection = () => {
     );
   };
 
+  const byCategory = {
+    achievements:    achievements.filter(a => a.category === "achievements"),
+    cocurricular:    achievements.filter(a => a.category === "cocurricular"),
+    extracurricular: achievements.filter(a => a.category === "extracurricular"),
+  };
+
   return (
-    <section id="achievements" className="section-padding bg-white dark:bg-gray-950 transition-colors">
-      <div className="container mx-auto px-4">
-        <div className="text-center max-w-3xl mx-auto mb-24">
-          <h2 className="section-heading !mb-4">Recognition & Impact</h2>
-          <p className="text-lg text-muted-foreground">
-            A celebration of milestones, certifications, and high-impact contributions across my professional and academic career.
+    <section id="achievements" className="py-24 md:py-32 relative overflow-hidden bg-white dark:bg-[#020617]">
+      <div className="container mx-auto px-6 relative z-10">
+        <div className="max-w-4xl mb-24 animate-fadeUp">
+          <span className="subheading-premium">Medals of Excellence</span>
+          <h2 className="heading-premium dark:text-white">Honors <span className="text-primary italic">&</span> Impacts</h2>
+          <p className="text-xl text-muted-foreground mt-4 leading-relaxed">
+             Documenting the milestones and recognition received throughout my technical journey.
           </p>
         </div>
 
-        {renderSection("Premier Achievements", <Trophy size={24} />, byCategory.achievements)}
-        {renderSection("Co-Curricular Growth", <BookOpen size={24} />, byCategory.cocurricular)}
-        {renderSection("Extracurricular Engagement", <Star size={24} />, byCategory.extracurricular)}
+        {renderGrid("Premier Awards", byCategory.achievements)}
+        {renderGrid("Co-Curricular Growth", byCategory.cocurricular)}
+        {renderGrid("Extracurricular Engagement", byCategory.extracurricular)}
 
         {!loading && achievements.length === 0 && (
-          <div className="text-center py-20 glass-card rounded-[3rem] max-w-4xl mx-auto">
-             <Award size={64} className="mx-auto text-muted mb-4 opacity-20" />
-             <p className="text-muted-foreground font-bold italic">No achievements data documented yet.</p>
+          <div className="bento-item max-w-4xl mx-auto py-20 text-center border-white/5 animate-fadeUp">
+             <Trophy size={64} className="mx-auto text-primary/10 mb-6" />
+             <p className="text-muted-foreground font-black uppercase tracking-[0.2em] text-xs">Awaiting data archives...</p>
           </div>
         )}
       </div>

@@ -32,10 +32,19 @@ const AIChatbot          = lazy(() => import("./components/AIChatbot"));
 
 // ─── Loading fallback ─────────────────────────────────────────────────────────
 const PageLoader = () => (
-  <div className="min-h-screen bg-gray-950 flex items-center justify-center">
-    <div className="flex flex-col items-center gap-4">
-      <div className="w-10 h-10 border-4 border-primary border-t-transparent rounded-full animate-spin" />
-      <p className="text-gray-400 text-sm">Loading...</p>
+  <div className="min-h-screen bg-[#020617] flex items-center justify-center p-6">
+    <div className="relative w-24 h-24">
+       {/* Rotating outer rings */}
+       <div className="absolute inset-0 border-2 border-primary/20 rounded-2xl animate-[spin_3s_linear_infinite]" />
+       <div className="absolute inset-2 border-2 border-secondary/20 rounded-xl animate-[spin_2s_linear_reverse_infinite]" />
+       
+       <div className="absolute inset-0 flex items-center justify-center">
+          <div className="w-8 h-8 bg-primary rounded-lg animate-pulse shadow-[0_0_20px_rgba(59,130,246,0.5)]" />
+       </div>
+       
+       <p className="absolute -bottom-12 left-1/2 -translate-x-1/2 text-[10px] font-black uppercase tracking-[0.5em] text-primary/60 animate-pulse whitespace-nowrap">
+          Initializing System
+       </p>
     </div>
   </div>
 );
