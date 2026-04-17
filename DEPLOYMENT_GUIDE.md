@@ -57,7 +57,7 @@ Now that you have your backend URL, you must tell the frontend where to find it.
 1. Open your local `.env.production` file.
 2. Update the `VITE_API_URL` to your Render URL:
    ```env
-   VITE_API_URL=https://portfolio-backend.onrender.com/api
+   VITE_API_URL=https://rohit-portfolio-qgd8.onrender.com/api
    ```
 3. Commit and push this change to GitHub.
 
