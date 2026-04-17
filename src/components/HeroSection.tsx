@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Github, Linkedin, Mail } from "lucide-react";
 import { useProfile } from "@/context/ProfileContext";
+import { Magnetic } from "./Magnetic";
 
 const HeroSection = () => {
   const { profile } = useProfile();
@@ -26,12 +27,14 @@ const HeroSection = () => {
   }, []);
 
   return (
-    <section id="home" className="min-h-screen relative flex items-center justify-center overflow-hidden bg-grainy pt-20">
+    <section id="home" className="min-h-screen relative flex items-center justify-center overflow-hidden bg-grainy pt-20 bg-grid">
+      {/* Background Mask */}
+      <div className="absolute inset-0 bg-background/60 mask-radial" />
+      
       {/* Aurora Background */}
       <div className="aurora">
-        <div className="bg-primary/20 top-0 left-0" />
-        <div className="bg-secondary/20 bottom-0 right-0" />
-        <div className="bg-purple-500/10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
+        <div className="bg-primary/10 top-0 left-0" />
+        <div className="bg-secondary/10 bottom-0 right-0" />
       </div>
 
       <div className="container mx-auto px-6 relative z-10">
@@ -41,8 +44,9 @@ const HeroSection = () => {
             <div className="animate-fadeUp">
               <span className="subheading-premium">Available for Collaboration</span>
               <h1 className="heading-premium mb-6 dark:text-white">
+              <h1 className="heading-premium mb-6 dark:text-white group/name">
                 {name.split(' ').map((word, i) => (
-                  <span key={i} className={i === 1 ? "text-primary" : ""}>
+                  <span key={i} className={`inline-block transition-all duration-300 hover:animate-glitch ${i === 1 ? "text-primary" : ""}`}>
                     {word}{' '}
                   </span>
                 ))}
@@ -53,21 +57,25 @@ const HeroSection = () => {
             </div>
 
             <div className="flex flex-wrap justify-center lg:justify-start gap-4 animate-fadeUp animate-delay-200">
-              <Button 
-                size="lg"
-                className="btn-glow h-16 px-10 rounded-full bg-primary text-white font-black uppercase tracking-widest text-[11px] shadow-2xl shadow-primary/20 transition-all active:scale-95"
-                onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
-              >
-                View Operations
-              </Button>
-              <Button 
-                variant="outline"
-                size="lg"
-                className="h-16 px-10 rounded-full border-2 border-primary/20 hover:border-primary/50 font-black uppercase tracking-widest text-[11px] glass transition-all active:scale-95 text-foreground"
-                onClick={() => window.open((profile as any)?.resumeLink || '#', '_blank')}
-              >
-                Dossier.pdf
-              </Button>
+              <Magnetic>
+                <Button 
+                  size="lg"
+                  className="btn-glow h-16 px-10 rounded-full bg-primary text-white font-black uppercase tracking-widest text-[11px] shadow-2xl shadow-primary/20 transition-all active:scale-95"
+                  onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
+                >
+                  View Operations
+                </Button>
+              </Magnetic>
+              <Magnetic>
+                <Button 
+                  variant="outline"
+                  size="lg"
+                  className="h-16 px-10 rounded-full border-2 border-primary/20 hover:border-primary/50 font-black uppercase tracking-widest text-[11px] glass transition-all active:scale-95 text-foreground"
+                  onClick={() => window.open((profile as any)?.resumeLink || '#', '_blank')}
+                >
+                  Dossier.pdf
+                </Button>
+              </Magnetic>
             </div>
 
             <div className="mt-12 flex items-center justify-center lg:justify-start gap-6 animate-fadeUp animate-delay-400">

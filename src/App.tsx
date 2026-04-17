@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -10,6 +10,8 @@ import ScrollProgressBar from "@/components/ScrollProgressBar";
 import { ThemeProvider } from "@/context/ThemeContext";
 import { ProfileProvider } from "@/context/ProfileContext";
 import { CommandPalette } from "@/components/CommandPalette";
+import CursorFollower from "@/components/CursorFollower";
+import Particles from "@/components/Particles";
 
 // ─── Eager Load (above the fold) ─────────────────────────────────────────────
 import Index from "./pages/Index";
@@ -55,6 +57,19 @@ const queryClient = new QueryClient({
   }
 });
 
+const ScrollProgress = () => {
+  const [width, setWidth] = useState(0);
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTotal = document.documentElement.scrollHeight - window.innerHeight;
+      setWidth((window.scrollY / scrollTotal) * 100);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+  return <div className="fixed top-0 left-0 h-[3px] bg-primary z-[100] transition-all duration-100 ease-out glow-primary" style={{ width: `${width}%` }} />;
+};
+
 const App = () => {
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -70,6 +85,10 @@ const App = () => {
       <ThemeProvider>
         <QueryClientProvider client={queryClient}>
           <ProfileProvider>
+            <ScrollProgress />
+            <CursorFollower />
+            <Particles />
+            <div className="min-h-screen">
             <TooltipProvider>
             <Toaster />
             <Sonner />

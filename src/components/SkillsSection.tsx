@@ -84,7 +84,7 @@ const SkillsSection = () => {
           {skills.map((skill, index) => (
             <div 
               key={skill._id} 
-              className={`bento-item border-white/10 dark:hover:bg-primary/5 hover:border-primary/40 group animate-fadeUp h-full flex flex-col justify-between`}
+              className={`bento-item hover-spotlight border-white/10 dark:hover:bg-primary/5 hover:border-primary/40 group animate-fadeUp h-full flex flex-col justify-between`}
               style={{ animationDelay: `${index * 100}ms` }}
             >
               <div>

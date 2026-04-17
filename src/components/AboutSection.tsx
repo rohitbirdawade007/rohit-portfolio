@@ -25,7 +25,7 @@ const AboutSection = () => {
         
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 max-w-7xl mx-auto">
           {/* Main Dossier Card */}
-          <div className="lg:col-span-8 bento-item border-white/10 dark:hover:bg-primary/5 group relative overflow-hidden">
+          <div className="lg:col-span-8 bento-item hover-spotlight border-white/10 dark:hover:bg-primary/5 group relative overflow-hidden">
             <div className="absolute top-0 right-0 p-8 text-primary/10 pointer-events-none group-hover:text-primary/20 transition-colors">
               <Cpu size={120} />
             </div>
@@ -60,11 +60,10 @@ const AboutSection = () => {
           </div>
 
           {/* Value Cards */}
-          <div className="lg:col-span-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-4">
             {values.map((v, i) => (
               <div 
                 key={i} 
-                className="bento-item !p-8 border-white/10 dark:hover:bg-white/5 transition-all group animate-fadeUp h-full" 
+                className="bento-item hover-spotlight !p-8 border-white/10 dark:hover:bg-white/5 transition-all group animate-fadeUp h-full" 
                 style={{ animationDelay: `${i * 100}ms` }}
               >
                 <div className={`mb-6 p-4 rounded-xl bg-white/5 inline-block ${v.color} transform group-hover:scale-110 group-hover:rotate-6 transition-transform shadow-sm`}>

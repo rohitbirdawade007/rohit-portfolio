@@ -137,13 +137,18 @@
 
   .hover-spotlight {
     position: relative;
+    overflow: hidden;
   }
 
   .hover-spotlight::before {
     content: '';
     position: absolute;
     inset: 0;
-    background: radial-gradient(400px circle at var(--mouse-x) var(--mouse-y), rgba(var(--primary-rgb), 0.06), transparent 40%);
+    background: radial-gradient(
+      600px circle at var(--mouse-x) var(--mouse-y), 
+      hsl(var(--primary) / 0.15), 
+      transparent 40%
+    );
     pointer-events: none;
     z-index: 0;
     opacity: 0;
@@ -344,4 +349,31 @@
 
 .text-glow {
   text-shadow: 0 0 12px hsl(var(--primary) / 0.3);
+}
+
+/* Grid Background */
+.bg-grid {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, hsl(var(--primary) / 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, hsl(var(--primary) / 0.05) 1px, transparent 1px);
+}
+
+.mask-radial {
+  mask-image: radial-gradient(circle at center, black, transparent 80%);
+}
+
+/* Glitch Animation */
+@keyframes glitch {
+  0% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(-2px, -2px); }
+  60% { transform: translate(2px, 2px); }
+  80% { transform: translate(2px, -2px); }
+  100% { transform: translate(0); }
+}
+
+.animate-glitch {
+  animation: glitch 0.3s cubic-bezier(.25,.46,.45,.94) both infinite;
+  opacity: 0.8;
 }
