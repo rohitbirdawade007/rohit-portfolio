@@ -138,8 +138,8 @@ const App = () => {
                 </Routes>
               </Suspense>
             </BrowserRouter>
-            </div>
             </TooltipProvider>
+            </div>
           </ProfileProvider>
         </QueryClientProvider>
       </ThemeProvider>
