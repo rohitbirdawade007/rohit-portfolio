@@ -86,8 +86,6 @@ const App = () => {
         <QueryClientProvider client={queryClient}>
           <ProfileProvider>
             <ScrollProgress />
-            <CursorFollower />
-            <Particles />
             <div className="min-h-screen">
             <TooltipProvider>
             <Toaster />

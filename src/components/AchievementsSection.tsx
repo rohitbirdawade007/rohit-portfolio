@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Award, Trophy, Medal, BookOpen, Star, Sparkles, ChevronRight, Calendar } from "lucide-react";
+import { Trophy, Medal, Star, Sparkles, ChevronRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { getAchievements } from "@/services/api";
 
@@ -8,120 +8,58 @@ interface Achievement {
   title: string;
   organization: string;
   date: string;
-  type: "award" | "certification" | "workshop" | "competition" | "paper" | "leadership";
-  description?: string;
-  image?: string;
-  category: "achievements" | "cocurricular" | "extracurricular";
+  type: string;
+  category: "achievements" | "cocurricular" | "extracurricular" | "default";
 }
 
 const AchievementsSection = () => {
   const navigate = useNavigate();
   const [achievements, setAchievements] = useState<Achievement[]>([]);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getAchievements()
-      .then(setAchievements)
-      .catch((err) => console.error("Failed to load achievements:", err))
-      .finally(() => setLoading(false));
+    getAchievements().then(setAchievements).catch(console.error);
   }, []);
 
-  const getIcon = (type: string) => {
-    switch (type) {
-      case "award":        return <Trophy size={20} />;
-      case "competition":  return <Medal size={20} />;
-      case "paper":        return <BookOpen size={20} />;
-      case "leadership":   return <Star size={20} />;
-      case "certification":return <Award size={20} />;
-      default:             return <Sparkles size={20} />;
-    }
-  };
-
-  const renderGrid = (title: string, items: Achievement[]) => {
-    if (items.length === 0) return null;
-    return (
-      <div className="mb-24 animate-fadeUp">
-        <div className="flex items-center gap-4 mb-12">
-           <div className="w-[2px] h-10 bg-primary" />
-           <h3 className="text-3xl font-black uppercase tracking-tighter dark:text-white leading-[0.8] italic">
-             {title}
-           </h3>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {items.map((a, i) => (
-            <div 
-              key={a._id} 
-              onClick={() => navigate(`/achievements/${a._id}`)}
-              className="bento-item border-white/5 dark:hover:bg-primary/5 cursor-pointer group transition-all duration-700 animate-fadeUp relative overflow-hidden h-full flex flex-col"
-              style={{ animationDelay: `${i * 100}ms` }}
-            >
-              <div className="flex items-start justify-between mb-8">
-                 <div className="w-12 h-12 bg-primary/10 text-primary rounded-xl flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all shadow-sm">
-                    {getIcon(a.type)}
-                 </div>
-                 <span className="text-[9px] font-black uppercase tracking-[0.2em] px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg text-muted-foreground group-hover:text-white transition-colors">
-                    {a.type}
-                 </span>
-              </div>
-
-              {a.image && (
-                <div className="mb-8 rounded-2xl overflow-hidden h-48 bg-white/2 border border-white/5 group-hover:border-primary/20 transition-all shadow-inner">
-                  <img 
-                    src={a.image.startsWith('http') ? a.image : `https://rohit-portfolio-qgd8.onrender.com${a.image}`} 
-                    alt={a.title} 
-                    className="w-full h-full object-cover grayscale-[30%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700" 
-                  />
-                </div>
-              )}
-
-              <h4 className="text-2xl font-black mb-3 tracking-tighter leading-tight group-hover:text-primary transition-colors line-clamp-2">
-                {a.title}
-              </h4>
-              <p className="text-primary/70 font-black text-xs uppercase tracking-widest mb-6">{a.organization}</p>
-              
-              <div className="mt-auto pt-6 border-t border-white/5 flex items-center justify-between">
-                <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-muted-foreground group-hover:text-white transition-colors">
-                  <Calendar size={12} className="text-primary/50" />
-                  {a.date}
-                </div>
-                <div className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all transform group-hover:translate-x-1">
-                   <ChevronRight size={14} />
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
+  const renderGrid = (title: string, items: Achievement[], emoji: string) => (
+    <div className="mb-20">
+      <div className="flex items-center justify-center gap-3 mb-10">
+        <span className="text-2xl">{emoji}</span>
+        <h3 className="text-2xl font-bold text-[#1a1a1a]">{title}</h3>
       </div>
-    );
-  };
-
-  const byCategory = {
-    achievements:    achievements.filter(a => a.category === "achievements"),
-    cocurricular:    achievements.filter(a => a.category === "cocurricular"),
-    extracurricular: achievements.filter(a => a.category === "extracurricular"),
-  };
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {items.map((a) => (
+          <div 
+            key={a._id}
+            onClick={() => navigate(`/achievements/${a._id}`)}
+            className="bg-white p-8 rounded-xl border border-blue-100 shadow-sm hover:shadow-md transition-all cursor-pointer group flex flex-col items-center text-center relative overflow-hidden"
+          >
+            <div className="absolute left-0 top-0 bottom-0 w-1 bg-primary/20 group-hover:bg-primary transition-colors" />
+            <div className="w-12 h-12 bg-blue-50 text-primary rounded-full flex items-center justify-center mb-6">
+               <Trophy size={20} />
+            </div>
+            <h4 className="font-bold text-gray-900 mb-2 leading-tight">{a.title}</h4>
+            <p className="text-xs text-gray-500 mb-2">{a.organization}</p>
+            <p className="text-[10px] text-primary font-bold uppercase tracking-widest mb-4">{a.date}</p>
+            <div className="mt-auto pt-4 flex items-center gap-1 text-[10px] text-emerald-500 font-bold hover:underline">
+               Click to view details <ChevronRight size={10} />
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 
   return (
-    <section id="achievements" className="py-24 md:py-32 relative overflow-hidden bg-white dark:bg-[#020617]">
-      <div className="container mx-auto px-6 relative z-10">
-        <div className="max-w-4xl mb-24 animate-fadeUp">
-          <span className="subheading-premium">Medals of Excellence</span>
-          <h2 className="heading-premium dark:text-white">Honors <span className="text-primary italic">&</span> Impacts</h2>
-          <p className="text-xl text-muted-foreground mt-4 leading-relaxed">
-             Documenting the milestones and recognition received throughout my technical journey.
-          </p>
+    <section id="achievements" className="py-24 bg-white">
+      <div className="container mx-auto px-6">
+        <div className="flex items-center gap-3 mb-16">
+          <h2 className="text-3xl font-bold text-[#1a1a1a]">Achievements & Recognition</h2>
+          <div className="h-[2px] w-12 bg-primary mt-2" />
         </div>
 
-        {renderGrid("Premier Awards", byCategory.achievements)}
-        {renderGrid("Co-Curricular Growth", byCategory.cocurricular)}
-        {renderGrid("Extracurricular Engagement", byCategory.extracurricular)}
-
-        {!loading && achievements.length === 0 && (
-          <div className="bento-item max-w-4xl mx-auto py-20 text-center border-white/5 animate-fadeUp">
-             <Trophy size={64} className="mx-auto text-primary/10 mb-6" />
-             <p className="text-muted-foreground font-black uppercase tracking-[0.2em] text-xs">Awaiting data archives...</p>
-          </div>
-        )}
+        {renderGrid("Achievements & Awards", achievements.filter(a => a.category === "achievements"), "🏆")}
+        {renderGrid("Co-Curricular Activities", achievements.filter(a => a.category === "cocurricular"), "🧩")}
+        {renderGrid("Extracurricular Activities", achievements.filter(a => a.category === "extracurricular"), "✨")}
       </div>
     </section>
   );

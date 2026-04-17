@@ -1,79 +1,108 @@
 import { useProfile } from "@/context/ProfileContext";
-import { Brain, Rocket, Zap, Target, Star, ShieldCheck, Cpu, Code2 } from "lucide-react";
+import { GraduationCap, Code2, Terminal, Cpu, Linkedin, Zap } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const AboutSection = () => {
   const { profile } = useProfile();
-  const aboutText = profile?.about || "I am a dedicated engineer specializing in AI and Machine Learning, with a deep commitment to building scalable and intelligent systems that solve real-world problems.";
-  
-  const values = [
-    { icon: <Rocket size={24} />, title: "Goal Oriented", desc: "Focusing on measurable outcomes and high-impact solutions.", color: "text-orange-500" },
-    { icon: <Zap size={24} />, title: "Rapid Iteration", desc: "Iterating fast without compromising on code quality or stability.", color: "text-yellow-500" },
-    { icon: <Brain size={24} />, title: "AI-First", desc: "Leveraging model-driven architectures for complex problem solving.", color: "text-purple-500" },
-    { icon: <ShieldCheck size={24} />, title: "Secure Design", desc: "Building with a security-first mindset and enterprise standards.", color: "text-green-500" },
+  const name = profile?.name || "Rohit Sandip Birdawade";
+  const title = profile?.title || "AI & ML Engineer";
+  const aboutText = profile?.about || "Highly motivated and results-driven Computer Science Engineer with a strong foundation in software development, data analytics, and deep learning models.";
+  const profileImage = profile?.profileImage || "/profile.png";
+
+  const skillCategories = [
+    { icon: <Code2 size={20} />, title: "Languages", items: "Python, C, C++, HTML, CSS" },
+    { icon: <Terminal size={20} />, title: "Tools", items: "Jupyter Notebook, Google Colab, Arduino, Raspberry Pi" },
+    { icon: <Cpu size={20} />, title: "Technologies", items: "Data Science, Machine Learning, Deep Learning, IoT" },
   ];
 
   return (
-    <section id="about" className="py-24 md:py-32 relative overflow-hidden bg-white dark:bg-[#020617]">
-      <div className="container mx-auto px-6 relative z-10">
-        <div className="max-w-4xl mb-20 animate-fadeUp text-center lg:text-left mx-auto lg:mx-0">
-          <span className="subheading-premium">The Philosophy</span>
-          <h2 className="heading-premium dark:text-white">Beyond <span className="text-primary italic">The</span> Matrix</h2>
-          <p className="text-xl text-muted-foreground mt-6 leading-relaxed">
-            Exploring the intersection of human creativity and artificial intelligence.
-          </p>
+    <section id="about" className="py-20 relative bg-white">
+      <div className="container mx-auto px-6">
+        <div className="flex items-center gap-3 mb-12">
+          <h2 className="text-3xl font-bold text-[#1a1a1a]">About Me</h2>
+          <div className="h-[2px] w-12 bg-primary mt-2" />
         </div>
-        
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 max-w-7xl mx-auto">
-          {/* Main Dossier Card */}
-          <div className="lg:col-span-8 bento-item hover-spotlight border-white/10 dark:hover:bg-primary/5 group relative overflow-hidden">
-            <div className="absolute top-0 right-0 p-8 text-primary/10 pointer-events-none group-hover:text-primary/20 transition-colors">
-              <Cpu size={120} />
-            </div>
-            
-            <div className="relative z-10">
-              <h3 className="text-3xl font-black mb-8 tracking-tighter flex items-center gap-3">
-                <Code2 className="text-primary" /> Technical Dossier
-              </h3>
-              <p className="text-gray-600 dark:text-gray-300 leading-[1.8] text-lg lg:text-xl whitespace-pre-wrap font-medium">
-                {aboutText}
-              </p>
-            </div>
-          </div>
 
-          {/* Quick Stats Bento */}
-          <div className="lg:col-span-4 flex flex-col gap-8">
-            <div className="bento-item border-white/10 dark:hover:bg-primary/5 flex flex-col justify-center items-center text-center group">
-              <div className="w-16 h-16 bg-primary/5 text-primary rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-primary group-hover:text-white transition-all shadow-sm">
-                <Target size={32} />
-              </div>
-              <h4 className="text-2xl font-black mb-2 tracking-tighter">Mission Ready</h4>
-              <p className="text-sm text-muted-foreground">Architecting high-impact scalable systems.</p>
-            </div>
-            
-            <div className="bento-item border-white/10 dark:hover:bg-secondary/5 flex flex-col justify-center items-center text-center group">
-              <div className="w-16 h-16 bg-secondary/5 text-secondary rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-secondary group-hover:text-white transition-all shadow-sm">
-                <Star size={32} />
-              </div>
-              <h4 className="text-2xl font-black mb-2 tracking-tighter">Elite Standards</h4>
-              <p className="text-sm text-muted-foreground">Cutting edge AI/ML implementation.</p>
-            </div>
-          </div>
-
-          {/* Value Cards */}
-          <div className="lg:col-span-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-4">
-            {values.map((v, i) => (
-              <div 
-                key={i} 
-                className="bento-item hover-spotlight !p-8 border-white/10 dark:hover:bg-white/5 transition-all group animate-fadeUp h-full" 
-                style={{ animationDelay: `${i * 100}ms` }}
-              >
-                <div className={`mb-6 p-4 rounded-xl bg-white/5 inline-block ${v.color} transform group-hover:scale-110 group-hover:rotate-6 transition-transform shadow-sm`}>
-                  {v.icon}
+        <div className="flex flex-col lg:flex-row gap-12 items-start">
+          {/* Left Side: Profile Card */}
+          <div className="w-full lg:w-[400px] shrink-0">
+             <div className="relative group">
+                <div className="absolute inset-0 bg-primary/10 rounded-[2rem] translate-x-4 translate-y-4 -z-10 group-hover:translate-x-2 group-hover:translate-y-2 transition-transform" />
+                <div className="bg-white rounded-[2rem] overflow-hidden shadow-2xl border border-gray-100 p-3">
+                   <div className="aspect-[4/5] rounded-[1.5rem] overflow-hidden relative">
+                      <img 
+                        src={profileImage.startsWith('http') ? profileImage : `https://rohit-portfolio-qgd8.onrender.com${profileImage}`} 
+                        alt={name}
+                        className="w-full h-full object-cover"
+                      />
+                      <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent p-6 text-white text-center">
+                         <h3 className="text-xl font-bold">{name}</h3>
+                         <p className="text-xs text-white/70 uppercase tracking-widest mt-1">Aspiring AI & ML Engineer</p>
+                      </div>
+                   </div>
                 </div>
-                <h4 className="font-black text-xl mb-3 tracking-tighter group-hover:text-primary transition-colors">{v.title}</h4>
-                <p className="text-sm text-muted-foreground leading-relaxed">{v.desc}</p>
-              </div>
-            ))}
+             </div>
+          </div>
+
+          {/* Right Side: Content */}
+          <div className="flex-1">
+             <h3 className="text-2xl font-bold text-[#1a1a1a] mb-6">
+                Computer Science Engineer with a passion for <span className="text-primary italic font-serif">AI and ML</span>
+             </h3>
+             <div className="text-gray-600 space-y-4 leading-relaxed text-sm md:text-base mb-10">
+                <p>{aboutText}</p>
+                <p>Demonstrated ability to work collaboratively on interdisciplinary projects and deliver innovative solutions. Committed to continuous learning and applying cutting-edge technologies.</p>
+             </div>
+
+             {/* Education Timeline (Reference style) */}
+             <div className="mb-12">
+                <div className="flex items-center gap-2 mb-6 text-primary font-bold">
+                   <GraduationCap size={20} />
+                   <span className="uppercase tracking-widest text-xs">Education</span>
+                </div>
+                <div className="space-y-8 pl-4 border-l-2 border-gray-100">
+                   <div className="relative">
+                      <div className="absolute -left-[21px] top-1 w-4 h-4 bg-primary rounded-full border-4 border-white shadow-sm" />
+                      <h4 className="font-bold text-gray-900">Bachelor of Computer Science Engineering</h4>
+                      <p className="text-sm text-gray-500 mt-1">Rajgad Dnyanpeeth's Shree Chhatrapati Shivajiraje College of Engineering, Bhor, Pune</p>
+                      <p className="text-xs text-primary mt-1 font-semibold">Expected Graduation: May 2025</p>
+                      <p className="text-[10px] text-gray-400 mt-2 uppercase tracking-wide">Machine Learning, Python, Artificial Intelligence, Data Science</p>
+                   </div>
+                   <div className="relative">
+                      <div className="absolute -left-[21px] top-1 w-4 h-4 bg-gray-200 rounded-full border-4 border-white shadow-sm" />
+                      <h4 className="font-bold text-gray-900">H.S.C</h4>
+                      <p className="text-sm text-gray-500 mt-1">Vidya Pratishthan's Arts, Science and Commerce College, Baramati, Pune</p>
+                      <p className="text-xs text-gray-400 mt-1 uppercase tracking-wide">IT, Science</p>
+                   </div>
+                </div>
+             </div>
+
+             {/* Categories Grid (Reference style) */}
+             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+                {skillCategories.map((cat, i) => (
+                   <div key={i} className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+                      <div className="text-primary mb-4">{cat.icon}</div>
+                      <h4 className="font-bold text-gray-900 mb-2">{cat.title}</h4>
+                      <p className="text-xs text-gray-500 leading-relaxed">{cat.items}</p>
+                   </div>
+                ))}
+             </div>
+
+             <div className="flex flex-wrap gap-4">
+                <Button 
+                   className="bg-primary hover:bg-primary/90 rounded-lg px-8 py-6 h-auto transition-transform active:scale-95"
+                   onClick={() => document.getElementById('skills')?.scrollIntoView({ behavior: 'smooth' })}
+                >
+                   View My Skills
+                </Button>
+                <Button 
+                   variant="outline"
+                   className="border-primary text-primary hover:bg-primary/5 rounded-lg px-8 py-6 h-auto transition-transform active:scale-95"
+                   onClick={() => window.open(profile?.socialLinks?.linkedin || '#', '_blank')}
+                >
+                   <Linkedin size={18} className="mr-2" /> LinkedIn Profile
+                </Button>
+             </div>
           </div>
         </div>
       </div>
