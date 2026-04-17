@@ -115,11 +115,11 @@
   }
 
   .section-padding {
-    @apply py-24 md:py-32;
+    @apply py-16 md:py-20;
   }
 
   .section-heading {
-    @apply text-3xl md:text-5xl font-extrabold mb-16 text-center tracking-tight;
+    @apply text-2xl md:text-4xl font-extrabold mb-12 text-center tracking-tight;
   }
 
   .text-gradient {
@@ -312,12 +312,12 @@
 }
 
 .bento-item {
-  @apply glass-card rounded-[2.5rem] p-8 transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl hover:shadow-primary/5 cursor-default;
+  @apply glass-card rounded-3xl p-6 transition-all duration-500 hover:scale-[1.01] hover:shadow-2xl hover:shadow-primary/5 cursor-default;
 }
 
 /* Typography Enhancements */
 .heading-premium {
-  @apply text-4xl md:text-7xl font-black tracking-tighter leading-[0.95] italic uppercase;
+  @apply text-3xl md:text-5xl font-black tracking-tighter leading-[0.95] italic uppercase;
 }
 
 .subheading-premium {

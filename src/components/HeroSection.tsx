@@ -50,7 +50,7 @@ const HeroSection = () => {
                   </span>
                 ))}
               </h1>
-              <p className="text-lg md:text-xl font-medium text-muted-foreground mb-10 max-w-xl leading-relaxed">
+              <p className="text-base md:text-lg font-medium text-muted-foreground mb-8 max-w-xl leading-relaxed">
                 A specialized <span className="text-foreground font-black underline decoration-primary/40 decoration-4 underline-offset-4">{title}</span>. {bio}
               </p>
             </div>
@@ -59,7 +59,7 @@ const HeroSection = () => {
               <Magnetic>
                 <Button 
                   size="lg"
-                  className="btn-glow h-16 px-10 rounded-full bg-primary text-white font-black uppercase tracking-widest text-[11px] shadow-2xl shadow-primary/20 transition-all active:scale-95"
+                  className="btn-glow h-14 px-8 rounded-full bg-primary text-white font-black uppercase tracking-widest text-[10px] shadow-2xl shadow-primary/20 transition-all active:scale-95"
                   onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
                 >
                   View Operations
@@ -69,7 +69,7 @@ const HeroSection = () => {
                 <Button 
                   variant="outline"
                   size="lg"
-                  className="h-16 px-10 rounded-full border-2 border-primary/20 hover:border-primary/50 font-black uppercase tracking-widest text-[11px] glass transition-all active:scale-95 text-foreground"
+                  className="h-14 px-8 rounded-full border-2 border-primary/20 hover:border-primary/50 font-black uppercase tracking-widest text-[10px] glass transition-all active:scale-95 text-foreground"
                   onClick={() => window.open((profile as any)?.resumeLink || '#', '_blank')}
                 >
                   Dossier.pdf
