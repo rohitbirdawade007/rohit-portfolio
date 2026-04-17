@@ -138,6 +138,7 @@ const App = () => {
                 </Routes>
               </Suspense>
             </BrowserRouter>
+            </div>
             </TooltipProvider>
           </ProfileProvider>
         </QueryClientProvider>
