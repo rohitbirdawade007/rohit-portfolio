@@ -43,7 +43,6 @@ const HeroSection = () => {
           <div className="flex-1 text-center lg:text-left order-2 lg:order-1">
             <div className="animate-fadeUp">
               <span className="subheading-premium">Available for Collaboration</span>
-              <h1 className="heading-premium mb-6 dark:text-white">
               <h1 className="heading-premium mb-6 dark:text-white group/name">
                 {name.split(' ').map((word, i) => (
                   <span key={i} className={`inline-block transition-all duration-300 hover:animate-glitch ${i === 1 ? "text-primary" : ""}`}>
