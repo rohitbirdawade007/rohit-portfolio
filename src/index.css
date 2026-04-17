@@ -312,11 +312,11 @@
 
 /* Typography Enhancements */
 .heading-premium {
-  @apply text-5xl md:text-8xl font-black tracking-tighter leading-[0.85] italic uppercase;
+  @apply text-4xl md:text-7xl font-black tracking-tighter leading-[0.95] italic uppercase;
 }
 
 .subheading-premium {
-  @apply text-[10px] font-black uppercase tracking-[0.5em] text-primary/60 mb-4 block;
+  @apply text-[10px] font-black uppercase tracking-[0.4em] text-primary/70 mb-4 block;
 }
 
 /* Button Glow */

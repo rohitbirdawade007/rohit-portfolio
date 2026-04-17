@@ -47,7 +47,7 @@ const HeroSection = () => {
                   </span>
                 ))}
               </h1>
-              <p className="text-xl md:text-2xl font-medium text-muted-foreground mb-10 max-w-xl leading-relaxed">
+              <p className="text-lg md:text-xl font-medium text-muted-foreground mb-10 max-w-xl leading-relaxed">
                 A specialized <span className="text-foreground font-black underline decoration-primary/40 decoration-4 underline-offset-4">{title}</span>. {bio}
               </p>
             </div>
@@ -90,7 +90,7 @@ const HeroSection = () => {
 
           <div className="flex-1 order-1 lg:order-2 flex justify-center lg:justify-end">
             <div 
-              className="relative w-72 h-72 md:w-[450px] md:h-[550px] transition-transform duration-500 ease-out"
+              className="relative w-64 h-64 md:w-[400px] md:h-[500px] transition-transform duration-500 ease-out"
               style={{ transform: `translate3d(${mousePos.x}px, ${mousePos.y}px, 0) rotateX(${-mousePos.y * 0.2}deg) rotateY(${mousePos.x * 0.2}deg)` }}
             >
               <div className="absolute -inset-4 bg-gradient-to-tr from-primary to-secondary rounded-[3rem] blur-2xl opacity-20 animate-pulse-slow" />
