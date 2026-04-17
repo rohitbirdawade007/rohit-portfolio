@@ -1,5 +1,6 @@
 import { Github, Linkedin, Mail } from "lucide-react";
 import { useProfile } from "@/context/ProfileContext";
+import AnimatedLogo from "./AnimatedLogo";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -10,7 +11,7 @@ const Footer = () => {
       <div className="container mx-auto px-4">
         <div className="flex flex-col md:flex-row justify-between items-center">
           <div className="mb-6 md:mb-0">
-            <h2 className="text-2xl font-bold mb-2">{profile?.name || "Portfolio"}</h2>
+            <AnimatedLogo className="mb-2 scale-90 origin-left" />
             <p className="text-gray-300">{profile?.title || "Engineer"}</p>
           </div>
           

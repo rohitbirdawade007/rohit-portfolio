@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import ThemeToggle from "./ThemeToggle";
 import { useProfile } from "@/context/ProfileContext";
+import AnimatedLogo from "./AnimatedLogo";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -80,16 +81,9 @@ const Navbar = () => {
       >
         <Link 
           to="/" 
-          className="text-2xl font-black tracking-tighter text-foreground group"
+          className="transition-transform active:scale-95"
         >
-          {profile?.logo ? (
-            <img src={profile.logo} alt="Logo" className="h-8 max-w-[120px] object-contain" />
-          ) : (
-            <span className="flex items-center gap-1">
-              {profile?.name?.split(' ')[0] || 'Portfolio'}
-              <span className="text-primary group-hover:scale-150 transition-transform">.</span>
-            </span>
-          )}
+          <AnimatedLogo />
         </Link>
         
         {/* Desktop Navigation Pill */}
