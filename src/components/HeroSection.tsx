@@ -1,30 +1,24 @@
-import { Button } from "@/components/ui/button";
-import { ChevronDown, Github, Linkedin, Mail, Twitter, Download, ExternalLink } from "lucide-react";
-import { useProfile } from "@/context/ProfileContext";
 import { useState, useEffect } from "react";
+import { Button } from "@/components/ui/button";
+import { Github, Linkedin, Mail } from "lucide-react";
+import { useProfile } from "@/context/ProfileContext";
+
 const HeroSection = () => {
   const { profile } = useProfile();
   const name = profile?.name || "Rohit Birdawade";
   const title = profile?.title || "AI & ML Engineer";
-  const description = profile?.bio || "Crafting intelligent solutions across the full stack with a passion for innovation.";
-  const resumeUrl = profile?.resumeLink || "#";
-  const githubUrl = profile?.socialLinks?.github || "https://github.com/rohitbirdawade007";
-  const linkedinUrl = profile?.socialLinks?.linkedin || "https://linkedin.com/in/rohitbirdawade";
-  const email = profile?.email || "rohitbirdawade007@gmail.com";
-  const twitterUrl = profile?.socialLinks?.twitter || "#";
+  const bio = profile?.bio || "Crafting intelligent solutions across the full stack with a passion for innovation.";
+  const githubUrl = profile?.socialLinks?.github || "#";
+  const linkedinUrl = profile?.socialLinks?.linkedin || "#";
   const profileImage = profile?.profileImage || "/profile.png";
-
-  const scrollToProjects = () => {
-    document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" });
-  };
 
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       setMousePos({
-        x: (e.clientX / window.innerWidth - 0.5) * 40,
-        y: (e.clientY / window.innerHeight - 0.5) * 40,
+        x: (e.clientX / window.innerWidth - 0.5) * 20,
+        y: (e.clientY / window.innerHeight - 0.5) * 20,
       });
     };
     window.addEventListener("mousemove", handleMouseMove);
@@ -32,129 +26,100 @@ const HeroSection = () => {
   }, []);
 
   return (
-    <section id="home" className="min-h-screen relative flex items-center justify-center overflow-hidden py-24">
-      {/* Dynamic Background Elements */}
-      <div className="absolute inset-0 -z-10 pointer-events-none">
-        <div 
-          className="absolute top-[10%] right-[10%] w-[500px] h-[500px] bg-primary/20 rounded-full blur-[120px] animate-pulse-slow transition-transform duration-700 ease-out"
-          style={{ transform: `translate(${mousePos.x}px, ${mousePos.y}px)` }}
-        ></div>
-        <div 
-          className="absolute bottom-[20%] left-[5%] w-[400px] h-[400px] bg-secondary/10 rounded-full blur-[100px] animate-pulse-slow animate-delay-200 transition-transform duration-1000 ease-out"
-          style={{ transform: `translate(${-mousePos.x * 1.5}px, ${-mousePos.y * 1.5}px)` }}
-        ></div>
-        {/* Subtle noise pattern (CSS based fallback) */}
-        <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] mix-blend-overlay"></div>
+    <section id="home" className="min-h-screen relative flex items-center justify-center overflow-hidden bg-grainy pt-20">
+      {/* Aurora Background */}
+      <div className="aurora">
+        <div className="bg-primary/20 top-0 left-0" />
+        <div className="bg-secondary/20 bottom-0 right-0" />
+        <div className="bg-purple-500/10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
       </div>
-      
-      <div className="container mx-auto px-4 z-10">
-        <div className="flex flex-col lg:flex-row items-center justify-between gap-16 lg:gap-24">
+
+      <div className="container mx-auto px-6 relative z-10">
+        <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
           
-          {/* Content Area */}
-          <div className="flex-1 text-center lg:text-left order-2 lg:order-1 max-w-2xl">
+          <div className="flex-1 text-center lg:text-left order-2 lg:order-1">
             <div className="animate-fadeUp">
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 mb-6 text-sm font-bold tracking-wider uppercase text-primary bg-primary/10 rounded-full">
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
-                </span>
-                Available for New Challenges
-              </div>
-              <h1 className="text-5xl md:text-8xl font-black mb-6 tracking-tighter dark:text-white leading-[0.9]">
-                {name}
+              <span className="subheading-premium">Available for Collaboration</span>
+              <h1 className="heading-premium mb-6 dark:text-white">
+                {name.split(' ').map((word, i) => (
+                  <span key={i} className={i === 1 ? "text-primary" : ""}>
+                    {word}{' '}
+                  </span>
+                ))}
               </h1>
-              <h2 className="text-2xl md:text-4xl font-semibold mb-8 text-gray-600 dark:text-gray-300">
-                A specialized <span className="text-gradient font-black">{title}</span>
-              </h2>
-            </div>
-            
-            <div className="animate-fadeUp animate-delay-200">
-              <p className="text-lg md:text-xl text-gray-500 dark:text-gray-400 mb-10 leading-relaxed max-w-xl">
-                {description}
+              <p className="text-xl md:text-2xl font-medium text-muted-foreground mb-10 max-w-xl leading-relaxed">
+                A specialized <span className="text-foreground font-black underline decoration-primary/40 decoration-4 underline-offset-4">{title}</span>. {bio}
               </p>
             </div>
-            
-            {/* Action Buttons */}
-            <div className="flex flex-wrap justify-center lg:justify-start gap-5 animate-fadeUp animate-delay-300">
+
+            <div className="flex flex-wrap justify-center lg:justify-start gap-4 animate-fadeUp animate-delay-200">
               <Button 
                 size="lg"
-                className="rounded-full px-8 h-14 bg-primary hover:bg-primary/90 text-white shadow-xl shadow-primary/20 hover:shadow-primary/40 transition-all font-bold group"
-                onClick={scrollToProjects}
+                className="btn-glow h-16 px-10 rounded-full bg-primary text-white font-black uppercase tracking-widest text-[11px] shadow-2xl shadow-primary/20 transition-all active:scale-95"
+                onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
               >
-                Explore My Work <ExternalLink size={18} className="ml-2 group-hover:translate-x-1 transition-transform" />
+                View Operations
               </Button>
               <Button 
-                size="lg"
                 variant="outline"
-                className="rounded-full px-8 h-14 border-2 border-primary/20 hover:border-primary/50 text-foreground transition-all font-bold glass"
-                onClick={() => window.open(resumeUrl, "_blank")}
+                size="lg"
+                className="h-16 px-10 rounded-full border-2 border-primary/20 hover:border-primary/50 font-black uppercase tracking-widest text-[11px] glass transition-all active:scale-95 text-foreground"
+                onClick={() => window.open((profile as any)?.resumeLink || '#', '_blank')}
               >
-                Resume <Download size={18} className="ml-2" />
+                Dossier.pdf
               </Button>
             </div>
 
-            {/* Social Proof */}
             <div className="mt-12 flex items-center justify-center lg:justify-start gap-6 animate-fadeUp animate-delay-400">
               {[
                 { icon: <Github size={20} />, url: githubUrl },
                 { icon: <Linkedin size={20} />, url: linkedinUrl },
-                { icon: <Mail size={20} />, url: `mailto:${email}` },
-                { icon: <Twitter size={20} />, url: twitterUrl },
-              ].map((social, i) => (
+                { icon: <Mail size={20} />, url: `mailto:${profile?.email}` },
+              ].map((s, i) => (
                 <a 
-                  key={i} 
-                  href={social.url} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="w-12 h-12 flex items-center justify-center rounded-full bg-white dark:bg-gray-900 border border-border hover:border-primary hover:text-primary hover:-translate-y-1 transition-all shadow-sm"
+                  key={i} href={s.url} 
+                  target="_blank"
+                  rel="noreferrer"
+                  className="w-12 h-12 flex items-center justify-center rounded-2xl bg-white/5 dark:bg-white/5 border border-white/10 hover:border-primary hover:text-primary transition-all backdrop-blur-md text-foreground"
                 >
-                  {social.icon}
+                  {s.icon}
                 </a>
               ))}
             </div>
           </div>
 
-          {/* Profile Visual */}
-          <div className="flex-1 order-1 lg:order-2 flex justify-center lg:justify-end animate-fadeUp animate-delay-200">
-            <div className="relative group">
-              {/* Decorative back-blob */}
-              <div 
-                className="absolute -inset-10 bg-gradient-to-tr from-primary to-secondary rounded-full opacity-20 blur-3xl group-hover:opacity-30 transition-all duration-700 animate-pulse-slow"
-                style={{ transform: `translate(${mousePos.x * 0.5}px, ${mousePos.y * 0.5}px)` }}
-              ></div>
-              
-              <div className="relative w-80 h-80 md:w-[450px] md:h-[450px] rounded-[60px] overflow-hidden border-4 border-white/20 dark:border-white/10 shadow-2xl glass p-4 transition-transform duration-500 hover:rotate-2">
+          <div className="flex-1 order-1 lg:order-2 flex justify-center lg:justify-end">
+            <div 
+              className="relative w-72 h-72 md:w-[450px] md:h-[550px] transition-transform duration-500 ease-out"
+              style={{ transform: `translate3d(${mousePos.x}px, ${mousePos.y}px, 0) rotateX(${-mousePos.y * 0.2}deg) rotateY(${mousePos.x * 0.2}deg)` }}
+            >
+              <div className="absolute -inset-4 bg-gradient-to-tr from-primary to-secondary rounded-[3rem] blur-2xl opacity-20 animate-pulse-slow" />
+              <div className="relative h-full w-full rounded-[3rem] overflow-hidden border-2 border-white/20 glass shadow-2xl group">
                 <img 
-                  src={profileImage.startsWith('http') || profileImage.startsWith('/profile') ? profileImage : `http://localhost:5000${profileImage}`} 
+                  src={profileImage.startsWith('http') ? profileImage : `https://rohit-portfolio-qgd8.onrender.com${profileImage}`} 
                   alt={name}
-                  className="w-full h-full object-cover rounded-[40px] transition-transform duration-1000 group-hover:scale-110"
+                  className="w-full h-full object-cover grayscale-[20%] group-hover:grayscale-0 transition-all duration-1000 group-hover:scale-110"
                 />
+                <div className="absolute inset-0 bg-gradient-to-t from-gray-950/80 via-transparent to-transparent opacity-60" />
                 
-                {/* Image Overlay Gradient */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none"></div>
-              </div>
-
-              {/* Stats badges */}
-              <div className="absolute -bottom-6 -left-6 glass-card px-8 py-5 rounded-3xl animate-float border-primary/20">
-                <span className="block text-3xl font-black text-primary">AI/ML</span>
-                <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Global Expertise</span>
-              </div>
-              
-              <div className="absolute -top-6 -right-6 glass-card px-8 py-5 rounded-3xl animate-float animate-delay-500 border-secondary/20">
-                <span className="block text-3xl font-black text-secondary">FullStack</span>
-                <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Next-Gen Solutions</span>
+                <div className="absolute bottom-8 left-8 right-8 animate-fadeUp animate-delay-500">
+                   <div className="glass p-5 rounded-2xl border-white/10 shadow-lg backdrop-blur-2xl">
+                      <div className="flex items-center gap-3">
+                         <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                         <span className="text-[10px] font-black uppercase tracking-[0.2em] text-white/70">Intelligence Systems Active</span>
+                      </div>
+                   </div>
+                </div>
               </div>
             </div>
           </div>
 
         </div>
       </div>
-      
-      {/* Bottom Scroll Indicator */}
-      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce cursor-pointer flex flex-col items-center gap-2 opacity-50 hover:opacity-100 transition-opacity"
-           onClick={() => document.getElementById("about")?.scrollIntoView({ behavior: "smooth" })}>
-        <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400">Continue Journey</span>
-        <ChevronDown size={20} className="text-primary" />
+
+      <div className="absolute bottom-10 left-10 hidden xl:flex flex-col gap-4 text-white/20 font-black animate-fadeUp">
+        <span className="[writing-mode:vertical-lr] tracking-[0.5em] text-[10px] uppercase">Scroll to explore</span>
+        <div className="w-[1px] h-20 bg-gradient-to-b from-primary to-transparent" />
       </div>
     </section>
   );

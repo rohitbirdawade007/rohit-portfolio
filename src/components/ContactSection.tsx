@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Mail, MapPin, Phone, Github, Linkedin, Send, MessageSquare, Twitter } from "lucide-react";
+import { Mail, MapPin, Phone, Github, Linkedin, Send, Twitter } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -22,114 +22,101 @@ const ContactSection = () => {
         body: JSON.stringify(formData)
       });
       if (res.ok) {
-        toast.success("Transmission Received! I'll get back to you soon.");
+        toast.success("Transmission Received! Direct reply incoming soon bhai.");
         setFormData({ name: '', email: '', message: '' });
       } else {
-        toast.error("Uplink Failure. Please check your connection and try again.");
+        toast.error("Uplink Failure. Server is down or connection issue.");
       }
     } catch (e) {
-      toast.error("A system error occurred during transmission.");
+      toast.error("A system error occurred. Please try again later.");
     } finally {
       setIsSubmitting(false);
     }
   };
 
   const contactItems = [
-    { icon: <Mail size={20} />, label: "Email", value: profile?.email || 'rohitbirdawade007@gmail.com', show: profile?.visibility?.showEmail !== false },
-    { icon: <MapPin size={20} />, label: "Location", value: profile?.location || 'Pune, India', show: profile?.visibility?.showLocation !== false },
-    { icon: <Phone size={20} />, label: "Phone", value: profile?.phone || 'Available on Request', show: profile?.visibility?.showPhone !== false },
-  ].filter(item => item.show);
+    { icon: <Mail size={20} />, label: "Direct Frequency", value: profile?.email || 'rohitbirdawade007@gmail.com' },
+    { icon: <MapPin size={20} />, label: "Base Location", value: profile?.location || 'Pune, India' },
+    { icon: <Phone size={20} />, label: "Direct Line", value: profile?.phone || 'Available for projects' },
+  ];
 
   return (
-    <section id="contact" className="section-padding bg-white dark:bg-gray-950 transition-colors relative overflow-hidden">
-      <div className="container mx-auto px-4 max-w-6xl relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
-          
-          {/* Information Side */}
-          <div className="space-y-12 animate-fadeUp">
-            <div>
-              <div className="inline-flex items-center gap-2 px-3 py-1 bg-primary/10 text-primary text-[10px] font-black uppercase tracking-widest rounded-full mb-6">
-                <MessageSquare size={14} /> Open for Collaboration
-              </div>
-              <h2 className="text-4xl md:text-6xl font-black tracking-tighter mb-6 leading-tight">
-                Let's Build Something <span className="text-gradient">Extraordinary</span>
-              </h2>
-              <p className="text-lg text-muted-foreground leading-relaxed max-w-md">
-                Whether you have a groundbreaking project in mind or just want to chat about AI/ML, my inbox is always open.
-              </p>
-            </div>
+    <section id="contact" className="py-24 md:py-32 relative overflow-hidden bg-white dark:bg-[#020617]">
+      {/* Background Decor */}
+      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[120px] translate-x-1/2 -translate-y-1/2" />
+      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-secondary/5 rounded-full blur-[100px] -translate-x-1/2 translate-y-1/2" />
 
-            <div className="space-y-6">
+      <div className="container mx-auto px-6 relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center max-w-7xl mx-auto">
+          
+          <div className="animate-fadeUp">
+            <span className="subheading-premium">Contact Interface</span>
+            <h2 className="heading-premium dark:text-white">Let's <span className="text-primary italic">Connect</span> & Build.</h2>
+            <p className="text-xl text-muted-foreground mt-8 leading-relaxed max-w-lg">
+              Ready to take your project to next level? Skip the formalities and let's have a technical discussion bhai.
+            </p>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-16">
               {contactItems.map((item, i) => (
-                <div key={i} className="flex items-center gap-6 group">
-                  <div className="w-14 h-14 bg-muted rounded-2xl flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all duration-500 shadow-sm group-hover:shadow-primary/20">
-                    {item.icon}
-                  </div>
-                  <div>
-                    <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-1">{item.label}</p>
-                    <p className="text-lg font-bold group-hover:text-primary transition-colors">{item.value}</p>
-                  </div>
+                <div key={i} className="bento-item !p-6 border-white/5 bg-white/5 backdrop-blur-3xl group">
+                   <div className="w-12 h-12 flex items-center justify-center bg-primary/10 text-primary rounded-xl mb-6 group-hover:bg-primary group-hover:text-white transition-all">
+                      {item.icon}
+                   </div>
+                   <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-1">{item.label}</p>
+                   <p className="text-sm font-bold truncate">{item.value}</p>
                 </div>
               ))}
             </div>
 
-            <div className="flex gap-4 pt-4">
+            <div className="flex gap-4 mt-8">
                {[
                  { icon: <Github size={20} />, url: profile?.socialLinks?.github || "#" },
                  { icon: <Linkedin size={20} />, url: profile?.socialLinks?.linkedin || "#" },
                  { icon: <Twitter size={20} />, url: profile?.socialLinks?.twitter || "#" },
-               ].map((social, i) => (
-                 <a 
-                   key={i} 
-                   href={social.url} 
-                   target="_blank" 
-                   rel="noopener noreferrer"
-                   className="w-12 h-12 flex items-center justify-center rounded-xl bg-muted text-foreground hover:bg-primary hover:text-white transition-all duration-300"
-                 >
-                   {social.icon}
+               ].map((s, i) => (
+                 <a key={i} href={s.url} target="_blank" rel="noreferrer" className="w-12 h-12 flex items-center justify-center glass border-white/10 text-muted-foreground hover:text-primary transition-all rounded-xl">
+                   {s.icon}
                  </a>
                ))}
             </div>
           </div>
 
-          {/* Form Side */}
           <div className="animate-fadeUp animate-delay-200">
-            <div className="glass-card p-8 md:p-12 rounded-[3rem] shadow-2xl relative overflow-hidden">
-              <div className="absolute top-0 right-0 p-8 opacity-5 text-primary pointer-events-none">
-                <Send size={120} />
-              </div>
+            <div className="glass p-8 md:p-12 rounded-[3.5rem] border-white/10 shadow-3xl bg-white/5 backdrop-blur-3xl relative overflow-hidden">
+              <div className="absolute -top-10 -right-10 w-40 h-40 bg-primary/10 rounded-full blur-3xl" />
               
-              <h3 className="text-2xl font-black mb-8 tracking-tight">Direct Transmission</h3>
+              <h3 className="text-3xl font-black mb-10 tracking-tighter">Direct Transmission</h3>
               
-              <form className="space-y-6 relative z-10" onSubmit={handleSubmit}>
-                <div className="space-y-2">
-                   <label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground ml-1">Identity</label>
-                   <Input 
-                    placeholder="E.g. Elon Musk" 
-                    className="h-14 rounded-2xl bg-muted/50 border-none focus:ring-2 focus:ring-primary/20"
-                    value={formData.name} 
-                    onChange={e => setFormData({...formData, name: e.target.value})} 
-                    required 
-                  />
-                </div>
-                
-                <div className="space-y-2">
-                   <label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground ml-1">Neural Frequency (Email)</label>
-                   <Input 
-                    type="email" 
-                    placeholder="your@email.com" 
-                    className="h-14 rounded-2xl bg-muted/50 border-none focus:ring-2 focus:ring-primary/20"
-                    value={formData.email} 
-                    onChange={e => setFormData({...formData, email: e.target.value})} 
-                    required 
-                  />
+              <form onSubmit={handleSubmit} className="space-y-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  <div className="space-y-3">
+                    <label className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground ml-1">Your Alias</label>
+                    <Input 
+                      placeholder="Rohit Birdawade" 
+                      className="h-14 rounded-2xl bg-white/5 border-white/10 focus:border-primary/50 transition-all px-6 text-foreground"
+                      value={formData.name} 
+                      onChange={e => setFormData({...formData, name: e.target.value})} 
+                      required 
+                    />
+                  </div>
+                  <div className="space-y-3">
+                    <label className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground ml-1">Frequency (Email)</label>
+                    <Input 
+                      type="email" 
+                      placeholder="rohit@ai.com" 
+                      className="h-14 rounded-2xl bg-white/5 border-white/10 focus:border-primary/50 transition-all px-6 text-foreground"
+                      value={formData.email} 
+                      onChange={e => setFormData({...formData, email: e.target.value})} 
+                      required 
+                    />
+                  </div>
                 </div>
 
-                <div className="space-y-2">
-                   <label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground ml-1">Message Packet</label>
-                   <Textarea 
-                    placeholder="Tell me about your vision..." 
-                    className="min-h-[160px] rounded-[2rem] bg-muted/50 border-none focus:ring-2 focus:ring-primary/20 p-6"
+                <div className="space-y-3">
+                  <label className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground ml-1">Protocol (Message)</label>
+                  <Textarea 
+                    placeholder="Tell me what are we building today bhai..." 
+                    className="min-h-[160px] rounded-[2rem] bg-white/5 border-white/10 focus:border-primary/50 transition-all p-8 text-foreground"
                     value={formData.message} 
                     onChange={e => setFormData({...formData, message: e.target.value})} 
                     required 
@@ -138,16 +125,16 @@ const ContactSection = () => {
 
                 <Button 
                   type="submit" 
-                  size="lg"
-                  className="w-full h-16 rounded-2xl bg-primary hover:bg-primary/90 text-white font-black uppercase tracking-widest gap-3 shadow-xl shadow-primary/20 hover:shadow-primary/40 transition-all flex items-center justify-center"
                   disabled={isSubmitting}
+                  className="w-full h-16 rounded-[1.5rem] bg-primary hover:bg-primary/90 text-white font-black uppercase tracking-[0.2em] text-xs shadow-2xl shadow-primary/20 transition-all active:scale-95 group"
                 >
-                  {isSubmitting ? 'Transmitting...' : 'Send Uplink'}
-                  <Send size={20} className={isSubmitting ? 'animate-pulse' : ''} />
+                  {isSubmitting ? 'Transmitting...' : 'Initiate Transmission'}
+                  <Send size={18} className="ml-3 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                 </Button>
               </form>
             </div>
           </div>
+
         </div>
       </div>
     </section>

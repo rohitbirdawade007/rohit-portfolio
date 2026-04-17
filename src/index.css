@@ -227,19 +227,54 @@
   transform: translateY(0);
 }
 
-/* Smooth Progress Bars */
-.progress-bar {
-  @apply h-2.5 w-full bg-muted rounded-full overflow-hidden;
+/* Premium Background Effects */
+.bg-grainy {
+  position: relative;
 }
 
-.progress-bar-fill {
-  @apply h-full rounded-full bg-gradient-to-r from-primary to-secondary shadow-lg shadow-primary/20;
-  transition: width 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+.bg-grainy::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  background-image: url("https://grainy-gradients.vercel.app/noise.svg");
+  opacity: 0.05;
+  z-index: 10;
+  mix-blend-mode: overlay;
+}
+
+.aurora {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -10;
+  filter: blur(100px);
+  opacity: 0.5;
+  overflow: hidden;
+}
+
+.aurora > div {
+  position: absolute;
+  width: 60%;
+  height: 60%;
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  animation: aurora-move 15s infinite alternate ease-in-out;
+}
+
+@keyframes aurora-move {
+  0% { transform: translate(-20%, -20%) rotate(0deg); }
+  100% { transform: translate(20%, 20%) rotate(180deg); }
 }
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 8px;
 }
 
 ::-webkit-scrollbar-track {
@@ -247,5 +282,54 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-muted-foreground/20 rounded-full hover:bg-muted-foreground/30 transition-colors;
+  @apply bg-primary/20 rounded-full hover:bg-primary/40 transition-all;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+/* Shimmer Effect */
+.shimmer {
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  background-size: 200% 100%;
+  animation: shimmer 2.5s infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* Bento Grid Utilities */
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.bento-item {
+  @apply glass-card rounded-[2.5rem] p-8 transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl hover:shadow-primary/5 cursor-default;
+}
+
+/* Typography Enhancements */
+.heading-premium {
+  @apply text-5xl md:text-8xl font-black tracking-tighter leading-[0.85] italic uppercase;
+}
+
+.subheading-premium {
+  @apply text-[10px] font-black uppercase tracking-[0.5em] text-primary/60 mb-4 block;
+}
+
+/* Button Glow */
+.btn-glow {
+  @apply relative overflow-hidden;
+}
+
+.btn-glow::after {
+  content: '';
+  @apply absolute -inset-2 bg-gradient-to-r from-primary to-secondary blur-xl opacity-0 transition-opacity duration-500;
+  z-index: -1;
+}
+
+.btn-glow:hover::after {
+  @apply opacity-30;
 }
