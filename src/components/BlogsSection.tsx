@@ -27,84 +27,63 @@ const BlogsSection = () => {
   if (!loading && blogs.length === 0) return null;
 
   return (
-    <section id="blogs" className="py-32 relative bg-[#020617] overflow-hidden">
-      <div className="container mx-auto px-6 max-w-7xl relative z-10">
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-10 mb-20">
-          <motion.div 
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            className="section-title-accent"
-          >
-            <span className="subheading-premium font-black">Intellectual Archive</span>
-            <h2 className="heading-premium text-white">Latest <span className="gradient-text-premium italic">Insights</span></h2>
-            <p className="text-lg text-gray-400 mt-6 leading-relaxed max-w-2xl font-medium">
-              Deep dives into AI, ML, and engineering excellence. Sharing knowledge from my latest experiments and architectural discoveries.
-            </p>
-          </motion.div>
-          
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-          >
-            <Link to="/blogs" className="group bento-item !px-8 !py-4 inline-flex items-center gap-3 font-black uppercase tracking-widest text-[10px] text-white hover:text-primary transition-all border-white/5">
-               Archive Access <ArrowRight size={16} className="group-hover:translate-x-2 transition-transform" />
-            </Link>
-          </motion.div>
+    <section id="blogs" className="scroll-mt-24 mb-20">
+      <div className="flex items-center justify-between gap-6 mb-10">
+        <div className="flex items-center gap-4 flex-1">
+          <div className="h-px w-10 bg-[#1e293b]" />
+          <h2 className="text-sm font-black text-[#94a3b8] uppercase tracking-[0.4em] font-mono-system shrink-0">Intellectual_Insights_Archive</h2>
+          <div className="h-px flex-1 bg-[#1e293b]" />
         </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {loading ? (
-             Array.from({ length: 3 }).map((_, i) => (
-                <div key={i} className="h-80 bg-white/5 rounded-[3rem] animate-pulse" />
-             ))
-          ) : (
-            blogs.map((blog, i) => (
-              <motion.div
-                key={blog._id} 
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="group h-full"
-              >
-                <Link to={`/blog/${blog.slug || blog._id}`} className="block h-full transition-all duration-500 hover:-translate-y-2">
-                  <div className="glass-card flex flex-col h-full p-8 rounded-[3rem] border-white/5 hover:border-primary/30 transition-all duration-500 overflow-hidden relative">
-                    <div className="absolute top-0 right-0 p-8 text-primary/5 pointer-events-none group-hover:text-primary/10 transition-all">
-                      <Rss size={80} />
+        <Link to="/blogs" className="hidden md:flex items-center gap-2 text-[10px] font-mono-system font-black text-[#94a3b8] hover:text-white uppercase tracking-widest transition-colors">
+          Full_Archive <ArrowRight size={14} />
+        </Link>
+      </div>
+      
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {loading ? (
+           Array.from({ length: 3 }).map((_, i) => (
+              <div key={i} className="h-64 bg-white/5 rounded border border-[#1e293b] animate-pulse" />
+           ))
+        ) : (
+          blogs.map((blog, i) => (
+            <motion.div
+              key={blog._id} 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.1 }}
+              className="group h-full"
+            >
+              <Link to={`/blog/${blog.slug || blog._id}`} className="block h-full transition-all duration-300">
+                <div className="system-module h-full mb-0 flex flex-col hover:border-blue-500/30">
+                  <div className="flex items-center justify-between mb-6">
+                    <div className="flex items-center gap-2 text-[9px] font-mono-system font-black text-blue-500 uppercase tracking-widest">
+                      <Calendar size={12} />
+                      {new Date(blog.createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}
                     </div>
-
-                    <div className="flex items-center gap-4 mb-8">
-                      <div className="flex items-center gap-1.5 text-[9px] font-black uppercase tracking-widest text-primary glass px-4 py-1.5 rounded-full border-white/5">
-                        <Calendar size={12} />
-                        <span>{new Date(blog.createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}</span>
+                    {blog.readTime && (
+                       <div className="text-[9px] font-mono-system font-black text-[#94a3b8] uppercase tracking-widest">
+                        {blog.readTime} MIN
                       </div>
-                      {blog.readTime && (
-                         <div className="flex items-center gap-1.5 text-[9px] font-black uppercase tracking-widest text-gray-500 glass px-4 py-1.5 rounded-full border-white/5">
-                          <Clock size={12} />
-                          <span>{blog.readTime} MIN READ</span>
-                        </div>
-                      )}
-                    </div>
-                    
-                    <h3 className="text-2xl font-black text-white group-hover:text-primary transition-colors line-clamp-2 leading-tight mb-4 uppercase italic tracking-tighter">
-                      {blog.title}
-                    </h3>
-                    
-                    <p className="text-gray-400 text-sm leading-relaxed line-clamp-3 mb-10 flex-grow font-medium">
-                      {blog.excerpt}
-                    </p>
-                    
-                    <div className="mt-auto flex items-center gap-2 font-black uppercase tracking-widest text-[10px] text-gray-500 group-hover:text-white transition-colors">
-                      Execute Read Protocol <ChevronRight size={16} className="text-primary group-hover:translate-x-1 transition-transform" />
-                    </div>
+                    )}
                   </div>
-                </Link>
-              </motion.div>
-            ))
-          )}
-        </div>
+                  
+                  <h3 className="text-base font-bold text-white group-hover:text-blue-500 transition-colors line-clamp-2 leading-tight mb-4 uppercase tracking-tight">
+                    {blog.title}
+                  </h3>
+                  
+                  <p className="text-[#94a3b8] text-xs leading-relaxed line-clamp-3 mb-8 flex-grow font-mono-system">
+                    {blog.excerpt}
+                  </p>
+                  
+                  <div className="flex items-center gap-2 text-[9px] font-mono-system font-black text-[#94a3b8] uppercase tracking-widest group-hover:text-white transition-colors">
+                    Execute_Read <ChevronRight size={14} className="text-blue-500" />
+                  </div>
+                </div>
+              </Link>
+            </motion.div>
+          ))
+        )}
       </div>
     </section>
   );
