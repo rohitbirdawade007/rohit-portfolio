@@ -11,6 +11,7 @@ import { ThemeProvider } from "@/context/ThemeContext";
 import { ProfileProvider } from "@/context/ProfileContext";
 import { CommandPalette } from "@/components/CommandPalette";
 import NeuralCursor from "@/components/NeuralCursor";
+import NeuralBackground from "@/components/NeuralBackground";
 
 // ─── Eager Load (above the fold) ─────────────────────────────────────────────
 import Index from "./pages/Index";
@@ -86,6 +87,7 @@ const App = () => {
         <QueryClientProvider client={queryClient}>
           <ProfileProvider>
             <NeuralCursor />
+            <NeuralBackground />
             <ScrollProgress />
             <div className="min-h-screen">
             <TooltipProvider>
