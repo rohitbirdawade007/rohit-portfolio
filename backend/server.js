@@ -23,6 +23,7 @@ app.use(cors({
   origin: function (origin, callback) {
     const allowedOrigins = [
       process.env.FRONTEND_URL,
+      'https://rohitbirdawade007.vercel.app',
       'https://rohit-portfolio-delta-tan.vercel.app',
       'http://localhost:5173',
       'http://localhost:8081'
