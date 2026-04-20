@@ -4,12 +4,14 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { GraduationCap, Edit, Trash2, Plus, GripVertical } from 'lucide-react';
+import { GraduationCap, Edit, Trash2, Plus, Target, School, MapPin, Calendar, BookOpen, GraduationCap as GradIcon } from 'lucide-react';
 import { toast } from "sonner";
 import { getEducations, createEducation, updateEducation, deleteEducation } from '@/services/api';
+import { motion } from "framer-motion";
 
 const EducationManager = () => {
   const [educations, setEducations] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     degree: '', institution: '', location: '', startDate: '', endDate: '',
@@ -21,7 +23,9 @@ const EducationManager = () => {
       const data = await getEducations();
       setEducations(Array.isArray(data) ? data : []);
     } catch (err) {
-      toast.error("Failed to load education history");
+      toast.error("Telemetry failure: Education history offline");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -44,13 +48,13 @@ const EducationManager = () => {
   };
 
   const handleDelete = async (id: string) => {
-    if (confirm("Are you sure you want to delete this education entry?")) {
+    if (confirm("Proceed with node archival?")) {
       try {
         await deleteEducation(id);
-        toast.success("Education deleted");
+        toast.success("Education record purged");
         fetchEducations();
       } catch (err) {
-        toast.error("Failed to delete");
+        toast.error("Cleanup failure");
       }
     }
   };
@@ -65,133 +69,168 @@ const EducationManager = () => {
       
       if (editingId) {
         await updateEducation(editingId, payload);
-        toast.success("Education updated successfully");
+        toast.success("Education recalibrated");
       } else {
         await createEducation(payload);
-        toast.success("Education added successfully");
+        toast.success("Education node synchronized");
       }
       handleCancel();
       fetchEducations();
     } catch (err) {
-      toast.error("An error occurred preserving data.");
+      toast.error("Synchronization failure");
     }
   };
 
   return (
-    <div className="p-8 pb-32 max-w-6xl mx-auto">
-      <div className="flex justify-between items-center mb-8">
+    <div className="space-y-10 pb-32">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 px-2">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Education Timeline</h1>
-          <p className="text-gray-600 dark:text-gray-400">Manage your academic history efficiently</p>
+           <h1 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tighter leading-none mb-4">Academic <span className="text-sky-500">Registry</span></h1>
+           <p className="text-slate-500 font-medium text-lg">Initialize and manage your foundation in engineering and mathematics.</p>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Form Section */}
-        <div className="lg:col-span-1">
-          <Card className="bg-white dark:bg-gray-900 dark:border-gray-800 transition-colors sticky top-24">
-            <CardHeader>
-              <CardTitle className="text-gray-900 dark:text-white">
-                {editingId ? 'Edit Education' : 'Add New Education'}
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="space-y-2">
-                  <Label>Degree / Certification</Label>
-                  <Input required value={formData.degree} onChange={e => setFormData({...formData, degree: e.target.value})} placeholder="e.g. B.Tech in Computer Science" className="bg-gray-50 dark:bg-gray-950"/>
-                </div>
-                <div className="space-y-2">
-                  <Label>Institution</Label>
-                  <Input required value={formData.institution} onChange={e => setFormData({...formData, institution: e.target.value})} placeholder="University Name" className="bg-gray-50 dark:bg-gray-950"/>
-                </div>
-                <div className="space-y-2">
-                  <Label>Location</Label>
-                  <Input required value={formData.location} onChange={e => setFormData({...formData, location: e.target.value})} placeholder="City, Country" className="bg-gray-50 dark:bg-gray-950"/>
-                </div>
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label>Start Date</Label>
-                    <Input required value={formData.startDate} onChange={e => setFormData({...formData, startDate: e.target.value})} placeholder="Aug 2018" className="bg-gray-50 dark:bg-gray-950"/>
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
+        {/* Form Sidebar */}
+        <div className="lg:col-span-5 h-fit sticky top-10">
+          <Card className="border border-slate-100 bg-white shadow-sm rounded-[2.5rem] overflow-hidden">
+             <CardHeader className="p-10 border-b border-slate-50 bg-slate-50/30">
+               <div className="flex items-center gap-3">
+                 <div className="w-10 h-10 rounded-2xl bg-white flex items-center justify-center text-sky-500 shadow-sm border border-slate-50">
+                    <School size={20} />
+                 </div>
+                 <CardTitle className="text-xl font-black tracking-tighter">
+                   {editingId ? 'Recalibrate Record' : 'Initialze Record'}
+                 </CardTitle>
+               </div>
+             </CardHeader>
+             <CardContent className="p-10">
+               <form onSubmit={handleSubmit} className="space-y-6">
+                  <div className="space-y-3">
+                    <Label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Academic degree</Label>
+                    <Input required value={formData.degree} onChange={e => setFormData({...formData, degree: e.target.value})} placeholder="e.g. B.Tech Computer Science" className="h-14 bg-slate-50/50 border-slate-100 rounded-2xl font-bold focus:bg-white transition-all"/>
                   </div>
-                  <div className="space-y-2">
-                    <Label>End Date</Label>
-                    <Input required value={formData.endDate} onChange={e => setFormData({...formData, endDate: e.target.value})} placeholder="May 2022 / Present" className="bg-gray-50 dark:bg-gray-950"/>
+                  <div className="space-y-3">
+                    <Label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Institution Label</Label>
+                    <Input required value={formData.institution} onChange={e => setFormData({...formData, institution: e.target.value})} placeholder="University Name" className="h-14 bg-slate-50/50 border-slate-100 rounded-2xl font-bold focus:bg-white transition-all"/>
                   </div>
-                </div>
-                <div className="space-y-2">
-                  <Label>Grade / GPA</Label>
-                  <Input value={formData.grade} onChange={e => setFormData({...formData, grade: e.target.value})} placeholder="3.8/4.0 GPA" className="bg-gray-50 dark:bg-gray-950"/>
-                </div>
-                <div className="space-y-2">
-                  <Label>Coursework (comma separated)</Label>
-                  <Textarea value={formData.coursework} onChange={e => setFormData({...formData, coursework: e.target.value})} placeholder="Data Structures, Algorithms..." className="bg-gray-50 dark:bg-gray-950" />
-                </div>
-                <div className="space-y-2">
-                  <Label>Description</Label>
-                  <Textarea required value={formData.description} onChange={e => setFormData({...formData, description: e.target.value})} placeholder="Detailed summary of activities..." className="bg-gray-50 dark:bg-gray-950 min-h-[100px]" />
-                </div>
-                <div className="space-y-2">
-                  <Label>Timeline Order (highest shown first)</Label>
-                  <Input type="number" value={formData.order} onChange={e => setFormData({...formData, order: parseInt(e.target.value) || 0})} className="bg-gray-50 dark:bg-gray-950"/>
-                </div>
+                  
+                  <div className="grid grid-cols-2 gap-6">
+                    <div className="space-y-3">
+                      <Label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Location Delta</Label>
+                      <Input required value={formData.location} onChange={e => setFormData({...formData, location: e.target.value})} placeholder="City, Country" className="h-14 bg-slate-50/50 border-slate-100 rounded-2xl font-bold"/>
+                    </div>
+                    <div className="space-y-3">
+                      <Label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">GPA / Grade</Label>
+                      <Input value={formData.grade} onChange={e => setFormData({...formData, grade: e.target.value})} placeholder="X.X / X.X" className="h-14 bg-slate-50/50 border-slate-100 rounded-2xl font-bold shadow-inner"/>
+                    </div>
+                  </div>
 
-                <div className="pt-4 flex gap-2">
-                  <Button type="submit" className="flex-1 flex gap-2"><Plus size={16}/> {editingId ? 'Update' : 'Add'}</Button>
-                  {editingId && <Button type="button" variant="outline" onClick={handleCancel}>Cancel</Button>}
-                </div>
-              </form>
-            </CardContent>
+                  <div className="grid grid-cols-2 gap-6">
+                    <div className="space-y-3">
+                      <Label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Inception</Label>
+                      <Input required value={formData.startDate} onChange={e => setFormData({...formData, startDate: e.target.value})} placeholder="Aug 2018" className="h-14 bg-slate-50/50 border-slate-100 rounded-2xl font-bold"/>
+                    </div>
+                    <div className="space-y-3">
+                      <Label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Termination</Label>
+                      <Input required value={formData.endDate} onChange={e => setFormData({...formData, endDate: e.target.value})} placeholder="May 2022" className="h-14 bg-slate-50/50 border-slate-100 rounded-2xl font-bold"/>
+                    </div>
+                  </div>
+
+                  <div className="space-y-3">
+                    <Label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Technical Coursework</Label>
+                    <Textarea value={formData.coursework} onChange={e => setFormData({...formData, coursework: e.target.value})} placeholder="AI, ML, Robotics..." className="bg-slate-50/50 border-slate-100 rounded-2xl font-medium" />
+                  </div>
+
+                  <div className="space-y-3">
+                    <Label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Experience Abstract</Label>
+                    <Textarea required value={formData.description} onChange={e => setFormData({...formData, description: e.target.value})} placeholder="Major achievements and focus areas..." className="bg-slate-50/50 border-slate-100 rounded-3xl min-h-[140px] font-medium leading-relaxed" />
+                  </div>
+
+                  <div className="flex gap-3 pt-6">
+                    <Button type="submit" className="flex-1 h-16 bg-sky-500 hover:bg-sky-600 text-white rounded-3xl font-black uppercase tracking-widest shadow-xl shadow-sky-500/20 active:scale-95 transition-all">
+                      {editingId ? 'Synchronize Protocol' : 'Deploy Record'}
+                    </Button>
+                    {editingId && (
+                      <Button type="button" variant="outline" onClick={handleCancel} className="h-16 w-16 rounded-3xl border-slate-200">
+                        <Plus className="rotate-45" />
+                      </Button>
+                    )}
+                  </div>
+               </form>
+             </CardContent>
           </Card>
         </div>
 
         {/* List Section */}
-        <div className="lg:col-span-2 space-y-4">
-          {educations.length === 0 ? (
-            <div className="text-center py-12 text-gray-500">No education entries found.</div>
+        <div className="lg:col-span-7 space-y-8">
+          {loading ? (
+             Array.from({ length: 3 }).map((_, i) => (
+               <div key={i} className="h-48 bg-slate-50 border border-slate-100 rounded-[3rem] animate-pulse" />
+             ))
+          ) : educations.length === 0 ? (
+            <div className="py-40 text-center bg-slate-50 rounded-[3rem] border border-slate-100 border-dashed">
+               <GraduationCap size={64} className="mx-auto mb-6 text-slate-200" />
+               <p className="text-slate-400 font-bold uppercase tracking-widest text-xs">Registry Empty</p>
+            </div>
           ) : (
-            educations.map((edu: any) => (
-              <Card key={edu._id} className="bg-white dark:bg-gray-900 border-gray-100 dark:border-gray-800 transition-colors">
-                <CardContent className="p-6">
-                  <div className="flex justify-between items-start">
-                    <div className="flex gap-4">
-                      <div className="p-3 bg-primary/10 rounded-lg text-primary h-fit">
-                        <GraduationCap size={24} />
-                      </div>
-                      <div>
-                        <h3 className="text-xl font-bold dark:text-white">{edu.degree}</h3>
-                        <p className="text-lg text-gray-700 dark:text-gray-300 font-medium">{edu.institution}</p>
-                        <div className="flex items-center text-sm text-gray-500 dark:text-gray-400 mt-1 gap-2">
-                          <span>{edu.startDate} - {edu.endDate}</span> •
-                          <span>{edu.location}</span>
-                          {edu.grade && <>• <span className="font-medium text-primary bg-primary/10 px-2 py-0.5 rounded text-xs">{edu.grade}</span></>}
+            educations.map((edu: any, idx: number) => (
+              <motion.div key={edu._id} initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: idx * 0.1 }}>
+                <Card className="group border border-slate-100 bg-white rounded-[3rem] overflow-hidden hover:shadow-2xl transition-all duration-500 shadow-sm">
+                  <CardContent className="p-10 flex items-start gap-8">
+                     <div className="w-16 h-16 rounded-[2rem] bg-sky-50 text-sky-500 flex items-center justify-center border border-sky-100 shrink-0 group-hover:rotate-6 transition-transform">
+                        <GradIcon size={28} />
+                     </div>
+                     <div className="flex-1 min-w-0">
+                        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
+                           <div>
+                              <h3 className="text-2xl font-black text-slate-900 tracking-tighter uppercase italic group-hover:text-sky-500 transition-colors leading-tight">
+                                {edu.degree}
+                              </h3>
+                              <p className="text-slate-400 font-bold uppercase tracking-widest text-[10px] mt-1 flex items-center gap-2">
+                                <Target size={12} className="text-sky-500" /> {edu.institution}
+                              </p>
+                           </div>
+                           <div className="flex flex-col items-end gap-1 shrink-0">
+                              <span className="text-[10px] font-black uppercase tracking-widest text-slate-400 px-3 py-1 bg-slate-50 rounded-full">{edu.startDate} — {edu.endDate}</span>
+                              <div className="flex items-center gap-2 text-[10px] font-black text-sky-500 mt-1 uppercase tracking-widest">
+                                 <MapPin size={10} /> {edu.location}
+                              </div>
+                           </div>
                         </div>
-                        <p className="mt-4 text-gray-600 dark:text-gray-400 leading-relaxed text-sm whitespace-pre-wrap">
-                          {edu.description}
+
+                        <p className="text-slate-500 text-sm font-medium leading-relaxed italic mb-8 border-l-2 border-slate-100 pl-6">
+                           "{edu.description}"
                         </p>
-                        {edu.coursework && edu.coursework.length > 0 && (
-                          <div className="mt-3 flex flex-wrap gap-2">
-                            {edu.coursework.map((course: string, i: number) => (
-                              <span key={i} className="text-xs bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 px-2 py-1 rounded">
-                                {course}
-                              </span>
-                            ))}
-                          </div>
-                        )}
-                        <span className="text-xs text-gray-400 mt-2 block">Order Index: {edu.order}</span>
-                      </div>
-                    </div>
-                    <div className="flex flex-col gap-2 shrink-0 border-l border-gray-100 dark:border-gray-800 pl-4 ml-4">
-                      <Button variant="ghost" size="sm" onClick={() => handleEdit(edu)} className="text-blue-500 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20">
-                        <Edit size={16} />
-                      </Button>
-                      <Button variant="ghost" size="sm" onClick={() => handleDelete(edu._id)} className="text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20">
-                        <Trash2 size={16} />
-                      </Button>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+
+                        <div className="flex flex-wrap gap-2 mb-8">
+                           {edu.coursework && edu.coursework.map((course: string, i: number) => (
+                             <span key={i} className="text-[10px] font-black uppercase tracking-widest bg-slate-50 text-slate-400 px-3 py-1 rounded-full border border-slate-100">
+                               {course}
+                             </span>
+                           ))}
+                        </div>
+
+                        <div className="flex items-center justify-between pt-8 border-t border-slate-50">
+                           <div className="flex items-center gap-4">
+                              <div className="flex flex-col">
+                                 <span className="text-[8px] font-black uppercase tracking-widest text-slate-300 mb-0.5">Performance index</span>
+                                 <span className="text-xs font-black text-slate-900">{edu.grade || 'GRADUATED'}</span>
+                              </div>
+                              <div className="flex flex-col">
+                                 <span className="text-[8px] font-black uppercase tracking-widest text-slate-300 mb-0.5">Registry Sort</span>
+                                 <span className="text-xs font-black text-slate-400">INDEX: {edu.order}</span>
+                              </div>
+                           </div>
+                           <div className="flex gap-2">
+                              <Button size="icon" variant="ghost" onClick={() => handleEdit(edu)} className="h-12 w-12 rounded-2xl bg-slate-50 hover:bg-sky-50 text-sky-600 transition-all border border-slate-100 shadow-sm"><Edit size={16} /></Button>
+                              <Button size="icon" variant="ghost" onClick={() => handleDelete(edu._id)} className="h-12 w-12 rounded-2xl bg-rose-50/30 hover:bg-rose-50 text-rose-500 transition-all border border-rose-50"><Trash2 size={16} /></Button>
+                           </div>
+                        </div>
+                     </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
             ))
           )}
         </div>

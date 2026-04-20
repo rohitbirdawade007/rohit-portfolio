@@ -4,7 +4,9 @@ import {
   ResponsiveContainer, BarChart, Bar, Cell
 } from 'recharts';
 import { apiAuthFetch } from '@/services/api';
-import { Eye, MousePointerClick, Github, Mail, TrendingUp, Activity, Clock } from 'lucide-react';
+import { Eye, MousePointerClick, Github, Mail, TrendingUp, Activity, Clock, Zap, Target, ArrowUpRight } from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { motion } from "framer-motion";
 
 interface AnalyticsSummary {
   totalViews: number;
@@ -16,23 +18,25 @@ interface AnalyticsSummary {
   viewsLast7Days: { _id: string; count: number }[];
 }
 
-const COLORS = ['#6366f1', '#8b5cf6', '#a78bfa', '#c4b5fd', '#ddd6fe'];
+const COLORS = ['#0ea5e9', '#0284c7', '#0369a1', '#075985', '#0c4a6e'];
 
-const StatBox = ({ icon, label, value, sub, color }: {
+const StatCard = ({ icon, label, value, sub, color }: {
   icon: React.ReactNode; label: string; value: number | string; sub?: string; color: string;
 }) => (
-  <div className={`bg-white dark:bg-gray-900 transition-colors rounded-xl border border-gray-100 dark:border-gray-800 p-5 hover:shadow-md transition-shadow`}>
-    <div className="flex items-start justify-between">
-      <div>
-        <p className="text-gray-500 dark:text-gray-400 text-xs font-medium uppercase tracking-wide">{label}</p>
-        <p className={`text-3xl font-bold mt-1 ${color}`}>{value}</p>
-        {sub && <p className="text-gray-400 text-xs mt-1">{sub}</p>}
+  <Card className="group border border-slate-100 bg-white rounded-[2.5rem] overflow-hidden hover:shadow-xl transition-all duration-300 shadow-sm">
+    <CardContent className="p-8">
+      <div className="flex items-start justify-between">
+        <div>
+          <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-2">{label}</p>
+          <p className={`text-4xl font-black tracking-tighter italic ${color}`}>{value}</p>
+          {sub && <p className="text-[9px] font-bold text-slate-400 mt-2 uppercase tracking-widest">{sub}</p>}
+        </div>
+        <div className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-transform group-hover:scale-110 duration-500 ${color.replace('text-', 'bg-')}/5`}>
+          {icon}
+        </div>
       </div>
-      <div className={`p-2.5 rounded-xl ${color.replace('text-', 'bg-')}/10`}>
-        {icon}
-      </div>
-    </div>
-  </div>
+    </CardContent>
+  </Card>
 );
 
 const AnalyticsDashboard = () => {
@@ -43,24 +47,25 @@ const AnalyticsDashboard = () => {
   useEffect(() => {
     apiAuthFetch('/analytics/summary')
       .then(setData)
-      .catch(() => setError('Could not load analytics. Ensure you are logged in.'))
+      .catch(() => setError('Telemetry offline: Check authentication status.'))
       .finally(() => setLoading(false));
   }, []);
 
   if (loading) return (
-    <div className="p-6 space-y-4">
-      <div className="h-8 bg-gray-100 dark:bg-gray-800 rounded w-48 animate-pulse" />
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+    <div className="space-y-10">
+      <div className="h-10 bg-slate-50 border border-slate-100 rounded-2xl w-64 animate-pulse" />
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
         {Array.from({ length: 4 }).map((_, i) => (
-          <div key={i} className="h-28 bg-gray-100 dark:bg-gray-800 rounded-xl animate-pulse" />
+          <div key={i} className="h-40 bg-slate-50 border border-slate-100 rounded-[2.5rem] animate-pulse" />
         ))}
       </div>
     </div>
   );
 
   if (error) return (
-    <div className="p-6 text-red-500 flex items-center gap-2">
-      <Activity size={18} /> {error}
+    <div className="py-20 text-center bg-rose-50 rounded-[3rem] border border-rose-100 text-rose-500 flex flex-col items-center gap-4">
+      <Activity size={48} />
+      <p className="font-black uppercase tracking-widest text-xs">{error}</p>
     </div>
   );
 
@@ -78,101 +83,160 @@ const AnalyticsDashboard = () => {
   })();
 
   return (
-    <div className="p-6 space-y-8">
-      <div>
-        <h2 className="text-2xl font-bold mb-1">Analytics Overview</h2>
-        <p className="text-gray-500 dark:text-gray-400 text-sm">Real-time portfolio performance metrics</p>
-      </div>
-
-      {/* Stat Cards */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <StatBox icon={<Eye size={20} className="text-indigo-500" />} label="Total Page Views" value={data.totalViews} color="text-indigo-500" />
-        <StatBox icon={<MousePointerClick size={20} className="text-purple-500" />} label="Demo Clicks" value={data.demoClicks} color="text-purple-500" />
-        <StatBox icon={<Github size={20} className="text-gray-700 dark:text-gray-300" />} label="GitHub Clicks" value={data.githubClicks} color="text-gray-700 dark:text-gray-300" />
-        <StatBox icon={<Mail size={20} className="text-green-500" />} label="Contact Forms" value={data.contactSubmissions} color="text-green-500" />
-      </div>
-
-      {/* Views Chart */}
-      <div className="bg-white dark:bg-slate-900 transition-colors border-none shadow-sm rounded-[2rem] p-8">
-        <div className="flex items-center gap-3 mb-8">
-          <div className="p-2 bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 rounded-lg">
-            <TrendingUp size={20} />
-          </div>
-          <div>
-            <h3 className="text-lg font-black tracking-tight">Traffic Intensity</h3>
-            <p className="text-xs text-slate-500 font-medium">Page views distribution (7-Day window)</p>
-          </div>
+    <div className="space-y-10 pb-20">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 px-2">
+        <div>
+           <h1 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tighter leading-none mb-4">Performance <span className="text-sky-500">Telemetry</span></h1>
+           <p className="text-slate-500 font-medium text-lg">Real-time engagement metrics and traffic distribution signatures.</p>
         </div>
-        <ResponsiveContainer width="100%" height={250}>
-          <AreaChart data={viewsChart}>
-            <defs>
-              <linearGradient id="viewGrad" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#4f46e5" stopOpacity={0.4} />
-                <stop offset="95%" stopColor="#4f46e5" stopOpacity={0} />
-              </linearGradient>
-            </defs>
-            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
-            <XAxis dataKey="date" axisLine={false} tickLine={false} tick={{ fontSize: 10, fill: '#94a3b8', fontWeight: 700 }} dy={10} />
-            <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 10, fill: '#94a3b8', fontWeight: 700 }} dx={-10} allowDecimals={false} />
-            <Tooltip 
-              contentStyle={{ borderRadius: '16px', border: 'none', boxShadow: '0 20px 25px -5px rgb(0 0 0 / 0.1)', backgroundColor: '#fff' }} 
-              itemStyle={{ fontWeight: 900, fontSize: '12px', color: '#4f46e5' }}
-            />
-            <Area type="monotone" dataKey="views" stroke="#4f46e5" fill="url(#viewGrad)" strokeWidth={4} name="Views" dot={{ fill: '#4f46e5', strokeWidth: 2, r: 4, stroke: '#fff' }} />
-          </AreaChart>
-        </ResponsiveContainer>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Top Projects */}
-        {data.topProjects?.length > 0 && (
-          <div className="bg-white dark:bg-gray-900 transition-colors border border-gray-100 dark:border-gray-800 rounded-xl p-5">
-            <h3 className="font-semibold mb-4">Most Viewed Projects</h3>
-            <ResponsiveContainer width="100%" height={200}>
-              <BarChart data={data.topProjects.slice(0, 5)} layout="vertical">
-                <CartesianGrid strokeDasharray="3 3" stroke="#f3f4f6" horizontal={false} />
-                <XAxis type="number" tick={{ fontSize: 11, fill: '#9ca3af' }} allowDecimals={false} />
-                <YAxis type="category" dataKey="title" width={120} tick={{ fontSize: 11, fill: '#6b7280' }} />
-                <Tooltip contentStyle={{ borderRadius: 8 }} />
-                <Bar dataKey="count" name="Views" radius={[0, 4, 4, 0]}>
-                  {data.topProjects.slice(0, 5).map((_, i) => (
-                    <Cell key={i} fill={COLORS[i % COLORS.length]} />
-                  ))}
-                </Bar>
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
-        )}
+      {/* Stat Grid */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
+        <StatCard icon={<Eye size={22} className="text-sky-500" />} label="Surface Scans" value={data.totalViews} color="text-sky-500" sub="Total Page Views" />
+        <StatCard icon={<Zap size={22} className="text-sky-500" />} label="Action Events" value={data.demoClicks} color="text-sky-500" sub="Interactive Clicks" />
+        <StatCard icon={<Github size={22} className="text-slate-700" />} label="Repo Syncs" value={data.githubClicks} color="text-slate-700" sub="GitHub Inbound" />
+        <StatCard icon={<Mail size={22} className="text-sky-600" />} label="Inbound Leads" value={data.contactSubmissions} color="text-sky-600" sub="Form Submissions" />
+      </div>
 
-        {/* Recent Events */}
-        <div className="bg-white dark:bg-gray-900 transition-colors border border-gray-100 dark:border-gray-800 rounded-xl p-5">
-          <div className="flex items-center gap-2 mb-4">
-            <Clock size={16} className="text-gray-400" />
-            <h3 className="font-semibold">Recent Events</h3>
-          </div>
-          <div className="space-y-2 max-h-52 overflow-y-auto">
-            {(data.recentEvents || []).map((e, i) => (
-              <div key={i} className="flex items-center justify-between text-sm py-1.5 border-b border-gray-50">
-                <div>
-                  <span className={`inline-block px-2 py-0.5 rounded-full text-xs font-medium mr-2 ${
-                    e.type === 'page_view' ? 'bg-indigo-50 text-indigo-600' :
-                    e.type === 'demo_click' ? 'bg-purple-50 text-purple-600' :
-                    e.type === 'github_click' ? 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400' :
-                    'bg-green-50 text-green-600'
-                  }`}>{e.type.replace('_', ' ')}</span>
-                  <span className="text-gray-500 dark:text-gray-400 text-xs">{e.path || e.resourceTitle || '—'}</span>
-                </div>
-                <span className="text-gray-400 text-xs">
-                  {new Date(e.createdAt).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })}
-                </span>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
+        {/* Graph Card */}
+        <Card className="lg:col-span-2 border border-slate-100 bg-white rounded-[3rem] overflow-hidden shadow-sm">
+           <CardHeader className="p-10 pb-4 flex flex-row items-center justify-between">
+              <div className="flex items-center gap-3">
+                 <div className="w-10 h-10 rounded-2xl bg-sky-50 text-sky-500 flex items-center justify-center border border-sky-100">
+                    <TrendingUp size={20} />
+                 </div>
+                 <div>
+                    <CardTitle className="text-xl font-black tracking-tighter uppercase italic">Traffic Intensity</CardTitle>
+                    <p className="text-[9px] font-black uppercase tracking-widest text-slate-400 mt-1">7-Day Analysis Window</p>
+                 </div>
               </div>
-            ))}
-            {!data.recentEvents?.length && (
-              <p className="text-gray-400 text-sm text-center py-8">No events yet</p>
-            )}
-          </div>
-        </div>
+              <Activity size={20} className="text-slate-200" />
+           </CardHeader>
+           <CardContent className="p-10 pt-10 h-[350px]">
+              <ResponsiveContainer width="100%" height="100%">
+                 <AreaChart data={viewsChart}>
+                    <defs>
+                       <linearGradient id="viewGrad" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="5%" stopColor="#0ea5e9" stopOpacity={0.15} />
+                          <stop offset="95%" stopColor="#0ea5e9" stopOpacity={0} />
+                       </linearGradient>
+                    </defs>
+                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
+                    <XAxis dataKey="date" axisLine={false} tickLine={false} tick={{ fontSize: 9, fill: '#64748b', fontWeight: 900 }} dy={20} />
+                    <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 9, fill: '#64748b', fontWeight: 900 }} dx={-20} allowDecimals={false} />
+                    <Tooltip 
+                       contentStyle={{ borderRadius: '24px', border: '1px solid #f1f5f9', boxShadow: '0 25px 50px -12px rgb(0 0 0 / 0.05)', backgroundColor: '#fff', padding: '15px' }} 
+                       labelStyle={{ fontWeight: 900, textTransform: 'uppercase', fontSize: '10px', color: '#94a3b8', letterSpacing: '0.1em', marginBottom: '5px' }}
+                       itemStyle={{ fontWeight: 900, fontSize: '14px', color: '#0ea5e9', fontStyle: 'italic' }}
+                       cursor={{ stroke: '#0ea5e9', strokeWidth: 2, strokeDasharray: '5 5' }}
+                    />
+                    <Area type="monotone" dataKey="views" stroke="#0ea5e9" fill="url(#viewGrad)" strokeWidth={4} name="Views Detected" dot={{ fill: '#0ea5e9', strokeWidth: 3, r: 5, stroke: '#fff' }} activeDot={{ r: 8, fill: '#0ea5e9', stroke: '#fff', strokeWidth: 4 }} />
+                 </AreaChart>
+              </ResponsiveContainer>
+           </CardContent>
+        </Card>
+
+        {/* Top Entities */}
+        <Card className="border border-slate-100 bg-white rounded-[3rem] overflow-hidden shadow-sm flex flex-col">
+           <CardHeader className="p-10 pb-4">
+              <div className="flex items-center gap-3">
+                 <div className="w-10 h-10 rounded-2xl bg-sky-50 text-sky-500 flex items-center justify-center border border-sky-100">
+                    <Target size={20} />
+                 </div>
+                 <div>
+                    <CardTitle className="text-xl font-black tracking-tighter uppercase italic">Entity Focus</CardTitle>
+                    <p className="text-[9px] font-black uppercase tracking-widest text-slate-400 mt-1">High Engagement Nodes</p>
+                 </div>
+              </div>
+           </CardHeader>
+           <CardContent className="p-10 flex-1 flex flex-col justify-center">
+              {data.topProjects?.length > 0 ? (
+                 <div className="space-y-6">
+                    {data.topProjects.slice(0, 5).map((project, i) => (
+                       <div key={i} className="flex flex-col gap-2 group">
+                          <div className="flex items-center justify-between">
+                             <span className="text-[10px] font-black uppercase tracking-widest text-slate-600 truncate max-w-[70%] group-hover:text-sky-500 transition-colors italic">{project.title}</span>
+                             <span className="text-[10px] font-black text-sky-500 bg-sky-50 px-3 py-1 rounded-full">{project.count} hits</span>
+                          </div>
+                          <div className="h-1.5 w-full bg-slate-50 rounded-full overflow-hidden">
+                             <motion.div 
+                               initial={{ width: 0 }} 
+                               animate={{ width: `${(project.count / data.totalViews) * 500}%` }} 
+                               transition={{ duration: 1, delay: i * 0.1 }}
+                               className="h-full bg-sky-500 rounded-full"
+                             />
+                          </div>
+                       </div>
+                    ))}
+                 </div>
+              ) : (
+                 <div className="text-center py-20">
+                    <Zap size={32} className="mx-auto mb-4 text-slate-100" />
+                    <p className="text-[10px] font-black text-slate-300 uppercase tracking-widest">Insufficient data context</p>
+                 </div>
+              )}
+           </CardContent>
+        </Card>
       </div>
+
+      {/* Events Log */}
+      <Card className="border border-slate-100 bg-white rounded-[3rem] overflow-hidden shadow-sm">
+        <CardHeader className="p-10 border-b border-slate-50 bg-slate-50/20 flex flex-row items-center justify-between">
+           <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-2xl bg-white border border-slate-50 text-slate-400 flex items-center justify-center">
+                 <Clock size={20} />
+              </div>
+              <CardTitle className="text-xl font-black tracking-tighter uppercase italic">Raw Telemetry Log</CardTitle>
+           </div>
+           <ArrowUpRight size={20} className="text-slate-200" />
+        </CardHeader>
+        <CardContent className="p-0">
+           <div className="max-h-[400px] overflow-y-auto custom-scrollbar">
+              {data.recentEvents?.length > 0 ? (
+                 <table className="w-full text-left border-collapse">
+                    <thead className="bg-slate-50/50 sticky top-0 z-10">
+                       <tr>
+                          <th className="p-6 pl-10 text-[9px] font-black uppercase tracking-widest text-slate-400">Sector Code</th>
+                          <th className="p-6 text-[9px] font-black uppercase tracking-widest text-slate-400">Node Identifier</th>
+                          <th className="p-6 text-[9px] font-black uppercase tracking-widest text-slate-400">Time Signature</th>
+                          <th className="p-6 pr-10 text-[9px] font-black uppercase tracking-widest text-slate-400 text-right">Status</th>
+                       </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-50">
+                       {data.recentEvents.map((e, i) => (
+                          <tr key={i} className="hover:bg-slate-50/50 transition-colors group">
+                             <td className="p-6 pl-10">
+                                <span className={`px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest ${
+                                  e.type === 'page_view' ? 'bg-sky-50 text-sky-600' :
+                                  e.type === 'demo_click' ? 'bg-indigo-50 text-indigo-600' :
+                                  'bg-slate-50 text-slate-500'
+                                }`}>{e.type.replace('_', ' ')}</span>
+                             </td>
+                             <td className="p-6">
+                                <span className="text-[10px] font-black text-slate-900 uppercase italic group-hover:text-sky-500 transition-colors">
+                                   {e.path || e.resourceTitle || 'ROOT_NODE'}
+                                </span>
+                             </td>
+                             <td className="p-6">
+                                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                                   {new Date(e.createdAt).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })}
+                                </span>
+                             </td>
+                             <td className="p-6 pr-10 text-right">
+                                <div className="w-2 h-2 rounded-full bg-emerald-500 ml-auto shadow-[0_0_8px_rgba(16,185,129,0.5)]" title="VALID_RECEPTION" />
+                             </td>
+                          </tr>
+                       ))}
+                    </tbody>
+                 </table>
+              ) : (
+                 <div className="py-20 text-center text-slate-300 font-black uppercase tracking-widest text-[10px]">Log buffer empty.</div>
+              )}
+           </div>
+        </CardContent>
+      </Card>
     </div>
   );
 };
