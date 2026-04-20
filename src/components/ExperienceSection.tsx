@@ -78,7 +78,6 @@ const ExperienceSection = () => {
               </div>
             </motion.div>
           ))}
-        </div>
       </div>
     </section>
   );
