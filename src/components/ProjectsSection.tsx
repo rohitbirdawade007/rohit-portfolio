@@ -26,6 +26,7 @@ const ProjectsSection = () => {
       .finally(() => setLoading(false));
   }, []);
 
+  return (
     <section id="projects" className="py-24 bg-white relative overflow-hidden">
       {/* Background Decor */}
       <div className="absolute inset-0 bg-grid-slate opacity-[0.1]" />
