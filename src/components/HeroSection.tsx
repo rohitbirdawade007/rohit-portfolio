@@ -9,8 +9,13 @@ const HeroSection = () => {
   const name = profile?.name || "Rohit Birdawade";
 
   return (
-    <section id="home" className="pt-32 pb-20 md:pt-48 md:pb-32 overflow-hidden bg-transparent">
-      <div className="container">
+    <section id="home" className="pt-32 pb-20 md:pt-48 md:pb-32 bg-mesh-glow relative overflow-hidden">
+      {/* Premium Background Layers */}
+      <div className="absolute inset-0 bg-grid-slate opacity-[0.2]" />
+      <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-sky-200/20 rounded-full blur-[140px] -translate-y-1/2 translate-x-1/2" />
+      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-indigo-100/30 rounded-full blur-[100px] translate-y-1/2 -translate-x-1/2" />
+      
+      <div className="container relative z-10">
         <div className="flex flex-col-reverse lg:flex-row items-center justify-between gap-12 lg:gap-20">
           
           {/* Text Content */}

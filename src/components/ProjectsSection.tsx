@@ -26,9 +26,12 @@ const ProjectsSection = () => {
       .finally(() => setLoading(false));
   }, []);
 
-  return (
-    <section id="projects" className="py-24 bg-slate-50/50">
-      <div className="container">
+    <section id="projects" className="py-24 bg-white relative overflow-hidden">
+      {/* Background Decor */}
+      <div className="absolute inset-0 bg-grid-slate opacity-[0.1]" />
+      <div className="absolute top-1/2 left-0 w-[500px] h-[500px] bg-sky-50/50 rounded-full blur-[120px] -translate-x-1/2 -translate-y-1/2" />
+      
+      <div className="container relative z-10">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
           <div className="text-left">
              <h2 className="text-3xl md:text-5xl font-bold text-slate-900 mb-4">Featured Work</h2>

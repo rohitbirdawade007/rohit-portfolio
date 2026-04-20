@@ -4,8 +4,12 @@ import { Button } from "@/components/ui/button";
 
 const ContactSection = () => {
   return (
-    <section id="contact" className="py-24 bg-slate-50/50">
-      <div className="container">
+    <section id="contact" className="py-24 bg-transparent relative overflow-hidden">
+      {/* Background Decor */}
+      <div className="absolute inset-0 bg-grid-slate opacity-[0.2]" />
+      <div className="absolute bottom-0 left-1/2 w-[600px] h-[600px] bg-sky-200/20 rounded-full blur-[140px] -translate-x-1/2 translate-y-1/2" />
+      
+      <div className="container relative z-10">
         <div className="max-w-4xl mx-auto">
           <div className="bg-white rounded-[3rem] p-12 md:p-20 text-center border border-slate-100 shadow-2xl relative overflow-hidden">
             {/* Soft Ambient Light */}

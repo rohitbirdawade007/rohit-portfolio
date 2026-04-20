@@ -37,8 +37,8 @@ const Navbar = () => {
 
   return (
     <header className={cn(
-      "fixed top-0 left-0 w-full z-[60] transition-all duration-300",
-      isScrolled ? "bg-white/80 backdrop-blur-md py-3 border-b border-slate-200" : "bg-transparent py-6"
+      "fixed top-0 left-0 w-full z-[60] transition-all duration-500",
+      isScrolled ? "bg-white/70 backdrop-blur-xl py-3 border-b border-slate-100/50 shadow-lg shadow-sky-500/5" : "bg-transparent py-6"
     )}>
       <div className="container flex justify-between items-center">
         <Link to="/" className="text-xl font-bold tracking-tighter text-slate-900 flex items-center gap-1">
