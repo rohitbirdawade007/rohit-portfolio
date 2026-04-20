@@ -15,6 +15,15 @@ const HeroSection = () => {
       <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-sky-200/20 rounded-full blur-[140px] -translate-y-1/2 translate-x-1/2" />
       <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-indigo-100/30 rounded-full blur-[100px] translate-y-1/2 -translate-x-1/2" />
       
+      {/* HUD System telemetry */}
+      <div className="absolute top-40 left-10 hidden xl:block animate-fadeUp">
+        <div className="space-y-4 text-[8px] font-mono text-slate-400 mix-blend-multiply uppercase tracking-[0.4em] font-bold">
+           <p className="flex items-center gap-2"><span className="w-1 h-1 bg-sky-500 rounded-full" /> LOC: [18.5204° N, 73.8567° E]</p>
+           <p className="flex items-center gap-2"><span className="w-1 h-1 bg-sky-500 rounded-full" /> UPLINK: STABLE_V4</p>
+           <p className="flex items-center gap-2"><span className="w-1 h-1 bg-sky-500 rounded-full" /> CORES: 16_VIRTUAL</p>
+        </div>
+      </div>
+
       <div className="container relative z-10">
         <div className="flex flex-col-reverse lg:flex-row items-center justify-between gap-12 lg:gap-20">
           

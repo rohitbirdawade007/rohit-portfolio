@@ -11,6 +11,8 @@ interface Skill {
   proficiency: number;
 }
 
+import TiltCard from "./TiltCard";
+
 const SkillsSection = () => {
   const [skills, setSkills] = useState<Skill[]>([]);
   const [activeTab, setActiveTab] = useState("AI & ML");
@@ -36,12 +38,12 @@ const SkillsSection = () => {
   });
 
   return (
-    <section id="skills" className="py-24 bg-transparent">
+    <section id="skills" className="py-24 bg-transparent relative">
       <div className="container">
         <div className="text-center mb-16">
-           <h2 className="text-3xl md:text-5xl font-bold text-slate-900 mb-4">Technical Expertise</h2>
-           <p className="text-slate-600 max-w-2xl mx-auto">
-             Specialized in deep learning architectures and hardware-software integration for real-world analytical problems.
+           <h2 className="text-3xl md:text-5xl font-bold text-slate-900 mb-4 tracking-tighter uppercase tracking-[0.2em]">Competencies</h2>
+           <p className="text-slate-600 max-w-2xl mx-auto font-medium">
+             Engineered solutions across the full stack of intelligent system operation.
            </p>
         </div>
 
@@ -51,7 +53,7 @@ const SkillsSection = () => {
              <button
                key={tab.name}
                onClick={() => setActiveTab(tab.name)}
-               className={`flex items-center gap-2 px-6 py-2.5 rounded-full text-xs font-bold transition-all ${
+               className={`flex items-center gap-2 px-6 py-2.5 rounded-full text-[10px] font-bold uppercase tracking-widest transition-all ${
                  activeTab === tab.name 
                    ? "bg-white text-sky-600 shadow-md transform scale-105" 
                    : "text-slate-500 hover:text-slate-900"
@@ -66,25 +68,26 @@ const SkillsSection = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
            <AnimatePresence mode="wait">
              {filteredSkills.map((skill, idx) => (
-               <motion.div 
-                 key={skill._id}
-                 initial={{ opacity: 0, y: 10 }}
-                 animate={{ opacity: 1, y: 0 }}
-                 exit={{ opacity: 0, y: -10 }}
-                 transition={{ delay: idx * 0.05 }}
-                 className="p-6 bg-white rounded-2xl border border-slate-100 shadow-sm"
-               >
-                 <div className="flex justify-between items-center mb-3">
-                    <div className="flex items-center gap-3">
-                       <div className="w-8 h-8 rounded-lg bg-sky-50 text-sky-600 flex items-center justify-center">
-                          <Code2 size={16} />
-                       </div>
-                       <span className="font-bold text-slate-800">{skill.name}</span>
-                    </div>
-                    <span className="text-xs font-bold text-sky-600">{skill.proficiency}%</span>
-                 </div>
-                 <Progress value={skill.proficiency} className="h-2 bg-slate-100 [&>div]:bg-sky-500" />
-               </motion.div>
+               <TiltCard key={skill._id}>
+                 <motion.div 
+                   initial={{ opacity: 0, y: 10 }}
+                   animate={{ opacity: 1, y: 0 }}
+                   exit={{ opacity: 0, y: -10 }}
+                   transition={{ delay: idx * 0.05 }}
+                   className="p-8 bg-white rounded-[2rem] border border-slate-100 shadow-sm hover:shadow-xl transition-all"
+                 >
+                   <div className="flex justify-between items-center mb-4">
+                      <div className="flex items-center gap-3">
+                         <div className="w-8 h-8 rounded-lg bg-sky-50 text-sky-600 flex items-center justify-center">
+                            <Code2 size={16} />
+                         </div>
+                         <span className="font-bold text-slate-800 tracking-tight uppercase text-xs">{skill.name}</span>
+                      </div>
+                      <span className="text-[10px] font-bold text-sky-600 font-mono tracking-tighter">{skill.proficiency}%</span>
+                   </div>
+                   <Progress value={skill.proficiency} className="h-2 bg-slate-50 [&>div]:bg-sky-500" />
+                 </motion.div>
+               </TiltCard>
              ))}
            </AnimatePresence>
         </div>
