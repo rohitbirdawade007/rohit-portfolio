@@ -19,7 +19,7 @@ const BlogsSection = () => {
 
   useEffect(() => {
     apiFetch("/blogs")
-      .then((data) => setBlogs(data.slice(0, 3))) // Only show latest 3 on homepage
+      .then((data) => setBlogs(Array.isArray(data) ? data.slice(0, 3) : [])) // Only show latest 3 on homepage
       .catch((err) => console.error("Failed to load blogs:", err))
       .finally(() => setLoading(false));
   }, []);
@@ -63,7 +63,7 @@ const BlogsSection = () => {
                       {blog.readTime && (
                          <div className="flex items-center gap-1.5 text-[10px] font-bold text-slate-400 uppercase tracking-widest">
                           <Clock size={12} />
-                          {blog.readTime} MIN READ
+                           {blog.readTime} MIN READ
                         </div>
                       )}
                     </div>
