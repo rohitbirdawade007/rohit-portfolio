@@ -23,14 +23,18 @@ const Index = () => {
     // Scroll to anchor if present in URL
     const hash = window.location.hash;
     if (hash) {
-      const element = document.querySelector(hash);
-      if (element) {
-        setTimeout(() => {
-          window.scrollTo({
-            top: element.getBoundingClientRect().top + window.scrollY - 100,
-            behavior: "smooth"
-          });
-        }, 100);
+      try {
+        const element = document.querySelector(hash);
+        if (element) {
+          setTimeout(() => {
+            window.scrollTo({
+              top: element.getBoundingClientRect().top + window.scrollY - 100,
+              behavior: "smooth"
+            });
+          }, 100);
+        }
+      } catch (e) {
+        console.warn("Invalid hash selector:", hash);
       }
     }
     
