@@ -71,7 +71,7 @@ const projectsData = [
     title: "AI and IoT Integration for Sustainable Agriculture",
     problemStatement: "Farmers need data-driven insights to manage crop health and resources efficiently.",
     description: "An integrated AI & IoT system (Group 30810) that won 1st prize at NLPC-2025. It optimizes resource usage and detects crop anomalies in real-time.",
-    techStack: ["Python", "IoT Sensors", "FastAPI", "TensorFlow"],
+    tags: ["Python", "IoT Sensors", "FastAPI", "TensorFlow"],
     category: "AI & IoT",
     featured: true,
     image: "/lovable-uploads/336b76fb-a773-44ae-9862-2668262245b7.png",
@@ -81,7 +81,7 @@ const projectsData = [
     title: "Guardian Eye - Missing Person Detection",
     problemStatement: "Traditional search methods are slow and localized.",
     description: "Centralized facial recognition dashboard for real-time tracking across distributed visual node clusters.",
-    techStack: ["React", "Face Recognition", "MongoDB", "Python"],
+    tags: ["React", "Face Recognition", "MongoDB", "Python"],
     category: "Computer Vision",
     featured: true,
     image: "/lovable-uploads/0add4ee8-c5f3-4d3b-ad72-1a48807ce2ee.png",
@@ -103,12 +103,12 @@ const researchData = [
 ];
 
 const skillsData = [
-  { name: "Python", category: "Languages", proficiency: 95 },
-  { name: "IoT & Embedded Systems", category: "Hardware", proficiency: 90 },
-  { name: "React & Next.js", category: "Frontend", proficiency: 85 },
-  { name: "Machine Learning (CNN/RNN)", category: "AI/ML", proficiency: 88 },
-  { name: "FastAPI / Node.js", category: "Backend", proficiency: 82 },
-  { name: "Computer Vision (OpenCV)", category: "AI/ML", proficiency: 85 }
+  { name: "Python", category: "Languages", proficiency: 95, description: "Advanced scripting and ML modeling." },
+  { name: "IoT & Embedded Systems", category: "Hardware", proficiency: 90, description: "Arduino and Raspberry Pi integration." },
+  { name: "React & Next.js", category: "Frontend", proficiency: 85, description: "Modern web UI development." },
+  { name: "Machine Learning (CNN/RNN)", category: "AI/ML", proficiency: 88, description: "Deep learning and neural networks." },
+  { name: "FastAPI / Node.js", category: "Backend", proficiency: 82, description: "Scalable API development." },
+  { name: "Computer Vision (OpenCV)", category: "AI/ML", proficiency: 85, description: "Image processing and face recognition." }
 ];
 
 const educationData = [

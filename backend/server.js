@@ -20,11 +20,19 @@ app.use(helmet({
 }));
 
 app.use(cors({
-  origin: [
-    process.env.FRONTEND_URL,
-    'https://rohit-portfolio-delta-tan.vercel.app',
-    'http://localhost:5173'
-  ].filter(Boolean),
+  origin: function (origin, callback) {
+    const allowedOrigins = [
+      process.env.FRONTEND_URL,
+      'https://rohit-portfolio-delta-tan.vercel.app',
+      'http://localhost:5173',
+      'http://localhost:8081'
+    ].filter(Boolean);
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true
 }));
 

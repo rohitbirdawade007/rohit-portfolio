@@ -1,6 +1,7 @@
 import { useProfile } from "@/context/ProfileContext";
 import { GraduationCap, Code2, Terminal, Cpu, Linkedin, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { getAssetUrl } from "@/services/api";
 
 const AboutSection = () => {
   const { profile } = useProfile();
@@ -31,7 +32,7 @@ const AboutSection = () => {
                 <div className="bg-white rounded-[2rem] overflow-hidden shadow-2xl border border-gray-100 p-3">
                    <div className="aspect-[4/5] rounded-[1.5rem] overflow-hidden relative">
                       <img 
-                        src={profileImage.startsWith('http') ? profileImage : `https://rohit-portfolio-qgd8.onrender.com${profileImage}`} 
+                        src={getAssetUrl(profileImage)} 
                         alt={name}
                         className="w-full h-full object-cover"
                       />

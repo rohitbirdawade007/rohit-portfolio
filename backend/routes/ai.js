@@ -58,7 +58,7 @@ router.post('/chat', async (req, res) => {
     `;
 
     // 3. Prepare Chat
-    const model = genAI.getGenerativeModel({ model: "gemini-3-flash-preview" });
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
     const chat = model.startChat({
       history: [
         { role: "user", parts: [{ text: "Hello! Who are you and who is this portfolio for?" }] },

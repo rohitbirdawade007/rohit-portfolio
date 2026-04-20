@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Github, ExternalLink, Code2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { getProjects } from "@/services/api";
+import { getProjects, getAssetUrl } from "@/services/api";
 
 interface Project {
   _id: string;
@@ -46,7 +46,7 @@ const ProjectsSection = () => {
             >
               <div className="aspect-video overflow-hidden">
                 <img 
-                  src={project.image.startsWith('http') ? project.image : `https://rohit-portfolio-qgd8.onrender.com${project.image}`} 
+                  src={getAssetUrl(project.image)} 
                   alt={project.title}
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                 />
@@ -58,7 +58,7 @@ const ProjectsSection = () => {
                 </div>
                 
                 <div className="flex flex-wrap gap-2 mb-6">
-                  {project.tags.map((tag) => (
+                  {(project.tags || []).map((tag) => (
                     <span 
                       key={tag} 
                       className="px-3 py-1 bg-[#f0f9ff] text-[#0ea5e9] text-[10px] font-bold rounded-full border border-[#e0f2fe] uppercase tracking-wider"

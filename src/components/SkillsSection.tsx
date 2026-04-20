@@ -28,7 +28,7 @@ const SkillsSection = () => {
   const categories = ["Languages", "AI & Machine Learning", "Tools & Technologies", "Other Skills"];
 
   const filteredSkills = skills.filter(skill => {
-    const desc = (skill.name + " " + skill.description).toLowerCase();
+    const desc = ((skill.name || "") + " " + (skill.description || "")).toLowerCase();
     if (activeCategory === "Languages") return desc.includes("python") || desc.includes("c++") || desc.includes("c") || desc.includes("html") || desc.includes("css") || desc.includes("java");
     if (activeCategory === "AI & Machine Learning") return desc.includes("ai") || desc.includes("ml") || desc.includes("learning") || desc.includes("data");
     if (activeCategory === "Tools & Technologies") return desc.includes("notebook") || desc.includes("jupyter") || desc.includes("arduino") || desc.includes("raspberry");
