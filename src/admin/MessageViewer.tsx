@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { API_URL } from '@/services/api';
-import { Trash2, Mail, ExternalLink, User, MessageCircle, ArrowRight, Clock, ShieldInfo } from "lucide-react";
+import { Trash2, Mail, ExternalLink, User, MessageCircle, ArrowRight, Clock, ShieldCheck } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { motion, AnimatePresence } from "framer-motion";
@@ -98,7 +98,7 @@ const MessageViewer = () => {
                         </div>
                       </div>
                       <div className="bg-slate-50/50 p-10 rounded-[2.5rem] border border-slate-100 relative overflow-hidden">
-                        <div className="absolute top-0 right-0 p-8 text-sky-100 opacity-20"><ShieldInfo size={80} /></div>
+                        <div className="absolute top-0 right-0 p-8 text-sky-100 opacity-20"><ShieldCheck size={80} /></div>
                         <p className="text-slate-600 leading-relaxed font-medium italic relative z-10 text-lg">"{m.message}"</p>
                       </div>
                     </div>
