@@ -2,10 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { 
   FolderKanban, Code, BookOpen, MessageSquare, Award, 
-  ArrowUpRight, Users, Clock, Zap, ShieldCheck 
+  ArrowUpRight, Users, Clock, Zap, ShieldCheck,
+  LayoutGrid, Activity, TrendingUp
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from 'react-router-dom';
+import { motion } from "framer-motion";
 
 const Dashboard = () => {
   const [stats, setStats] = useState({
@@ -17,118 +19,121 @@ const Dashboard = () => {
   });
 
   const StatCard = ({ title, value, icon: Icon, color, trend }: any) => (
-    <Card className="overflow-hidden border-none bg-white dark:bg-slate-900 shadow-sm hover:shadow-xl transition-all duration-300 group">
-      <CardContent className="p-0">
-        <div className="p-6">
-          <div className="flex items-center justify-between mb-4">
-            <div className={`p-3 rounded-2xl bg-slate-50 dark:bg-slate-800 text-${color}-600 dark:text-${color}-400 group-hover:scale-110 transition-transform`}>
-              <Icon size={24} />
+    <motion.div whileHover={{ y: -5 }}>
+      <Card className="overflow-hidden border border-slate-100 bg-white shadow-sm hover:shadow-xl transition-all duration-300 group rounded-3xl">
+        <CardContent className="p-8">
+          <div className="flex items-center justify-between mb-8">
+            <div className={`p-4 rounded-2xl bg-sky-50 text-sky-500 group-hover:scale-110 transition-transform`}>
+              <Icon size={22} />
             </div>
             {trend && (
-              <div className="flex items-center gap-1 text-emerald-500 text-xs font-black">
-                <ArrowUpRight size={14} />
-                {trend}%
+              <div className="flex items-center gap-1 text-emerald-500 text-[10px] font-black uppercase tracking-widest px-2 py-1 bg-emerald-50 rounded-full">
+                <TrendingUp size={12} />
+                +{trend}%
               </div>
             )}
           </div>
           <div>
-            <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 dark:text-slate-500 mb-1">{title}</p>
-            <h3 className="text-3xl font-black text-slate-900 dark:text-white tracking-tighter">{value}</h3>
+            <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-2">{title}</p>
+            <h3 className="text-4xl font-black text-slate-900 tracking-tighter">{value}</h3>
           </div>
-        </div>
-        <div className={`h-1 w-full bg-${color}-500/20`} />
-      </CardContent>
-    </Card>
+        </CardContent>
+      </Card>
+    </motion.div>
   );
 
   return (
-    <div className="space-y-8 pb-12">
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+    <div className="space-y-10 pb-12">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 px-2">
         <div>
-          <h1 className="text-4xl font-black text-slate-900 dark:text-white tracking-tighter">System Overview</h1>
-          <p className="text-slate-500 font-medium">Performance metrics and site telemetry.</p>
+          <h1 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tighter leading-none mb-4">Command <span className="text-sky-500">Center</span></h1>
+          <p className="text-slate-500 font-medium text-lg">Predictive system metrics and portfolio telemetry.</p>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-3">
            <Link to="/admin/profile">
-            <Button className="bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl h-12 px-6 font-bold shadow-lg shadow-indigo-600/20">
-              Edit Profile
+            <Button className="bg-white border border-slate-200 text-slate-900 hover:bg-slate-50 rounded-2xl h-14 px-8 font-bold shadow-sm active:scale-95 transition-all">
+              Configuration
+            </Button>
+           </Link>
+           <Link to="/">
+            <Button className="bg-sky-500 hover:bg-sky-600 text-white rounded-2xl h-14 px-8 font-bold shadow-xl shadow-sky-500/20 active:scale-95 transition-all">
+              Live Site
             </Button>
            </Link>
         </div>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-        <StatCard title="Total Projects" value={stats.projects} icon={FolderKanban} color="blue" trend={12} />
-        <StatCard title="Active Skills" value={stats.skills} icon={Code} color="indigo" />
-        <StatCard title="Publications" value={stats.research} icon={BookOpen} color="purple" trend={2} />
-        <StatCard title="Blog Posts" value={stats.blogs} icon={Award} color="amber" trend={5} />
-        <StatCard title="Inbound Leads" value={stats.messages} icon={MessageSquare} color="rose" trend={28} />
+        <StatCard title="Project Node" value={stats.projects} icon={FolderKanban} trend={12} />
+        <StatCard title="Tech Stack" value={stats.skills} icon={Code} />
+        <StatCard title="Research" value={stats.research} icon={BookOpen} trend={2} />
+        <StatCard title="Insights" value={stats.blogs} icon={Award} trend={5} />
+        <StatCard title="Telemetry" value={stats.messages} icon={MessageSquare} trend={28} />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Welcome Section */}
-        <Card className="lg:col-span-2 border-none bg-indigo-600 text-white shadow-2xl shadow-indigo-600/20 overflow-hidden relative">
-          <div className="absolute top-0 right-0 p-8 text-indigo-400/20 -mr-12 -mt-12">
-            <ShieldCheck size={240} />
+        <Card className="lg:col-span-2 border border-slate-100 bg-white shadow-sm rounded-[3rem] overflow-hidden relative">
+          <div className="absolute top-0 right-0 p-12 text-sky-50 opacity-10">
+            <ShieldCheck size={320} />
           </div>
-          <CardHeader className="relative z-10">
-            <CardTitle className="text-3xl font-black tracking-tight">Welcome to Command Center</CardTitle>
-            <CardDescription className="text-indigo-100 font-medium opacity-80">
-              Your personal full-stack deployment is operational and secure.
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="relative z-10 space-y-4">
-            <p className="text-indigo-50 leading-relaxed max-w-xl">
-              All systems are reporting normal latency. Content delivery is optimized via global CDN nodes. 
-              The server is running on <span className="font-bold underline">Node.js v20 LTS</span> with MongoDB Atlas sync active.
+          <CardHeader className="p-12 relative z-10 pb-8">
+            <div className="inline-flex items-center gap-2 px-3 py-1 bg-sky-50 text-sky-500 rounded-full text-[10px] font-bold uppercase tracking-widest mb-6 border border-sky-100 w-fit">
+               <span className="w-1.5 h-1.5 rounded-full bg-sky-500 animate-pulse" /> SYSTEM_ONLINE
+            </div>
+            <CardTitle className="text-4xl font-black tracking-tight text-slate-900 mb-4">Central Processing Unit</CardTitle>
+            <p className="text-slate-500 font-medium text-lg leading-relaxed max-w-xl">
+               Your autonomous portfolio system is initialized. Content delivery and database synchronization are currently operational.
             </p>
-            <div className="flex flex-wrap gap-4 pt-4">
-              <div className="flex items-center gap-2 bg-white/10 px-4 py-2 rounded-full text-xs font-bold border border-white/10">
-                <Clock size={14} /> 
-                LAST SYNC: 2 MINS AGO
-              </div>
-              <div className="flex items-center gap-2 bg-white/10 px-4 py-2 rounded-full text-xs font-bold border border-white/10">
-                <Zap size={14} /> 
-                UPTIME: 99.9%
-              </div>
+          </CardHeader>
+          <CardContent className="p-12 pt-0 relative z-10">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
+               <div className="p-6 bg-slate-50 rounded-3xl border border-slate-100">
+                  <div className="flex items-center gap-3 mb-4">
+                     <div className="w-8 h-8 rounded-xl bg-white flex items-center justify-center text-sky-500 shadow-sm"><Zap size={16} /></div>
+                     <span className="text-xs font-black uppercase tracking-widest text-slate-400">Environment</span>
+                  </div>
+                  <p className="text-sm font-bold text-slate-900">NOJE.JS v20 LTS • MONGODB ATLAS</p>
+               </div>
+               <div className="p-6 bg-slate-50 rounded-3xl border border-slate-100">
+                  <div className="flex items-center gap-3 mb-4">
+                     <div className="w-8 h-8 rounded-xl bg-white flex items-center justify-center text-sky-500 shadow-sm"><Activity size={16} /></div>
+                     <span className="text-xs font-black uppercase tracking-widest text-slate-400">Sync Status</span>
+                  </div>
+                  <p className="text-sm font-bold text-slate-900">UPTIME: 99.9% • LATENCY: 24ms</p>
+               </div>
             </div>
           </CardContent>
         </Card>
 
-        {/* Quick Help */}
-        <Card className="border-none bg-white dark:bg-slate-900 shadow-sm overflow-hidden flex flex-col">
-          <CardHeader>
-            <CardTitle className="text-lg font-black tracking-tight flex items-center gap-2">
-              <Users size={20} className="text-indigo-600" />
-              Recent Visitors
+        {/* Recent Traffic */}
+        <Card className="border border-slate-100 bg-white shadow-sm rounded-[3rem] overflow-hidden flex flex-col">
+          <CardHeader className="p-10 pb-6">
+            <CardTitle className="text-xl font-black tracking-tighter flex items-center gap-3">
+              <div className="w-10 h-10 rounded-2xl bg-sky-50 text-sky-500 flex items-center justify-center shadow-sm">
+                <Users size={20} />
+              </div>
+              Traffic Nodes
             </CardTitle>
           </CardHeader>
-          <CardContent className="flex-grow space-y-4">
-            <div className="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors cursor-pointer">
-              <div className="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center font-bold text-xs">JD</div>
-              <div>
-                <p className="text-sm font-bold">John Doe</p>
-                <p className="text-[10px] text-slate-500 uppercase tracking-wider font-medium">United States • Just Now</p>
+          <CardContent className="px-10 flex-grow space-y-6">
+            {[
+              { name: "Node: US-EAST", label: "RECRUITER • JUST NOW", color: "sky" },
+              { name: "Node: EU-WEST", label: "DEVELOPER • 5M AGO", color: "sky" },
+              { name: "Node: IN-SOUTH", label: "ANONYMOUS • 12M AGO", color: "sky" },
+            ].map((node, i) => (
+              <div key={i} className="flex items-center gap-4 group cursor-pointer">
+                <div className="w-12 h-12 rounded-2xl bg-slate-50 flex items-center justify-center font-black text-xs text-slate-400 group-hover:bg-sky-50 group-hover:text-sky-500 transition-colors border border-slate-100">PN</div>
+                <div>
+                  <p className="text-sm font-bold text-slate-900">{node.name}</p>
+                  <p className="text-[9px] text-slate-400 font-black uppercase tracking-widest mt-0.5">{node.label}</p>
+                </div>
               </div>
-            </div>
-             <div className="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors cursor-pointer">
-              <div className="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center font-bold text-xs">MS</div>
-              <div>
-                <p className="text-sm font-bold">Maria Silva</p>
-                <p className="text-[10px] text-slate-500 uppercase tracking-wider font-medium">Brazil • 5m Ago</p>
-              </div>
-            </div>
-             <div className="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors cursor-pointer">
-              <div className="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center font-bold text-xs">RK</div>
-              <div>
-                <p className="text-sm font-bold">Raj Kumar</p>
-                <p className="text-[10px] text-slate-500 uppercase tracking-wider font-medium">India • 12m Ago</p>
-              </div>
-            </div>
+            ))}
           </CardContent>
-          <div className="p-4 border-t border-slate-100 dark:border-slate-800 text-center">
-             <Link to="/admin/analytics" className="text-xs font-black uppercase tracking-widest text-indigo-600 hover:text-indigo-700">
-               Deep Analytics View
+          <div className="p-10 pt-6 border-t border-slate-50 text-center">
+             <Link to="/admin/analytics" className="text-[10px] font-black uppercase tracking-[0.2em] text-sky-500 hover:text-sky-700 transition-colors flex items-center justify-center gap-2">
+               Full Latency Report <ArrowUpRight size={14} />
              </Link>
           </div>
         </Card>
