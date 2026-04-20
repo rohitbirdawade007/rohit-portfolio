@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Github, ExternalLink, ArrowRight, Code } from "lucide-react";
+import { Github, ExternalLink, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { getProjects, getAssetUrl } from "@/services/api";
 import { motion } from "framer-motion";
@@ -27,82 +27,84 @@ const ProjectsSection = () => {
   }, []);
 
   return (
-    <section id="projects" className="py-32 bg-[#020617]">
+    <section id="projects" className="py-24 bg-slate-50/50">
       <div className="container">
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mb-20"
-        >
-           <span className="subheading">Selected Work</span>
-           <h2 className="heading-section">Engineering <span className="text-blue-500">Solutions</span></h2>
-           <p className="text-[#94a3b8] max-w-2xl mt-4">
-             A collection of production-level implementations focusing on machine learning efficiency and hardware integration.
-           </p>
-        </motion.div>
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+          <div className="text-left">
+             <h2 className="text-3xl md:text-5xl font-bold text-slate-900 mb-4">Featured Work</h2>
+             <p className="text-slate-600 max-w-xl">
+               Experimental and production-ready applications focusing on intelligent automation and data synthesis.
+             </p>
+          </div>
+          <Button 
+            variant="ghost" 
+            className="text-sky-600 hover:bg-sky-50 font-bold gap-2"
+            onClick={() => window.open('https://github.com/rohitbirdawade007', '_blank')}
+          >
+            Explore Repositories <ArrowRight size={18} />
+          </Button>
+        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {projects.map((project, index) => (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {projects.map((project, idx) => (
             <motion.div 
               key={project._id}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-              className="project-card group rounded-3xl overflow-hidden flex flex-col"
+              transition={{ delay: idx * 0.1 }}
+              className="group bg-white rounded-3xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-500"
             >
-              {/* Image Container with Zoom */}
-              <div className="aspect-[16/9] overflow-hidden relative border-b border-white/5">
+              {/* Image Container */}
+              <div className="aspect-video overflow-hidden">
                 <img 
                   src={getAssetUrl(project.image)} 
                   alt={project.title}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                 />
-                <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-all duration-500" />
               </div>
 
-              <div className="p-8 flex-grow flex flex-col">
+              <div className="p-8">
                 <div className="flex items-center gap-2 mb-4">
-                  <span className="text-[10px] font-bold text-blue-500 uppercase tracking-widest bg-blue-500/10 px-3 py-1 rounded-full border border-blue-500/20">
-                    {project.category || "AI Engineering"}
+                  <span className="badge-tech font-bold uppercase tracking-widest text-[9px]">
+                    {project.category || "ENGINEERING"}
                   </span>
                 </div>
 
-                <h3 className="text-2xl font-bold text-white mb-4 transition-colors group-hover:text-blue-400">
+                <h3 className="text-xl font-bold text-slate-900 mb-3 group-hover:text-sky-600 transition-colors">
                   {project.title}
                 </h3>
                 
-                <p className="text-[#94a3b8] text-sm leading-relaxed mb-8 line-clamp-3">
+                <p className="text-slate-600 text-sm leading-relaxed mb-8 line-clamp-3">
                   {project.description}
                 </p>
 
-                <div className="flex flex-wrap gap-2 mb-8 mt-auto">
+                <div className="flex flex-wrap gap-2 mb-8">
                   {(project.tags || []).map((tag) => (
                     <span 
                       key={tag} 
-                      className="px-3 py-1 bg-white/5 text-[#94a3b8] text-[10px] font-semibold rounded-lg border border-white/5 uppercase tracking-wide"
+                      className="px-3 py-1 bg-slate-50 text-slate-500 text-[10px] font-bold rounded-lg border border-slate-100 uppercase"
                     >
                       {tag}
                     </span>
                   ))}
                 </div>
 
-                <div className="flex items-center gap-4 pt-6 border-t border-white/5">
-                  <a 
-                    href={project.githubUrl} 
-                    target="_blank"
-                    className="flex items-center gap-2 text-[#94a3b8] hover:text-white transition-colors text-xs font-bold uppercase tracking-widest"
+                <div className="flex items-center gap-4 pt-6 border-t border-slate-100">
+                  <Button 
+                    variant="link" 
+                    className="p-0 text-slate-400 hover:text-slate-900 gap-2 h-auto text-xs font-bold uppercase tracking-widest"
+                    onClick={() => window.open(project.githubUrl, '_blank')}
                   >
-                    <Github size={18} /> Source
-                  </a>
-                  <a 
-                    href={project.liveUrl} 
-                    target="_blank"
-                    className="ml-auto flex items-center gap-2 text-white hover:text-blue-500 transition-colors text-xs font-bold uppercase tracking-widest"
+                    <Github size={16} /> Source
+                  </Button>
+                  <Button 
+                    variant="link" 
+                    className="ml-auto p-0 text-sky-500 hover:text-sky-700 gap-2 h-auto text-xs font-bold uppercase tracking-widest"
+                    onClick={() => window.open(project.liveUrl, '_blank')}
                   >
-                    View Demo <ExternalLink size={16} />
-                  </a>
+                    Demo <ExternalLink size={16} />
+                  </Button>
                 </div>
               </div>
             </motion.div>

@@ -1,5 +1,5 @@
 import { useProfile } from "@/context/ProfileContext";
-import { GraduationCap, Code2, Terminal, Cpu, Linkedin, ChevronRight, User } from "lucide-react";
+import { GraduationCap, Code2, Terminal, Cpu, ChevronRight, User, Target, Award } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { getAssetUrl } from "@/services/api";
 import { motion } from "framer-motion";
@@ -9,79 +9,70 @@ const AboutSection = () => {
   const name = profile?.name || "Rohit Birdawade";
   const aboutText = profile?.about || "Highly motivated and results-driven Computer Science Engineer with a strong foundation in software development, data analytics, and deep learning models.";
 
+  const highlights = [
+    { icon: <Target size={20} className="text-sky-500" />, title: "Precision Models", desc: "Specialized in 95%+ accuracy architectures." },
+    { icon: <Cpu size={20} className="text-sky-500" />, title: "IoT Orchestration", desc: "Expertise in sensor integration and ESP32." },
+    { icon: <Award size={20} className="text-sky-500" />, title: "National Honor", desc: "1st Prize Winner at NLPC-2025." },
+  ];
+
   return (
-    <section id="about" className="py-32 bg-[#020617]">
+    <section id="about" className="py-24 bg-slate-50/50">
       <div className="container">
-        <div className="flex flex-col lg:flex-row gap-20 items-center">
+        <div className="flex flex-col lg:flex-row gap-16 lg:gap-24 items-center">
+          
           {/* Visual Side */}
-          <motion.div 
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            className="w-full lg:w-1/2"
-          >
-            <div className="relative aspect-[4/5] rounded-[2.5rem] overflow-hidden group">
-               <div className="absolute inset-0 bg-blue-600/10 group-hover:bg-transparent transition-all duration-700 z-10" />
-               <img 
-                 src={getAssetUrl(profile?.profileImage || "/profile.png")} 
-                 alt={name}
-                 className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-1000 scale-105 group-hover:scale-100"
-               />
-               
-               {/* Minimal Info Overlay */}
-               <div className="absolute bottom-8 left-8 right-8 z-20">
-                  <div className="glass p-6 rounded-2xl border-white/10 backdrop-blur-xl">
-                     <p className="text-white font-bold text-lg mb-1">{name}</p>
-                     <p className="text-blue-500 text-xs font-semibold uppercase tracking-wider">AI & IoT Specialist</p>
-                  </div>
-               </div>
-            </div>
-          </motion.div>
+          <div className="w-full lg:w-5/12">
+             <div className="relative">
+                <div className="absolute -inset-4 bg-sky-200 rounded-[3rem] blur-2xl opacity-20" />
+                <div className="relative bg-white p-4 rounded-[3rem] border border-slate-200 shadow-xl overflow-hidden group">
+                   <img 
+                     src={getAssetUrl(profile?.profileImage || "/profile.png")} 
+                     alt={name}
+                     className="w-full h-auto rounded-[2rem] grayscale group-hover:grayscale-0 transition-all duration-700"
+                   />
+                </div>
+             </div>
+          </div>
 
           {/* Content Side */}
-          <motion.div 
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            className="w-full lg:w-1/2"
-          >
-            <span className="subheading">Background</span>
-            <h2 className="heading-section mb-8">Passionate about <span className="text-blue-500">Engineering.</span></h2>
-            
-            <div className="space-y-6 text-[#94a3b8] leading-relaxed text-lg mb-12">
-               <p>{aboutText}</p>
-               <p>
-                 My expertise lies in developing robust <span className="text-white font-semibold">Machine Learning</span> models and integrating them into efficient <span className="text-white font-semibold">IoT ecosystems</span>. 
-                 I believe in building software that isn't just intelligent, but also reliable and scalable.
-               </p>
-            </div>
+          <div className="w-full lg:w-7/12">
+             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white text-sky-500 font-bold text-[10px] uppercase tracking-[0.2em] mb-6 border border-slate-200">
+                <User size={14} /> My Story
+             </div>
+             
+             <h2 className="text-3xl md:text-5xl font-bold text-slate-900 mb-8 leading-tight">
+                Pioneering the future of <br/>
+                <span className="text-sky-500 italic font-medium">Intelligent Engineering.</span>
+             </h2>
 
-            {/* Education Summary */}
-            <div className="mb-12 p-8 glass-card rounded-3xl border-white/5">
-               <div className="flex items-center gap-4 mb-6">
-                  <div className="w-12 h-12 rounded-xl bg-blue-500/10 text-blue-500 flex items-center justify-center">
-                    <GraduationCap size={24} />
-                  </div>
-                  <div>
-                    <h4 className="text-white font-bold">Academic Background</h4>
-                    <p className="text-xs text-[#94a3b8]">Class of 2025</p>
-                  </div>
-               </div>
-               <div className="space-y-4">
-                  <div className="pl-4 border-l-2 border-blue-500/20">
-                    <p className="text-white font-semibold text-sm">B.E. in Computer Science</p>
-                    <p className="text-xs text-[#94a3b8]">Rajgad Dnyanpeeth's SCSC Engineering, Pune</p>
-                  </div>
-               </div>
-            </div>
+             <div className="text-slate-600 space-y-6 text-lg mb-10 leading-relaxed font-medium">
+                <p>{aboutText}</p>
+                <p>
+                  I specialize in building low-latency AI solutions at the edge. My work combines academic rigor with practical deployment experience in both deep learning and hardware engineering.
+                </p>
+             </div>
 
-            <Button 
-               className="btn-primary"
-               onClick={() => window.open(profile?.socialLinks?.linkedin || '#', '_blank')}
-            >
-               LinkedIn Profile <ChevronRight size={18} className="ml-2" />
-            </Button>
-          </motion.div>
+             {/* Highlights Grid */}
+             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-12">
+                {highlights.map((item, i) => (
+                  <div key={i} className="p-6 bg-white rounded-2xl border border-slate-100 shadow-sm">
+                     <div className="w-10 h-10 rounded-xl bg-sky-50 flex items-center justify-center mb-4">
+                        {item.icon}
+                     </div>
+                     <h4 className="text-slate-900 font-bold text-sm mb-2">{item.title}</h4>
+                     <p className="text-slate-500 text-[11px] leading-relaxed">{item.desc}</p>
+                  </div>
+                ))}
+             </div>
+
+             <Button 
+                className="btn-primary"
+                onClick={() => document.getElementById('skills')?.scrollIntoView({ behavior: 'smooth' })}
+              >
+                Deep Dive into Skills <ChevronRight size={18} className="ml-2" />
+             </Button>
+          </div>
+
         </div>
       </div>
     </section>

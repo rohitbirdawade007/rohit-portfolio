@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { API_URL } from "@/services/api";
-import { motion } from "framer-motion";
-import { Cpu, FlaskConical, Layout, Terminal, Code } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Brain, Cpu, Database, Layout, Code2 } from "lucide-react";
+import { Progress } from "@/components/ui/progress";
 
 interface Skill {
   _id: string;
@@ -12,118 +13,84 @@ interface Skill {
 
 const SkillsSection = () => {
   const [skills, setSkills] = useState<Skill[]>([]);
-  const [activeCategory, setActiveCategory] = useState("AI & ML");
+  const [activeTab, setActiveTab] = useState("AI & ML");
 
   useEffect(() => {
-    const fetchSkills = async () => {
-      try {
-        const res = await fetch(`${API_URL}/skills`);
-        const data = await res.json();
-        setSkills(Array.isArray(data) ? data : []);
-      } catch (e) {
-        setSkills([]);
-      }
-    };
-    fetchSkills();
+    fetch(`${API_URL}/skills`)
+      .then(res => res.json())
+      .then(data => setSkills(Array.isArray(data) ? data : []))
+      .catch(() => setSkills([]));
   }, []);
 
-  const categories = [
-    { name: "AI & ML", icon: <FlaskConical size={18} /> },
-    { name: "IoT & Hardware", icon: <Cpu size={18} /> },
-    { name: "Languages", icon: <Terminal size={18} /> },
-    { name: "Web & Tools", icon: <Layout size={18} /> }
+  const tabs = [
+    { name: "AI & ML", icon: <Brain size={18} />, filter: ["ai", "ml", "learning", "data", "deep", "vision"] },
+    { name: "IoT", icon: <Cpu size={18} />, filter: ["arduino", "raspberry", "iot", "embedded", "sensor"] },
+    { name: "Backend", icon: <Database size={18} />, filter: ["python", "c++", "c", "javascript", "java", "sql"] },
+    { name: "Full Stack", icon: <Layout size={18} />, filter: ["html", "css", "react", "git"] }
   ];
 
-  const filteredSkills = skills.filter(skill => {
-    const desc = ((skill.name || "") + " " + (skill.description || "")).toLowerCase();
-    if (activeCategory === "AI & ML") return desc.includes("ai") || desc.includes("ml") || desc.includes("learning") || desc.includes("data") || desc.includes("deep") || desc.includes("vision");
-    if (activeCategory === "IoT & Hardware") return desc.includes("arduino") || desc.includes("raspberry") || desc.includes("iot") || desc.includes("embedded") || desc.includes("sensor");
-    if (activeCategory === "Languages") return desc.includes("python") || desc.includes("c++") || desc.includes("c") || desc.includes("javascript") || desc.includes("java");
-    if (activeCategory === "Web & Tools") return desc.includes("html") || desc.includes("css") || desc.includes("react") || desc.includes("git") || desc.includes("notebook");
-    return true;
+  const filteredSkills = skills.filter(s => {
+    const desc = (s.name + " " + s.description).toLowerCase();
+    const currentTab = tabs.find(t => t.name === activeTab);
+    return currentTab?.filter.some(f => desc.includes(f));
   });
 
   return (
-    <section id="skills" className="py-32 bg-[#020617]">
+    <section id="skills" className="py-24 bg-transparent">
       <div className="container">
-        <div className="max-w-4xl mx-auto">
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="mb-20 text-center"
-          >
-             <span className="subheading">Technical Stack</span>
-             <h2 className="heading-section">Tools of the <span className="text-blue-500">Trade</span></h2>
-          </motion.div>
+        <div className="text-center mb-16">
+           <h2 className="text-3xl md:text-5xl font-bold text-slate-900 mb-4">Technical Expertise</h2>
+           <p className="text-slate-600 max-w-2xl mx-auto">
+             Specialized in deep learning architectures and hardware-software integration for real-world analytical problems.
+           </p>
+        </div>
 
-          {/* Categories Filter */}
-          <div className="flex flex-wrap items-center justify-center gap-4 mb-16 px-4">
-            {categories.map((cat) => (
-              <button
-                key={cat.name}
-                onClick={() => setActiveCategory(cat.name)}
-                className={`flex items-center gap-2 px-6 py-3 rounded-full text-sm font-semibold transition-all border ${
-                  activeCategory === cat.name 
-                    ? "bg-blue-600 text-white border-blue-600 shadow-lg shadow-blue-500/20" 
-                    : "bg-white/5 text-[#94a3b8] border-white/10 hover:bg-white/10 hover:text-white"
-                }`}
-              >
-                {cat.name}
-              </button>
-            ))}
-          </div>
+        {/* Tab Navigation */}
+        <div className="flex flex-wrap items-center justify-center gap-2 mb-12 p-2 bg-slate-100 rounded-full w-fit mx-auto shadow-inner border border-slate-200">
+           {tabs.map((tab) => (
+             <button
+               key={tab.name}
+               onClick={() => setActiveTab(tab.name)}
+               className={`flex items-center gap-2 px-6 py-2.5 rounded-full text-xs font-bold transition-all ${
+                 activeTab === tab.name 
+                   ? "bg-white text-sky-600 shadow-md transform scale-105" 
+                   : "text-slate-500 hover:text-slate-900"
+               }`}
+             >
+               {tab.icon} {tab.name}
+             </button>
+           ))}
+        </div>
 
-          {/* Clean Grid of Badges/Tags */}
-          <motion.div 
-            layout
-            className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4"
-          >
-            {filteredSkills.map((skill) => (
-              <motion.div 
-                key={skill._id}
-                layout
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="glass-card p-4 flex flex-col items-center justify-center text-center group cursor-default"
-              >
-                <div className="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-500 flex items-center justify-center mb-3 group-hover:bg-blue-600 group-hover:text-white transition-all">
-                  <Code size={18} />
-                </div>
-                <h3 className="text-sm font-bold text-white mb-1">{skill.name}</h3>
-                <p className="text-[10px] text-[#94a3b8] font-medium uppercase tracking-widest">{skill.proficiency}% Experience</p>
-              </motion.div>
-            ))}
-          </motion.div>
-          
-          {experience_placeholder()}
+        {/* Skills Grid with Progress Bars */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+           <AnimatePresence mode="wait">
+             {filteredSkills.map((skill, idx) => (
+               <motion.div 
+                 key={skill._id}
+                 initial={{ opacity: 0, y: 10 }}
+                 animate={{ opacity: 1, y: 0 }}
+                 exit={{ opacity: 0, y: -10 }}
+                 transition={{ delay: idx * 0.05 }}
+                 className="p-6 bg-white rounded-2xl border border-slate-100 shadow-sm"
+               >
+                 <div className="flex justify-between items-center mb-3">
+                    <div className="flex items-center gap-3">
+                       <div className="w-8 h-8 rounded-lg bg-sky-50 text-sky-600 flex items-center justify-center">
+                          <Code2 size={16} />
+                       </div>
+                       <span className="font-bold text-slate-800">{skill.name}</span>
+                    </div>
+                    <span className="text-xs font-bold text-sky-600">{skill.proficiency}%</span>
+                 </div>
+                 <Progress value={skill.proficiency} className="h-2 bg-slate-100 [&>div]:bg-sky-500" />
+               </motion.div>
+             ))}
+           </AnimatePresence>
         </div>
       </div>
     </section>
   );
-
-  function experience_placeholder() {
-    return (
-      <div className="mt-32">
-        <h3 className="text-xl font-bold text-white mb-8 text-center uppercase tracking-widest italic opacity-50">Certifications & Accreditations</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-           {[
-             "AI model-building workshop - NEXT WAVE",
-             "HTML & CSS For Web Development",
-             "Mastering Battery Management Systems",
-             "Research Paper Writing & Publishing"
-           ].map((cert, i) => (
-             <div key={i} className="glass p-6 rounded-2xl flex items-center gap-4 border-white/5 hover:bg-white/5 transition-colors">
-                <div className="w-10 h-10 rounded-full bg-blue-500/10 text-blue-500 flex items-center justify-center shrink-0">
-                  {i+1}
-                </div>
-                <span className="text-sm font-semibold text-[#94a3b8]">{cert}</span>
-             </div>
-           ))}
-        </div>
-      </div>
-    );
-  }
 };
 
 export default SkillsSection;

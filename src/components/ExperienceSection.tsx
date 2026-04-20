@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import { Briefcase, Calendar } from "lucide-react";
+import { Briefcase, Calendar, MapPin } from "lucide-react";
 import { getExperiences } from "@/services/api";
 import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
 
 interface Experience {
   _id: string;
@@ -22,62 +23,67 @@ const ExperienceSection = () => {
   }, []);
 
   return (
-    <section id="experience" className="scroll-mt-24 mb-20">
-      <div className="flex items-center gap-4 mb-10">
-        <div className="h-px w-10 bg-[#1e293b]" />
-        <h2 className="text-sm font-black text-[#94a3b8] uppercase tracking-[0.4em] font-mono-system shrink-0">Professional_Experience_Log</h2>
-        <div className="h-px flex-1 bg-[#1e293b]" />
-      </div>
+    <section id="experience" className="py-24 bg-transparent relative">
+      <div className="container max-w-5xl">
+        <div className="text-center mb-20">
+           <h2 className="text-3xl md:text-5xl font-bold text-slate-900 mb-4">Professional Timeline</h2>
+           <p className="text-slate-600">Trace my evolution through industry and academic projects.</p>
+        </div>
 
-      <div className="space-y-6">
+        <div className="relative space-y-12">
+          {/* Vertical Line */}
+          <div className="absolute left-[23px] md:left-1/2 top-0 bottom-0 w-0.5 bg-slate-200 -translate-x-1/2 hidden md:block" />
+
           {experience.map((exp, i) => (
             <motion.div 
               key={exp._id} 
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
-              className="flex gap-8 group"
+              className={cn(
+                "flex flex-col md:flex-row items-center justify-between gap-8 md:gap-0",
+                i % 2 === 0 ? "md:flex-row-reverse" : ""
+              )}
             >
-              {/* Simple Timeline Dot/Line */}
-              <div className="hidden md:flex flex-col items-center">
-                 <div className="w-4 h-4 rounded-full border-2 border-blue-600 bg-[#020617] z-10" />
-                 <div className="flex-1 w-px bg-white/10 group-last:bg-transparent" />
-              </div>
-
-              <div className="flex-1 pb-12">
-                 <div className="system-module mb-0 hover:border-blue-500/30 transition-colors">
-                    <div className="flex flex-col md:flex-row md:items-center justify-between mb-6 gap-4">
-                       <div className="flex items-center gap-4">
-                          <div className="w-10 h-10 rounded bg-blue-500/10 text-blue-500 flex items-center justify-center">
-                             <Briefcase size={20} />
-                          </div>
-                          <div>
-                            <h3 className="text-base font-bold text-white uppercase tracking-tight">{exp.role}</h3>
-                            <p className="text-blue-500 font-mono-system text-[10px] uppercase font-bold tracking-widest mt-1">{exp.company}</p>
-                          </div>
-                       </div>
-                       <div className="flex items-center gap-2 text-[#94a3b8] font-mono-system font-bold text-[10px] px-3 py-1 rounded bg-white/5 border border-white/5 h-fit uppercase tracking-widest">
-                          <Calendar size={12} />
-                          {exp.duration}
-                       </div>
+              {/* Content Panel */}
+              <div className="w-full md:w-[45%]">
+                 <div className="p-8 bg-white rounded-3xl border border-slate-100 shadow-sm hover:shadow-xl transition-all duration-500">
+                    <div className="flex items-center gap-3 mb-4 text-sky-500">
+                       <Briefcase size={20} />
+                       <span className="font-bold text-xs uppercase tracking-widest">{exp.company}</span>
                     </div>
-
-                    <p className="text-[#94a3b8] text-xs leading-relaxed mb-6 font-mono-system">
+                    <h3 className="text-xl font-bold text-slate-900 mb-3">{exp.role}</h3>
+                    <p className="text-slate-600 text-sm leading-relaxed mb-6">
                        {exp.description}
                     </p>
-
                     <div className="flex flex-wrap gap-2">
                        {exp.technologies.map(tech => (
-                         <span key={tech} className="px-3 py-1 bg-white/5 text-[#64748b] text-[10px] font-bold rounded-lg border border-white/5 uppercase tracking-wider">
+                         <span key={tech} className="px-3 py-1 bg-slate-50 text-slate-500 text-[10px] font-bold rounded-lg border border-slate-100">
                             {tech}
                          </span>
                        ))}
                     </div>
                  </div>
               </div>
+
+              {/* Timeline Center Dot */}
+              <div className="absolute left-[23px] md:left-1/2 -translate-x-1/2 w-12 h-12 rounded-full bg-white border-4 border-sky-500 flex items-center justify-center z-10 shadow-lg">
+                 <Calendar size={18} className="text-sky-500" />
+              </div>
+
+              {/* Date Column */}
+              <div className={cn(
+                "hidden md:block w-[45%]",
+                i % 2 === 0 ? "text-right" : "text-left"
+              )}>
+                 <span className="text-2xl font-bold text-slate-300 group-hover:text-sky-500 transition-colors">
+                    {exp.duration}
+                 </span>
+              </div>
             </motion.div>
           ))}
+        </div>
       </div>
     </section>
   );

@@ -1,91 +1,84 @@
 import { Button } from "@/components/ui/button";
-import { ArrowRight, FileText, Github, Linkedin, Mail } from "lucide-react";
+import { ArrowRight, FileText, Sparkles } from "lucide-react";
 import { useProfile } from "@/context/ProfileContext";
 import { motion } from "framer-motion";
-import Typewriter from 'typewriter-effect';
+import { getAssetUrl } from "@/services/api";
 
 const HeroSection = () => {
   const { profile } = useProfile();
   const name = profile?.name || "Rohit Birdawade";
-  const roles = ["AI & ML Engineer", "IoT Developer", "Full Stack Engineer"];
 
   return (
-    <section id="home" className="min-h-[90vh] flex items-center justify-center pt-20 relative overflow-hidden bg-[#020617]">
-      {/* Subtle Background Ambience */}
-      <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-600/5 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-[-10%] right-[-10%] w-[30%] h-[30%] bg-blue-400/5 rounded-full blur-[100px] pointer-events-none" />
-
-      <div className="container relative z-10">
-        <div className="max-w-4xl mx-auto text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
+    <section id="home" className="pt-32 pb-20 md:pt-48 md:pb-32 overflow-hidden bg-transparent">
+      <div className="container">
+        <div className="flex flex-col-reverse lg:flex-row items-center justify-between gap-12 lg:gap-20">
+          
+          {/* Text Content */}
+          <motion.div 
+            initial={{ opacity: 0, x: -30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
+            className="flex-1 text-center lg:text-left"
           >
-            <span className="inline-block text-blue-500 font-semibold tracking-widest uppercase text-xs mb-6 px-4 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20">
-              Personal Portfolio
-            </span>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-sky-50 text-sky-600 font-bold text-xs uppercase tracking-widest mb-8 border border-sky-100">
+               <Sparkles size={14} className="animate-pulse" />
+               Available for new opportunities
+            </div>
 
-            <h1 className="heading-hero mb-8">
-              Hi, I'm <span className="gradient-text">{name.split(' ')[0]}</span>. <br/>
-              Designing <span className="text-white/90">Intelligence</span>.
+            <h1 className="text-5xl md:text-7xl font-bold text-slate-900 mb-6 leading-[1.1] tracking-tight">
+               AI & IoT <span className="text-sky-500">Solutions</span> <br/>
+               Engineered for Impact
             </h1>
 
-            <div className="text-xl md:text-2xl text-[#94a3b8] mb-10 h-8 flex justify-center items-center font-medium">
-              <span className="mr-2">A specialized</span>
-              <span className="text-blue-500">
-                <Typewriter
-                  options={{
-                    strings: roles,
-                    autoStart: true,
-                    loop: true,
-                    deleteSpeed: 50,
-                  }}
-                />
-              </span>
-            </div>
-
-            <p className="text-lg md:text-xl text-[#94a3b8] mb-12 max-w-2xl mx-auto leading-relaxed">
-              I engineer high-performance <span className="text-white">AI models</span> and <span className="text-white">IoT architectures</span>. 
-              Bridging the gap between intelligent software and physical hardware.
+            <p className="text-lg md:text-xl text-slate-600 mb-10 max-w-xl mx-auto lg:mx-0 leading-relaxed font-medium">
+               I build intelligent systems that bridge the gap between AI, IoT, and high-performance software. Focused on creating real-world value through data.
             </p>
 
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-              <Button 
-                className="btn-primary"
-                onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
-              >
-                View Projects <ArrowRight size={18} className="ml-2" />
-              </Button>
-              <Button 
-                variant="outline"
-                className="btn-secondary"
-                onClick={() => window.open('/resume.pdf', '_blank')}
-              >
-                Download Resume <FileText size={18} className="ml-2" />
-              </Button>
-            </div>
-
-            {/* Social Proof Bar */}
-            <div className="mt-20 pt-10 border-t border-white/5 flex items-center justify-center gap-8 text-[#94a3b8]">
-               {[
-                 { icon: <Github size={20} />, url: profile?.socialLinks?.github },
-                 { icon: <Linkedin size={20} />, url: profile?.socialLinks?.linkedin },
-                 { icon: <Mail size={20} />, url: `mailto:${profile?.email}` },
-               ].map((social, i) => (
-                 <motion.a
-                   key={i}
-                   href={social.url}
-                   target="_blank"
-                   rel="noopener noreferrer"
-                   whileHover={{ y: -2, color: "#fff" }}
-                   className="transition-colors"
-                 >
-                   {social.icon}
-                 </motion.a>
-               ))}
+            <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+               <Button 
+                 className="btn-primary w-full sm:w-auto h-14"
+                 onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
+               >
+                 View Projects <ArrowRight size={18} className="ml-2" />
+               </Button>
+               <Button 
+                 variant="outline"
+                 className="btn-secondary w-full sm:w-auto h-14"
+                 onClick={() => window.open('/resume.pdf', '_blank')}
+               >
+                 Download CV <FileText size={18} className="ml-2" />
+               </Button>
             </div>
           </motion.div>
+
+          {/* Visual Side: Circular Profile */}
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8 }}
+            className="flex-1 relative"
+          >
+             <div className="relative w-[300px] h-[300px] md:w-[450px] md:h-[450px] mx-auto group">
+                <div className="absolute inset-0 bg-sky-100 rounded-full scale-105 group-hover:scale-110 transition-transform duration-700" />
+                <div className="relative h-full w-full rounded-full overflow-hidden border-8 border-white shadow-xl">
+                   <img 
+                     src={getAssetUrl(profile?.profileImage || "/profile.png")} 
+                     alt={name}
+                     className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-1000"
+                   />
+                </div>
+                {/* Float floating badges */}
+                <div className="absolute top-10 -right-4 bg-white p-4 rounded-2xl shadow-xl animate-float border border-slate-100">
+                   <span className="text-[10px] font-bold text-slate-400 block mb-1">ACCURACY</span>
+                   <span className="text-2xl font-bold text-sky-500">96.4%</span>
+                </div>
+                <div className="absolute bottom-20 -left-10 bg-white p-4 rounded-2xl shadow-xl animate-float-slow border border-slate-100">
+                   <span className="text-[10px] font-bold text-slate-400 block mb-1">EXPERIENCE</span>
+                   <span className="text-2xl font-bold text-slate-800">2+ Years</span>
+                </div>
+             </div>
+          </motion.div>
+
         </div>
       </div>
     </section>

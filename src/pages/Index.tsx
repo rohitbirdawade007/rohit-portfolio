@@ -1,18 +1,18 @@
 import { useEffect } from "react";
-import Sidebar from "@/components/Sidebar";
-import TopBar from "@/components/TopBar";
-import SystemOverview from "@/components/SystemOverview";
-import ProjectModules from "@/components/ProjectModules";
-import ModelInsights from "@/components/ModelInsights";
-import SkillMatrix from "@/components/SkillMatrix";
-import ContactTerminal from "@/components/ContactTerminal";
+import Navbar from "@/components/Navbar";
+import HeroSection from "@/components/HeroSection";
+import AboutSection from "@/components/AboutSection";
+import ProjectsSection from "@/components/ProjectsSection";
+import SkillsSection from "@/components/SkillsSection";
+import ExperienceSection from "@/components/ExperienceSection";
+import ResearchSection from "@/components/ResearchSection";
+import BlogsSection from "@/components/BlogsSection";
+import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
 import BackToTop from "@/components/BackToTop";
 import SEO from "@/components/SEO";
 import { usePageView } from "@/services/analytics";
-import ExperienceSection from "@/components/ExperienceSection";
-import ResearchSection from "@/components/ResearchSection";
-import BlogsSection from "@/components/BlogsSection";
+import { motion } from "framer-motion";
 
 const Index = () => {
   usePageView('/');
@@ -31,37 +31,30 @@ const Index = () => {
   }, []);
   
   return (
-    <div className="system-layout bg-[#020617] text-white selection:bg-blue-500/30">
+    <div className="min-h-screen bg-white">
       <SEO />
       
-      {/* Sidebar - Identity Module */}
-      <Sidebar />
-
-      {/* Workspace Area */}
-      <div className="system-workspace">
-        <TopBar />
+      <Navbar />
+      
+      <main>
+        <HeroSection />
         
-        <main className="workspace-scroll">
-          <SystemOverview />
-          
-          <ProjectModules />
-          
-          <ModelInsights />
-          
-          <SkillMatrix />
+        <AboutSection />
+        
+        <SkillsSection />
+        
+        <ProjectsSection />
+        
+        <ExperienceSection />
+        
+        <ResearchSection />
 
-          <ExperienceSection />
-          
-          <ResearchSection />
+        <BlogsSection />
+        
+        <ContactSection />
+      </main>
 
-          <BlogsSection />
-          
-          <ContactTerminal />
-
-          <Footer />
-        </main>
-      </div>
-
+      <Footer />
       <BackToTop />
     </div>
   );
