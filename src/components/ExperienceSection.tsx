@@ -22,19 +22,14 @@ const ExperienceSection = () => {
   }, []);
 
   return (
-    <section id="experience" className="py-32 bg-[#020617]">
-      <div className="container">
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mb-24"
-        >
-           <span className="subheading">Career Journey</span>
-           <h2 className="heading-section">Professional <span className="text-blue-500">Trajectory</span></h2>
-        </motion.div>
+    <section id="experience" className="scroll-mt-24 mb-20">
+      <div className="flex items-center gap-4 mb-10">
+        <div className="h-px w-10 bg-[#1e293b]" />
+        <h2 className="text-sm font-black text-[#94a3b8] uppercase tracking-[0.4em] font-mono-system shrink-0">Professional_Experience_Log</h2>
+        <div className="h-px flex-1 bg-[#1e293b]" />
+      </div>
 
-        <div className="max-w-4xl mx-auto space-y-12">
+      <div className="space-y-6">
           {experience.map((exp, i) => (
             <motion.div 
               key={exp._id} 
@@ -51,19 +46,24 @@ const ExperienceSection = () => {
               </div>
 
               <div className="flex-1 pb-12">
-                 <div className="glass-card p-8 hover:bg-white/[0.04]">
+                 <div className="system-module mb-0 hover:border-blue-500/30 transition-colors">
                     <div className="flex flex-col md:flex-row md:items-center justify-between mb-6 gap-4">
-                       <div>
-                          <h3 className="text-xl font-bold text-white tracking-tight">{exp.role}</h3>
-                          <p className="text-blue-500 font-semibold text-sm mt-1">{exp.company}</p>
+                       <div className="flex items-center gap-4">
+                          <div className="w-10 h-10 rounded bg-blue-500/10 text-blue-500 flex items-center justify-center">
+                             <Briefcase size={20} />
+                          </div>
+                          <div>
+                            <h3 className="text-base font-bold text-white uppercase tracking-tight">{exp.role}</h3>
+                            <p className="text-blue-500 font-mono-system text-[10px] uppercase font-bold tracking-widest mt-1">{exp.company}</p>
+                          </div>
                        </div>
-                       <div className="flex items-center gap-2 text-[#94a3b8] font-semibold text-xs px-4 py-1.5 rounded-full bg-white/5 border border-white/5 h-fit">
-                          <Calendar size={14} />
+                       <div className="flex items-center gap-2 text-[#94a3b8] font-mono-system font-bold text-[10px] px-3 py-1 rounded bg-white/5 border border-white/5 h-fit uppercase tracking-widest">
+                          <Calendar size={12} />
                           {exp.duration}
                        </div>
                     </div>
 
-                    <p className="text-[#94a3b8] text-sm leading-relaxed mb-8">
+                    <p className="text-[#94a3b8] text-xs leading-relaxed mb-6 font-mono-system">
                        {exp.description}
                     </p>
 

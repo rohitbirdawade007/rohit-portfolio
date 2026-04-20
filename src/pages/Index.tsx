@@ -1,72 +1,67 @@
 import { useEffect } from "react";
-import Navbar from "@/components/Navbar";
-import HeroSection from "@/components/HeroSection";
-import AboutSection from "@/components/AboutSection";
-import ProjectsSection from "@/components/ProjectsSection";
-import SkillsSection from "@/components/SkillsSection";
-import ExperienceSection from "@/components/ExperienceSection";
-import ResearchSection from "@/components/ResearchSection";
-import BlogsSection from "@/components/BlogsSection";
-import ContactSection from "@/components/ContactSection";
+import Sidebar from "@/components/Sidebar";
+import TopBar from "@/components/TopBar";
+import SystemOverview from "@/components/SystemOverview";
+import ProjectModules from "@/components/ProjectModules";
+import ModelInsights from "@/components/ModelInsights";
+import SkillMatrix from "@/components/SkillMatrix";
+import ContactTerminal from "@/components/ContactTerminal";
 import Footer from "@/components/Footer";
 import BackToTop from "@/components/BackToTop";
 import SEO from "@/components/SEO";
 import { usePageView } from "@/services/analytics";
-import { motion, useScroll, useSpring } from "framer-motion";
+import ExperienceSection from "@/components/ExperienceSection";
+import ResearchSection from "@/components/ResearchSection";
+import BlogsSection from "@/components/BlogsSection";
 
 const Index = () => {
   usePageView('/');
-  const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001
-  });
 
   useEffect(() => {
     // Scroll to anchor if present in URL
     const hash = window.location.hash;
     if (hash) {
-      try {
-        const element = document.querySelector(hash);
-        if (element) {
-          setTimeout(() => {
-            window.scrollTo({
-              top: element.getBoundingClientRect().top + window.scrollY - 100,
-              behavior: "smooth"
-            });
-          }, 100);
-        }
-      } catch (e) {
-        console.warn("Invalid hash selector:", hash);
+      const element = document.querySelector(hash);
+      if (element) {
+        setTimeout(() => {
+          element.scrollIntoView({ behavior: "smooth" });
+        }, 100);
       }
     }
   }, []);
   
   return (
-    <div className="min-h-screen overflow-x-hidden bg-[#020617] text-white selection:bg-blue-500/30">
+    <div className="system-layout bg-[#020617] text-white selection:bg-blue-500/30">
       <SEO />
       
-      {/* Global Progress Bar */}
-      <motion.div 
-        className="fixed top-0 left-0 right-0 h-1 bg-blue-600 z-[60] origin-left"
-        style={{ scaleX }}
-      />
-      
-      <Navbar />
-      
-      <main className="relative">
-        <HeroSection />
-        <AboutSection />
-        <SkillsSection />
-        <ProjectsSection />
-        <ExperienceSection />
-        <ResearchSection />
-        <BlogsSection />
-        <ContactSection />
-      </main>
+      {/* Sidebar - Identity Module */}
+      <Sidebar />
 
-      <Footer />
+      {/* Workspace Area */}
+      <div className="system-workspace">
+        <TopBar />
+        
+        <main className="workspace-scroll">
+          <SystemOverview />
+          
+          <ProjectModules />
+          
+          <ModelInsights />
+          
+          <SkillMatrix />
+
+          <ExperienceSection />
+          
+          <ResearchSection />
+
+          <BlogsSection />
+          
+          <ContactTerminal />
+
+          <Footer />
+        </main>
+      </div>
+
       <BackToTop />
     </div>
   );
