@@ -36,11 +36,11 @@ const SkillsSection = () => {
   });
 
   return (
-    <section id="skills" className="py-24 bg-white">
-      <div className="container mx-auto px-6 max-w-6xl">
-        <div className="flex items-center gap-3 mb-16">
-          <h2 className="text-3xl font-bold text-[#1a1a1a]">Skills & Expertise</h2>
-          <div className="h-[2px] w-12 bg-primary mt-2" />
+    <section id="skills" className="py-32 relative bg-white overflow-hidden">
+      <div className="container mx-auto px-6 max-w-7xl relative z-10">
+        <div className="mb-20 animate-fadeUp">
+           <span className="subheading-premium">Proficiency</span>
+           <h2 className="heading-premium text-gray-900">Technical <span className="text-primary">Registry</span></h2>
         </div>
 
         {/* Categories Tabs */}
@@ -80,21 +80,21 @@ const SkillsSection = () => {
         </div>
 
         {/* Certifications (Reference Image Style) */}
-        <div className="text-center mb-16">
-           <h3 className="text-2xl font-bold text-gray-900">Certifications</h3>
+        <div className="mb-12 animate-fadeUp">
+           <h3 className="text-2xl font-black text-gray-900 uppercase tracking-tighter">Certifications</h3>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-24">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-32">
            {[
              "AI model-building workshop by NEXT WAVE (20/1/2024)",
              "HTML & CSS For Web Development by Skill Academy",
              "Free Live Course on Mastering Battery Management Systems",
              "Three Days of National Online Workshops on Research Paper Writing & Publishing"
            ].map((cert, i) => (
-             <div key={i} className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm flex items-center gap-6 group hover:shadow-md transition-all">
-                <div className="w-10 h-10 bg-blue-50 text-primary border border-blue-100 rounded-lg flex items-center justify-center font-bold shrink-0">
+             <div key={i} className="glass p-6 rounded-2xl border border-gray-100 shadow-sm flex items-center gap-6 group hover:shadow-xl transition-all duration-500 hover:-translate-y-1">
+                <div className="w-12 h-12 bg-primary text-white rounded-xl flex items-center justify-center font-black shrink-0 shadow-lg shadow-primary/20 group-hover:scale-110 transition-transform">
                    {i + 1}
                 </div>
-                <p className="text-sm font-medium text-gray-700 leading-relaxed text-left">{cert}</p>
+                <p className="text-sm font-bold text-gray-700 leading-relaxed text-left uppercase tracking-tight">{cert}</p>
              </div>
            ))}
         </div>

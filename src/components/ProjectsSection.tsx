@@ -26,23 +26,21 @@ const ProjectsSection = () => {
   }, []);
 
   return (
-    <section id="projects" className="py-20 bg-[#f8fafc]">
-      <div className="container mx-auto px-6">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-[#0f172a] mb-4 relative inline-block">
-            My Projects
-            <div className="absolute -bottom-2 left-0 w-full h-1 bg-primary rounded-full" />
-          </h2>
-          <p className="text-gray-500 max-w-2xl mx-auto mt-6 text-sm">
-            Here are some of the projects I've worked on, showcasing my skills in AI, machine learning, data analytics, and IoT applications.
-          </p>
+    <section id="projects" className="py-32 relative bg-gray-50/50 overflow-hidden">
+      <div className="container mx-auto px-6 max-w-7xl relative z-10">
+        <div className="mb-20 animate-fadeUp">
+           <span className="subheading-premium">Portfolio</span>
+           <h2 className="heading-premium text-gray-900">Featured <span className="text-primary">Projects</span></h2>
+           <p className="text-gray-500 max-w-2xl mt-6 text-sm font-medium">
+             A collection of engineering solutions leveraging AI, IoT, and modern web architectures.
+           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
           {projects.map((project) => (
             <div 
               key={project._id} 
-              className="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-300 group"
+              className="card-premium group"
             >
               <div className="aspect-video overflow-hidden">
                 <img 
@@ -53,8 +51,7 @@ const ProjectsSection = () => {
               </div>
               <div className="p-8">
                 <div className="flex items-center gap-2 mb-4">
-                  <span className="text-2xl">🚀</span>
-                  <h3 className="text-xl font-bold text-gray-900 group-hover:text-primary transition-colors">{project.title}</h3>
+                  <h3 className="text-xl font-black text-gray-900 uppercase tracking-tighter group-hover:text-primary transition-colors">{project.title}</h3>
                 </div>
                 
                 <div className="flex flex-wrap gap-2 mb-6">
@@ -68,7 +65,7 @@ const ProjectsSection = () => {
                   ))}
                 </div>
 
-                <p className="text-gray-500 text-sm leading-relaxed mb-8 line-clamp-3">
+                <p className="text-gray-500 text-sm leading-relaxed mb-8 line-clamp-3 font-medium">
                   {project.description}
                 </p>
 

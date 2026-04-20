@@ -17,11 +17,11 @@ const AboutSection = () => {
   ];
 
   return (
-    <section id="about" className="py-20 relative bg-white">
-      <div className="container mx-auto px-6">
-        <div className="flex items-center gap-3 mb-12">
-          <h2 className="text-3xl font-bold text-[#1a1a1a]">About Me</h2>
-          <div className="h-[2px] w-12 bg-primary mt-2" />
+    <section id="about" className="py-32 relative bg-gray-50/50">
+      <div className="container mx-auto px-6 max-w-7xl">
+        <div className="mb-20 animate-fadeUp">
+           <span className="subheading-premium">Background</span>
+           <h2 className="heading-premium text-gray-900">About <span className="text-primary">Me</span></h2>
         </div>
 
         <div className="flex flex-col lg:flex-row gap-12 items-start">
@@ -56,24 +56,23 @@ const AboutSection = () => {
              </div>
 
              {/* Education Timeline (Reference style) */}
-             <div className="mb-12">
-                <div className="flex items-center gap-2 mb-6 text-primary font-bold">
-                   <GraduationCap size={20} />
-                   <span className="uppercase tracking-widest text-xs">Education</span>
+             <div className="mb-12 animate-fadeUp animate-delay-100">
+                <div className="flex items-center gap-2 mb-8 text-primary font-black uppercase tracking-[0.3em] text-[10px]">
+                   <GraduationCap size={16} />
+                   <span>Education Journey</span>
                 </div>
-                <div className="space-y-8 pl-4 border-l-2 border-gray-100">
+                <div className="space-y-10 pl-6 border-l-2 border-primary/20">
                    <div className="relative">
-                      <div className="absolute -left-[21px] top-1 w-4 h-4 bg-primary rounded-full border-4 border-white shadow-sm" />
-                      <h4 className="font-bold text-gray-900">Bachelor of Computer Science Engineering</h4>
-                      <p className="text-sm text-gray-500 mt-1">Rajgad Dnyanpeeth's Shree Chhatrapati Shivajiraje College of Engineering, Bhor, Pune</p>
-                      <p className="text-xs text-primary mt-1 font-semibold">Expected Graduation: May 2025</p>
-                      <p className="text-[10px] text-gray-400 mt-2 uppercase tracking-wide">Machine Learning, Python, Artificial Intelligence, Data Science</p>
+                      <div className="absolute -left-[31px] top-1 w-3 h-3 bg-primary rounded-full border-2 border-white shadow-lg shadow-primary/20" />
+                      <h4 className="font-black text-gray-900 uppercase tracking-tight text-lg">Bachelor of Computer Science Engineering</h4>
+                      <p className="text-sm text-gray-500 mt-1 font-medium">Rajgad Dnyanpeeth's Shree Chhatrapati Shivajiraje College of Engineering, Pune</p>
+                      <p className="inline-block px-3 py-1 bg-primary/10 text-primary text-[10px] font-black uppercase tracking-widest rounded-full mt-3">Expected Graduation: May 2025</p>
+                      <p className="text-[10px] text-gray-400 mt-3 uppercase font-black tracking-widest opacity-60">ML • Python • AI • Data Science</p>
                    </div>
                    <div className="relative">
-                      <div className="absolute -left-[21px] top-1 w-4 h-4 bg-gray-200 rounded-full border-4 border-white shadow-sm" />
-                      <h4 className="font-bold text-gray-900">H.S.C</h4>
-                      <p className="text-sm text-gray-500 mt-1">Vidya Pratishthan's Arts, Science and Commerce College, Baramati, Pune</p>
-                      <p className="text-xs text-gray-400 mt-1 uppercase tracking-wide">IT, Science</p>
+                      <div className="absolute -left-[31px] top-1 w-3 h-3 bg-gray-300 rounded-full border-2 border-white" />
+                      <h4 className="font-black text-gray-900 uppercase tracking-tight text-lg opacity-60">Higher Secondary Education</h4>
+                      <p className="text-sm text-gray-500 mt-1 font-medium">Vidya Pratishthan's ASCC, Baramati</p>
                    </div>
                 </div>
              </div>
