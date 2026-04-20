@@ -21,7 +21,7 @@ const AboutSection = () => {
       {/* Background Decor */}
       <div className="absolute top-1/2 left-0 w-[400px] h-[400px] bg-primary/5 rounded-full blur-[100px] -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
 
-      <div className="container mx-auto px-6 max-w-7xl relative z-10">
+      <div className="container relative z-10">
         <motion.div 
           initial={{ opacity: 0, x: -20 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -29,7 +29,7 @@ const AboutSection = () => {
           className="mb-20 section-title-accent"
         >
            <span className="subheading-premium font-black">Background</span>
-           <h2 className="heading-premium text-white">About <span className="gradient-text-premium">Me</span></h2>
+           <h2 className="heading-premium text-white">About <span className="gradient-text">Me</span></h2>
         </motion.div>
 
         <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 items-start">

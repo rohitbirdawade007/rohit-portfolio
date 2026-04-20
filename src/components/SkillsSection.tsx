@@ -49,7 +49,7 @@ const SkillsSection = () => {
       <div className="absolute top-1/2 right-[-10%] w-[50%] h-[50%] border-2 border-primary/5 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-1/2 left-[-10%] w-[40%] h-[40%] border-2 border-blue-500/5 rounded-full blur-3xl pointer-events-none" />
 
-      <div className="container mx-auto px-6 max-w-7xl relative z-10">
+      <div className="container relative z-10">
         <motion.div 
           initial={{ opacity: 0, x: -20 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -57,7 +57,7 @@ const SkillsSection = () => {
           className="mb-20 section-title-accent"
         >
            <span className="subheading-premium font-black">Proficiency</span>
-           <h2 className="heading-premium text-white">Technical <span className="gradient-text-premium">Registry</span></h2>
+           <h2 className="heading-premium text-white">Technical <span className="gradient-text">Registry</span></h2>
            <p className="text-gray-400 max-w-2xl mt-6 text-sm font-medium">
              Expertise developed through academic excellence and hands-on implementation of cutting-edge technologies.
            </p>

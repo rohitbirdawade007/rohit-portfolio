@@ -40,14 +40,14 @@ const HeroSection = () => {
                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-blue-400">Available for Collaboration</span>
             </div>
 
-            <h1 className="text-5xl md:text-8xl font-black text-white mb-6 tracking-tighter leading-[0.9] uppercase italic">
+            <h1 className="text-6xl md:text-9xl font-[800] text-white mb-6 tracking-tighter leading-[0.85] uppercase italic">
                HI, I AM <br />
-               <span className="gradient-text-premium">{name.split(' ')[0]}</span>
+               <span className="gradient-text">{name.split(' ')[0]}</span>
             </h1>
             
-            <div className="text-xl md:text-3xl text-gray-400 mb-8 font-bold h-12 flex items-center">
-              <span className="mr-3 text-white italic">A dedicated </span>
-              <span className="text-primary">
+            <div className="text-2xl md:text-4xl text-slate-400 mb-10 font-[800] h-12 flex items-center tracking-tight">
+              <span className="mr-4 text-white italic">A dedicated </span>
+              <span className="text-primary text-glow">
                 <Typewriter
                   options={{
                     strings: roles,
@@ -59,28 +59,28 @@ const HeroSection = () => {
               </span>
             </div>
 
-            <p className="text-lg text-gray-400 mb-10 max-w-xl leading-relaxed font-medium">
-               Bridging the gap between intelligent hardware and sophisticated software solutions. Specializing in Deep Learning, Embedded Systems, and Real-time Data processing.
+            <p className="text-xl text-slate-400 mb-12 max-w-xl leading-relaxed font-medium">
+               Engineering intelligent systems at the intersection of <span className="text-white">AI</span> and <span className="text-white">IoT</span>. Specialized in high-accuracy modeling and real-time edge processing.
             </p>
 
-            <div className="flex flex-wrap gap-4 mb-12">
+            <div className="flex flex-wrap gap-6 mb-16">
               <Magnetic>
                 <Button 
                   size="lg"
-                  className="h-14 px-8 rounded-2xl bg-white text-black hover:bg-gray-200 font-bold uppercase tracking-widest text-xs transition-all active:scale-95 shadow-[0_0_20px_rgba(255,255,255,0.3)]"
+                  className="h-16 px-10 rounded-full bg-primary text-white hover:bg-primary/90 font-black uppercase tracking-widest text-[10px] transition-all active:scale-95 shadow-[0_0_30px_rgba(59,130,246,0.5)] border-none"
                   onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
                 >
-                  Explore Projects
+                  Initiate Discovery
                 </Button>
               </Magnetic>
               <Magnetic>
                 <Button 
                   variant="outline"
                   size="lg"
-                  className="h-14 px-8 rounded-2xl border-white/10 text-white hover:bg-white/5 font-bold uppercase tracking-widest text-xs transition-all active:scale-95 glass"
+                  className="h-16 px-10 rounded-full border-white/10 text-white hover:bg-white/5 font-black uppercase tracking-widest text-[10px] transition-all active:scale-95 glass"
                   onClick={() => window.open(linkedinUrl, '_blank')}
                 >
-                  Connect Now
+                  Establish Connection
                 </Button>
               </Magnetic>
             </div>
@@ -128,39 +128,46 @@ const HeroSection = () => {
                {/* Stats Badges */}
                <motion.div 
                  initial={{ opacity: 0, x: 20 }}
-                 animate={{ opacity: 1, x: 0 }}
+                 whileInView={{ opacity: 1, x: 0 }}
+                 viewport={{ once: true }}
                  transition={{ delay: 0.5 }}
-                 className="absolute -top-6 -right-6 glass p-5 rounded-3xl border-white/10 shadow-2xl animate-float min-w-[140px]"
+                 className="absolute -top-10 -right-10 glass p-6 rounded-[2rem] border-white/10 shadow-[0_0_40px_rgba(34,197,94,0.2)] animate-float min-w-[180px]"
                >
-                  <div className="flex items-center gap-3 mb-1">
-                    <Target className="text-cyan-400" size={20} />
-                    <p className="text-2xl font-black text-white italic">8.7</p>
+                  <div className="flex items-center gap-4 mb-2">
+                    <div className="p-2 rounded-xl bg-accent/20 text-accent glow-secondary">
+                      <Trophy size={24} />
+                    </div>
+                    <p className="text-3xl font-[800] text-white tracking-tighter">1st</p>
                   </div>
-                  <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Curr. CGPA</p>
+                  <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest leading-tight">National Prize <br/> <span className="text-accent underline">NLPC-2025</span></p>
                </motion.div>
 
                <motion.div 
                  initial={{ opacity: 0, x: -20 }}
-                 animate={{ opacity: 1, x: 0 }}
+                 whileInView={{ opacity: 1, x: 0 }}
+                 viewport={{ once: true }}
                  transition={{ delay: 0.7 }}
-                 className="absolute bottom-12 -left-12 glass p-5 rounded-3xl border-white/10 shadow-2xl animate-float-slow delay-500 min-w-[140px]"
+                 className="absolute bottom-12 -left-12 glass p-6 rounded-[2rem] border-white/10 shadow-[0_0_40px_rgba(59,130,246,0.2)] animate-float-slow delay-500 min-w-[180px]"
                >
-                  <div className="flex items-center gap-3 mb-1">
-                    <Award className="text-yellow-400" size={20} />
-                    <p className="text-2xl font-black text-white italic">15+</p>
+                  <div className="flex items-center gap-4 mb-2">
+                    <div className="p-2 rounded-xl bg-primary/20 text-primary glow-primary">
+                      <Target size={24} />
+                    </div>
+                    <p className="text-3xl font-[800] text-white tracking-tighter">96%</p>
                   </div>
-                  <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Projects done</p>
+                  <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest leading-tight">Model Accuracy <br/> <span className="text-primary underline">Optimized</span></p>
                </motion.div>
 
                <motion.div 
                  initial={{ opacity: 0, y: 20 }}
-                 animate={{ opacity: 1, y: 0 }}
+                 whileInView={{ opacity: 1, y: 0 }}
+                 viewport={{ once: true }}
                  transition={{ delay: 0.9 }}
-                 className="absolute -bottom-4 right-1/4 glass p-4 px-6 rounded-2xl border-white/10 shadow-2xl animate-pulse-slow"
+                 className="absolute -bottom-6 right-1/4 glass p-4 px-8 rounded-2xl border-white/5 shadow-2xl animate-pulse-slow"
                >
                   <div className="flex items-center gap-3">
-                    <Rocket className="text-primary" size={18} />
-                    <p className="text-xs font-black text-white uppercase tracking-tighter">AI Specialist</p>
+                    <div className="w-2 h-2 rounded-full bg-red-500 animate-ping" />
+                    <p className="text-[10px] font-black text-white uppercase tracking-[0.3em]">AI Specialist <span className="text-slate-500 ml-1">/</span> IoT</p>
                   </div>
                </motion.div>
             </div>

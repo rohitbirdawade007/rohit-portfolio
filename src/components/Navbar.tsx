@@ -112,7 +112,7 @@ const Navbar = () => {
           <Button 
             variant="default" 
             size="sm"
-            className="bg-white text-black hover:bg-gray-200 rounded-full px-6 h-10 font-bold uppercase tracking-widest text-[10px] transition-all active:scale-95"
+            className="bg-primary text-white hover:bg-primary/90 rounded-full px-8 h-12 font-[800] uppercase tracking-widest text-[10px] transition-all active:scale-95 shadow-[0_0_20px_rgba(59,130,246,0.3)] border-none"
             onClick={() => scrollToSection("contact")}
           >
             Hire Me

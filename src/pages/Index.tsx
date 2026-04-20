@@ -12,6 +12,7 @@ import BlogsSection from "@/components/BlogsSection";
 import GitHubStats from "@/components/GitHubStats";
 import DataVisSection from "@/components/DataVisSection";
 import ContactSection from "@/components/ContactSection";
+import CTASection from "@/components/CTASection";
 import Footer from "@/components/Footer";
 import BackToTop from "@/components/BackToTop";
 import SEO from "@/components/SEO";
@@ -88,6 +89,8 @@ const Index = () => {
         <GitHubStats />
         
         <BlogsSection />
+        
+        <CTASection />
         
         <ContactSection />
       </main>

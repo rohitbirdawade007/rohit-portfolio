@@ -23,7 +23,7 @@ const sensorData = [
 const DataVisSection = () => {
   return (
     <section id="data-vis" className="py-32 relative bg-[#020617] overflow-hidden">
-      <div className="container mx-auto px-6 max-w-7xl relative z-10">
+      <div className="container relative z-10">
         <motion.div 
           initial={{ opacity: 0, x: -20 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -31,7 +31,7 @@ const DataVisSection = () => {
           className="mb-20 section-title-accent"
         >
           <span className="subheading-premium">Analytics</span>
-          <h2 className="heading-premium text-white">Data <span className="gradient-text-premium">Intelligence</span></h2>
+          <h2 className="heading-premium text-white">Data <span className="gradient-text">Intelligence</span></h2>
           <p className="text-gray-400 max-w-2xl mt-6 text-sm font-medium">
             Visualizing the performance of AI models and real-time sensor data from IoT nodes.
           </p>
