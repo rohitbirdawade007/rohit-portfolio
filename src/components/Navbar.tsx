@@ -4,8 +4,8 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import ThemeToggle from "./ThemeToggle";
 import { useProfile } from "@/context/ProfileContext";
-import AnimatedLogo from "./AnimatedLogo";
 import { motion, AnimatePresence } from "framer-motion";
+import { Menu, X } from "lucide-react";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -13,20 +13,17 @@ const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const { profile } = useProfile();
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
-      
       const sections = document.querySelectorAll("section");
-      const scrollPosition = window.scrollY + 120;
+      const scrollPosition = window.scrollY + 100;
       
       sections.forEach((section) => {
         const sectionTop = section.offsetTop;
         const sectionHeight = section.offsetHeight;
         const sectionId = section.getAttribute("id") || "";
-        
         if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
           setActiveSection(sectionId);
         }
@@ -39,18 +36,14 @@ const Navbar = () => {
 
   const scrollToSection = (sectionId: string) => {
     setMobileMenuOpen(false);
-    
     if (location.pathname !== "/") {
       navigate(`/#${sectionId}`);
       return;
     }
-    
     const section = document.getElementById(sectionId);
     if (section) {
-      const offset = 100;
-      const sectionTop = section.offsetTop - offset;
       window.scrollTo({
-        top: sectionTop,
+        top: section.offsetTop - 80,
         behavior: "smooth"
       });
     }
@@ -61,112 +54,76 @@ const Navbar = () => {
     { id: "about", label: "About" },
     { id: "skills", label: "Skills" },
     { id: "projects", label: "Projects" },
-    { id: "experience", label: "Experience" },
     { id: "contact", label: "Contact" }
   ];
 
   return (
-    <header className="fixed top-6 left-0 w-full z-50 px-4 md:px-8 pointer-events-none">
-      <motion.div 
-        initial={{ y: -100, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        className={cn(
-          "mx-auto flex justify-between items-center transition-all duration-500 glass max-w-7xl rounded-full px-6 py-2 shadow-2xl border-white/10 pointer-events-auto",
-          isScrolled ? "py-2 bg-black/40" : "py-3 bg-black/20"
-        )}
-      >
-        <Link 
-          to="/" 
-          className="transition-transform active:scale-95"
-        >
-          <AnimatedLogo />
+    <header className={cn(
+      "fixed top-0 left-0 w-full z-50 transition-all duration-300",
+      isScrolled ? "bg-[#020617]/80 backdrop-blur-md border-b border-white/5 py-4" : "bg-transparent py-6"
+    )}>
+      <div className="container flex justify-between items-center">
+        <Link to="/" className="text-xl font-bold tracking-tighter text-white">
+          ROHIT<span className="text-blue-500">.</span>
         </Link>
         
-        {/* Desktop Navigation Pill */}
-        <nav className="hidden lg:flex items-center gap-1 p-1 bg-white/5 backdrop-blur-md rounded-full border border-white/10">
+        {/* Desktop Navigation */}
+        <nav className="hidden md:flex items-center gap-8">
           {navItems.map((item) => (
             <button
               key={item.id}
               onClick={() => scrollToSection(item.id)}
               className={cn(
-                "relative px-4 py-2 rounded-full text-[11px] font-bold uppercase tracking-widest transition-all duration-300",
-                activeSection === item.id 
-                  ? "text-white" 
-                  : "text-gray-400 hover:text-white"
+                "text-sm font-medium transition-colors relative",
+                activeSection === item.id ? "text-white" : "text-[#94a3b8] hover:text-white"
               )}
             >
+              {item.label}
               {activeSection === item.id && (
                 <motion.div 
                   layoutId="activeNav"
-                  className="absolute inset-0 bg-primary rounded-full -z-10"
-                  transition={{ type: "spring", bounce: 0.25, duration: 0.5 }}
+                  className="absolute -bottom-1 left-0 right-0 h-px bg-blue-500"
+                  transition={{ type: "spring", stiffness: 380, damping: 30 }}
                 />
               )}
-              {item.label}
             </button>
           ))}
-        </nav>
-
-        <div className="hidden lg:flex items-center gap-4">
-          <ThemeToggle />
           <Button 
-            variant="default" 
-            size="sm"
-            className="bg-primary text-white hover:bg-primary/90 rounded-full px-8 h-12 font-[800] uppercase tracking-widest text-[10px] transition-all active:scale-95 shadow-[0_0_20px_rgba(59,130,246,0.3)] border-none"
+            className="bg-blue-600 text-white hover:bg-blue-500 rounded-lg px-6 h-10 font-bold text-xs"
             onClick={() => scrollToSection("contact")}
           >
             Hire Me
           </Button>
-        </div>
+        </nav>
         
-        {/* Mobile Controls */}
-        <div className="flex lg:hidden items-center gap-4">
-          <ThemeToggle />
-          <button 
-            className="w-10 h-10 flex items-center justify-center rounded-full glass border-white/10 transition-colors" 
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          >
-            {mobileMenuOpen ? (
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
-            ) : (
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="16" y1="6" y2="6"></line><line x1="4" x2="18" y1="18" y2="18"></line></svg>
-            )}
-          </button>
-        </div>
-      </motion.div>
-      
-      {/* Mobile Menu Content */}
+        {/* Mobile Toggle */}
+        <button 
+          className="md:hidden text-white" 
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+        >
+          {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
+      </div>
+
+      {/* Mobile Menu */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div 
-            initial={{ opacity: 0, y: -20, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -20, scale: 0.95 }}
-            className="lg:hidden fixed top-[100px] left-4 right-4 glass rounded-[2rem] border-white/10 shadow-2xl overflow-hidden pointer-events-auto"
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            className="md:hidden bg-[#020617] border-b border-white/5 overflow-hidden"
           >
-            <div className="p-6 flex flex-col gap-2">
+            <div className="container py-8 flex flex-col gap-4">
               {navItems.map((item) => (
                 <button
                   key={item.id}
                   onClick={() => scrollToSection(item.id)}
-                  className={cn(
-                    "py-3 px-6 text-left font-bold uppercase tracking-[0.2em] text-[10px] rounded-xl transition-all",
-                    activeSection === item.id 
-                      ? "bg-primary text-white" 
-                      : "text-gray-400 hover:bg-white/5 hover:text-white"
-                  )}
+                  className="text-left py-4 text-xl font-bold text-[#94a3b8] hover:text-white"
                 >
                   {item.label}
                 </button>
               ))}
-              <div className="pt-4">
-                <Button 
-                  className="w-full h-12 rounded-xl bg-primary hover:bg-primary/90 text-white font-bold uppercase tracking-widest text-[10px]"
-                  onClick={() => scrollToSection("contact")}
-                >
-                  Get In Touch
-                </Button>
-              </div>
             </div>
           </motion.div>
         )}

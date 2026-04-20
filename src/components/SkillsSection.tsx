@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { API_URL } from "@/services/api";
-import { motion, AnimatePresence } from "framer-motion";
-import { Cpu, Globe, FlaskConical, Layout, Terminal, Zap } from "lucide-react";
+import { motion } from "framer-motion";
+import { Cpu, FlaskConical, Layout, Terminal, Code } from "lucide-react";
 
 interface Skill {
   _id: string;
@@ -28,10 +28,10 @@ const SkillsSection = () => {
   }, []);
 
   const categories = [
-    { name: "AI & ML", icon: <FlaskConical size={16} /> },
-    { name: "IoT & Hardware", icon: <Cpu size={16} /> },
-    { name: "Languages", icon: <Terminal size={16} /> },
-    { name: "Web & Tools", icon: <Layout size={16} /> }
+    { name: "AI & ML", icon: <FlaskConical size={18} /> },
+    { name: "IoT & Hardware", icon: <Cpu size={18} /> },
+    { name: "Languages", icon: <Terminal size={18} /> },
+    { name: "Web & Tools", icon: <Layout size={18} /> }
   ];
 
   const filteredSkills = skills.filter(skill => {
@@ -44,113 +44,86 @@ const SkillsSection = () => {
   });
 
   return (
-    <section id="skills" className="py-32 relative bg-[#020617] overflow-hidden">
-      {/* Background Decorative Rings */}
-      <div className="absolute top-1/2 right-[-10%] w-[50%] h-[50%] border-2 border-primary/5 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-1/2 left-[-10%] w-[40%] h-[40%] border-2 border-blue-500/5 rounded-full blur-3xl pointer-events-none" />
+    <section id="skills" className="py-32 bg-[#020617]">
+      <div className="container">
+        <div className="max-w-4xl mx-auto">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="mb-20 text-center"
+          >
+             <span className="subheading">Technical Stack</span>
+             <h2 className="heading-section">Tools of the <span className="text-blue-500">Trade</span></h2>
+          </motion.div>
 
-      <div className="container relative z-10">
-        <motion.div 
-          initial={{ opacity: 0, x: -20 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          className="mb-20 section-title-accent"
-        >
-           <span className="subheading-premium font-black">Proficiency</span>
-           <h2 className="heading-premium text-white">Technical <span className="gradient-text">Registry</span></h2>
-           <p className="text-gray-400 max-w-2xl mt-6 text-sm font-medium">
-             Expertise developed through academic excellence and hands-on implementation of cutting-edge technologies.
-           </p>
-        </motion.div>
+          {/* Categories Filter */}
+          <div className="flex flex-wrap items-center justify-center gap-4 mb-16 px-4">
+            {categories.map((cat) => (
+              <button
+                key={cat.name}
+                onClick={() => setActiveCategory(cat.name)}
+                className={`flex items-center gap-2 px-6 py-3 rounded-full text-sm font-semibold transition-all border ${
+                  activeCategory === cat.name 
+                    ? "bg-blue-600 text-white border-blue-600 shadow-lg shadow-blue-500/20" 
+                    : "bg-white/5 text-[#94a3b8] border-white/10 hover:bg-white/10 hover:text-white"
+                }`}
+              >
+                {cat.name}
+              </button>
+            ))}
+          </div>
 
-        {/* Categories Tabs */}
-        <div className="flex flex-wrap justify-center gap-3 mb-16 px-4">
-          {categories.map((cat) => (
-            <button
-              key={cat.name}
-              onClick={() => setActiveCategory(cat.name)}
-              className={`flex items-center gap-2 px-6 py-3 rounded-full text-[10px] font-black uppercase tracking-widest transition-all ${
-                activeCategory === cat.name 
-                  ? "bg-primary text-white shadow-[0_0_20px_rgba(59,130,246,0.3)]" 
-                  : "glass text-gray-400 hover:text-white"
-              }`}
-            >
-              {cat.icon}
-              {cat.name}
-            </button>
-          ))}
-        </div>
-
-        {/* Skills Cards Grid */}
-        <div className="min-h-[400px]">
+          {/* Clean Grid of Badges/Tags */}
           <motion.div 
             layout
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-24"
+            className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4"
           >
-            <AnimatePresence mode="popLayout">
-              {filteredSkills.map((skill) => (
-                <motion.div 
-                  key={skill._id}
-                  layout
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.9 }}
-                  transition={{ duration: 0.4 }}
-                  className="glass-card p-6 rounded-3xl border-white/5 group hover:border-primary/50 transition-all cursor-default"
-                >
-                  <div className="flex justify-between items-start mb-4">
-                    <div className="p-3 rounded-2xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white transition-all">
-                      <Zap size={20} />
-                    </div>
-                    <span className="text-[10px] font-black text-gray-500 uppercase tracking-widest bg-white/5 px-3 py-1 rounded-full">{skill.proficiency}% Proficient</span>
-                  </div>
-                  <h3 className="text-lg font-black text-white uppercase tracking-tighter mb-2">{skill.name}</h3>
-                  <p className="text-xs text-gray-400 font-medium leading-relaxed mb-6 line-clamp-2">
-                    {skill.description || "Mastering the core concepts and real-world applications of this technology."}
-                  </p>
-                  <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
-                    <motion.div 
-                      initial={{ width: 0 }}
-                      whileInView={{ width: `${skill.proficiency}%` }}
-                      transition={{ duration: 1, ease: "easeOut" }}
-                      className="h-full bg-gradient-to-r from-primary to-cyan-400 rounded-full"
-                    />
-                  </div>
-                </motion.div>
-              ))}
-            </AnimatePresence>
+            {filteredSkills.map((skill) => (
+              <motion.div 
+                key={skill._id}
+                layout
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="glass-card p-4 flex flex-col items-center justify-center text-center group cursor-default"
+              >
+                <div className="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-500 flex items-center justify-center mb-3 group-hover:bg-blue-600 group-hover:text-white transition-all">
+                  <Code size={18} />
+                </div>
+                <h3 className="text-sm font-bold text-white mb-1">{skill.name}</h3>
+                <p className="text-[10px] text-[#94a3b8] font-medium uppercase tracking-widest">{skill.proficiency}% Experience</p>
+              </motion.div>
+            ))}
           </motion.div>
-        </div>
-
-        {/* Certifications (Reference Image Style) */}
-        <div className="mb-12">
-           <h3 className="text-2xl font-black text-white uppercase tracking-tighter italic">Key Certifications</h3>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-32">
-           {[
-             { title: "AI model-building workshop", date: "NEXT WAVE (2024)" },
-             { title: "HTML & CSS For Web Development", date: "Skill Academy" },
-             { title: "Mastering Battery Management Systems", date: "Free Live Course" },
-             { title: "Research Paper Writing & Publishing", date: "National Online Workshop" }
-           ].map((cert, i) => (
-             <motion.div 
-               key={i} 
-               whileHover={{ y: -5 }}
-               className="glass p-6 rounded-[2rem] border-white/5 flex items-center gap-6 group hover:border-primary/30 transition-all duration-500"
-             >
-                <div className="w-14 h-14 glass rounded-2xl flex items-center justify-center font-black text-xl text-primary shrink-0 border-white/10 group-hover:bg-primary group-hover:text-white transition-all">
-                   0{i + 1}
-                </div>
-                <div>
-                  <p className="text-sm font-black text-white uppercase tracking-tight group-hover:text-primary transition-colors">{cert.title}</p>
-                  <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mt-1">{cert.date}</p>
-                </div>
-             </motion.div>
-           ))}
+          
+          {experience_placeholder()}
         </div>
       </div>
     </section>
   );
+
+  function experience_placeholder() {
+    return (
+      <div className="mt-32">
+        <h3 className="text-xl font-bold text-white mb-8 text-center uppercase tracking-widest italic opacity-50">Certifications & Accreditations</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+           {[
+             "AI model-building workshop - NEXT WAVE",
+             "HTML & CSS For Web Development",
+             "Mastering Battery Management Systems",
+             "Research Paper Writing & Publishing"
+           ].map((cert, i) => (
+             <div key={i} className="glass p-6 rounded-2xl flex items-center gap-4 border-white/5 hover:bg-white/5 transition-colors">
+                <div className="w-10 h-10 rounded-full bg-blue-500/10 text-blue-500 flex items-center justify-center shrink-0">
+                  {i+1}
+                </div>
+                <span className="text-sm font-semibold text-[#94a3b8]">{cert}</span>
+             </div>
+           ))}
+        </div>
+      </div>
+    );
+  }
 };
 
 export default SkillsSection;

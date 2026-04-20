@@ -2,17 +2,12 @@ import { useEffect, lazy, Suspense } from "react";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import AboutSection from "@/components/AboutSection";
-import ResumeSection from "@/components/ResumeSection";
 import ProjectsSection from "@/components/ProjectsSection";
 import SkillsSection from "@/components/SkillsSection";
-import AchievementsSection from "@/components/AchievementsSection";
 import ExperienceSection from "@/components/ExperienceSection";
 import ResearchSection from "@/components/ResearchSection";
 import BlogsSection from "@/components/BlogsSection";
-import GitHubStats from "@/components/GitHubStats";
-import DataVisSection from "@/components/DataVisSection";
 import ContactSection from "@/components/ContactSection";
-import CTASection from "@/components/CTASection";
 import Footer from "@/components/Footer";
 import BackToTop from "@/components/BackToTop";
 import SEO from "@/components/SEO";
@@ -70,9 +65,6 @@ const Index = () => {
           transition={{ duration: 1 }}
         >
           <AboutSection />
-        </motion.div>
-        
-        <ResumeSection />
         
         <SkillsSection />
         
@@ -80,17 +72,9 @@ const Index = () => {
         
         <ExperienceSection />
         
-        <AchievementsSection />
-        
         <ResearchSection />
 
-        <DataVisSection />
-
-        <GitHubStats />
-        
         <BlogsSection />
-        
-        <CTASection />
         
         <ContactSection />
       </main>
