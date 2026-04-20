@@ -1,109 +1,179 @@
-import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Github, Linkedin, Mail, ChevronDown } from "lucide-react";
+import { Github, Linkedin, Mail, ChevronDown, Award, Target, Rocket } from "lucide-react";
 import { useProfile } from "@/context/ProfileContext";
 import { Magnetic } from "./Magnetic";
+import Typewriter from 'typewriter-effect';
+import { motion } from "framer-motion";
 
 const HeroSection = () => {
   const { profile } = useProfile();
   const name = profile?.name || "Rohit Sandip Birdawade";
-  const title = profile?.title || "AI & ML Engineer";
   const githubUrl = profile?.socialLinks?.github || "#";
   const linkedinUrl = profile?.socialLinks?.linkedin || "#";
   const email = profile?.email || "";
 
+  const roles = ["AI & ML Engineer", "IoT Developer", "Full Stack Developer", "Data Scientist"];
+
   return (
-    <section id="home" className="min-h-screen relative flex items-center pt-20 bg-white overflow-hidden bg-dot-pattern">
+    <section id="home" className="min-h-screen relative flex items-center pt-24 pb-16 overflow-hidden bg-[#020617]">
+      {/* Background Decorative Elements */}
+      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/20 rounded-full blur-[120px] animate-pulse-slow" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[30%] h-[30%] bg-blue-600/10 rounded-full blur-[100px] animate-float-slow" />
+        <div className="absolute top-[20%] right-[10%] w-[15%] h-[15%] bg-cyan-400/10 rounded-full blur-[80px]" />
+      </div>
+
       <div className="container mx-auto px-6 relative z-10">
-        <div className="flex flex-col lg:flex-row items-center gap-16">
+        <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
           {/* Left Column: Text Content */}
-          <div className="flex-1 text-left animate-fadeUp">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 text-primary border border-blue-100 mb-8">
+          <motion.div 
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="flex-1 text-left"
+          >
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass mb-8 border-white/10">
                <span className="relative flex h-2 w-2">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
                </span>
-               <span className="text-[10px] font-black uppercase tracking-[0.2em]">Available for Collaboration</span>
+               <span className="text-[10px] font-black uppercase tracking-[0.2em] text-blue-400">Available for Collaboration</span>
             </div>
 
-            <span className="subheading-premium">Pioneering AI & IoT</span>
-            <h1 className="text-5xl md:text-8xl font-black text-gray-900 mb-8 tracking-tighter leading-[0.9] uppercase italic">
-               Hi, I am <span className="text-primary">Rohit</span>
+            <h1 className="text-5xl md:text-8xl font-black text-white mb-6 tracking-tighter leading-[0.9] uppercase italic">
+               HI, I AM <br />
+               <span className="gradient-text-premium">{name.split(' ')[0]}</span>
             </h1>
             
-            <p className="text-lg md:text-xl text-gray-500 mb-10 max-w-xl leading-relaxed font-medium">
-               A dedicated <span className="text-gray-900 font-bold">{title}</span> bridging the gap between intelligent hardware and sophisticated software solutions.
+            <div className="text-xl md:text-3xl text-gray-400 mb-8 font-bold h-12 flex items-center">
+              <span className="mr-3 text-white italic">A dedicated </span>
+              <span className="text-primary">
+                <Typewriter
+                  options={{
+                    strings: roles,
+                    autoStart: true,
+                    loop: true,
+                    deleteSpeed: 50,
+                  }}
+                />
+              </span>
+            </div>
+
+            <p className="text-lg text-gray-400 mb-10 max-w-xl leading-relaxed font-medium">
+               Bridging the gap between intelligent hardware and sophisticated software solutions. Specializing in Deep Learning, Embedded Systems, and Real-time Data processing.
             </p>
 
             <div className="flex flex-wrap gap-4 mb-12">
               <Magnetic>
                 <Button 
                   size="lg"
-                  className="h-16 px-10 rounded-2xl bg-primary hover:bg-primary/90 text-white font-black uppercase tracking-widest text-xs shadow-2xl shadow-primary/20 transition-all active:scale-95"
+                  className="h-14 px-8 rounded-2xl bg-white text-black hover:bg-gray-200 font-bold uppercase tracking-widest text-xs transition-all active:scale-95 shadow-[0_0_20px_rgba(255,255,255,0.3)]"
                   onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
                 >
-                  View My Work
+                  Explore Projects
                 </Button>
               </Magnetic>
               <Magnetic>
                 <Button 
                   variant="outline"
                   size="lg"
-                  className="h-16 px-10 rounded-2xl border-2 border-primary/10 text-primary hover:bg-primary/5 font-black uppercase tracking-widest text-xs transition-all active:scale-95"
+                  className="h-14 px-8 rounded-2xl border-white/10 text-white hover:bg-white/5 font-bold uppercase tracking-widest text-xs transition-all active:scale-95 glass"
                   onClick={() => window.open(linkedinUrl, '_blank')}
                 >
-                  Connect
+                  Connect Now
                 </Button>
               </Magnetic>
             </div>
 
-            <div className="flex items-center gap-8">
+            <div className="flex items-center gap-6">
                {[
-                 { icon: <Github size={22} />, url: githubUrl },
-                 { icon: <Linkedin size={22} />, url: linkedinUrl },
-                 { icon: <Mail size={22} />, url: `mailto:${email}` },
+                 { icon: <Github size={24} />, url: githubUrl },
+                 { icon: <Linkedin size={24} />, url: linkedinUrl },
+                 { icon: <Mail size={24} />, url: `mailto:${email}` },
                ].map((s, i) => (
-                 <a 
-                   key={i} href={s.url} 
+                 <motion.a 
+                   key={i} 
+                   href={s.url} 
                    target="_blank" rel="noreferrer"
-                   className="text-gray-400 hover:text-primary transition-all transform hover:scale-110 active:scale-95"
+                   whileHover={{ scale: 1.2, y: -5 }}
+                   className="p-3 rounded-full glass border-white/5 text-gray-400 hover:text-white transition-colors"
                  >
                    {s.icon}
-                 </a>
+                 </motion.a>
                ))}
             </div>
-          </div>
+          </motion.div>
 
           {/* Right Column: Visual/Image */}
-          <div className="flex-1 relative animate-fadeUp animate-delay-200 hidden lg:block">
-            <div className="relative w-full aspect-square max-w-[500px] mx-auto">
-               <div className="absolute inset-0 bg-primary/5 rounded-[3rem] rotate-6 animate-pulse-slow" />
-               <div className="absolute inset-0 bg-primary/10 rounded-[3rem] -rotate-3 animate-float" />
-               <div className="relative w-full h-full rounded-[3rem] overflow-hidden border-2 border-white shadow-2xl">
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.8, rotate: 5 }}
+            animate={{ opacity: 1, scale: 1, rotate: 0 }}
+            transition={{ duration: 1, ease: "easeOut" }}
+            className="flex-1 relative hidden lg:block"
+          >
+            <div className="relative w-full aspect-square max-w-[550px] mx-auto">
+               {/* Decorative background shapes */}
+               <div className="absolute inset-0 bg-primary/20 rounded-[4rem] rotate-6 blur-md animate-pulse-slow" />
+               <div className="absolute inset-0 border-2 border-primary/30 rounded-[4rem] -rotate-3 animate-float" />
+               
+               <div className="relative w-full h-full rounded-[4rem] overflow-hidden border border-white/10 shadow-[0_0_50px_rgba(0,0,0,0.5)]">
                   <img 
                     src={profile?.profileImage || "/profile.png"} 
                     alt={name}
-                    className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"
+                    className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-1000 scale-105 hover:scale-100"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-primary/40 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#020617] via-transparent to-transparent opacity-80" />
                </div>
                
-               {/* Decorative elements */}
-               <div className="absolute -bottom-6 -right-6 glass p-6 rounded-2xl shadow-2xl border-white/20 animate-float translate-x-4">
-                  <p className="text-3xl font-black text-primary">8.7</p>
-                  <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Target CGPA</p>
-               </div>
+               {/* Stats Badges */}
+               <motion.div 
+                 initial={{ opacity: 0, x: 20 }}
+                 animate={{ opacity: 1, x: 0 }}
+                 transition={{ delay: 0.5 }}
+                 className="absolute -top-6 -right-6 glass p-5 rounded-3xl border-white/10 shadow-2xl animate-float min-w-[140px]"
+               >
+                  <div className="flex items-center gap-3 mb-1">
+                    <Target className="text-cyan-400" size={20} />
+                    <p className="text-2xl font-black text-white italic">8.7</p>
+                  </div>
+                  <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Curr. CGPA</p>
+               </motion.div>
+
+               <motion.div 
+                 initial={{ opacity: 0, x: -20 }}
+                 animate={{ opacity: 1, x: 0 }}
+                 transition={{ delay: 0.7 }}
+                 className="absolute bottom-12 -left-12 glass p-5 rounded-3xl border-white/10 shadow-2xl animate-float-slow delay-500 min-w-[140px]"
+               >
+                  <div className="flex items-center gap-3 mb-1">
+                    <Award className="text-yellow-400" size={20} />
+                    <p className="text-2xl font-black text-white italic">15+</p>
+                  </div>
+                  <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Projects done</p>
+               </motion.div>
+
+               <motion.div 
+                 initial={{ opacity: 0, y: 20 }}
+                 animate={{ opacity: 1, y: 0 }}
+                 transition={{ delay: 0.9 }}
+                 className="absolute -bottom-4 right-1/4 glass p-4 px-6 rounded-2xl border-white/10 shadow-2xl animate-pulse-slow"
+               >
+                  <div className="flex items-center gap-3">
+                    <Rocket className="text-primary" size={18} />
+                    <p className="text-xs font-black text-white uppercase tracking-tighter">AI Specialist</p>
+                  </div>
+               </motion.div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
 
       <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce hidden md:block">
          <div 
-           className="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center cursor-pointer hover:bg-gray-100 text-gray-400 border border-gray-100"
+           className="w-12 h-12 rounded-full glass flex items-center justify-center cursor-pointer hover:bg-white/10 text-gray-400 border border-white/5"
            onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
          >
-            <ChevronDown size={20} />
+            <ChevronDown size={24} />
          </div>
       </div>
     </section>

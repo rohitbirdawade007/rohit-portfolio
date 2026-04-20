@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
-import { BookOpen, ChevronRight } from "lucide-react";
+import { BookOpen, ChevronRight, FileText } from "lucide-react";
 import { getResearchList } from "@/services/api";
+import { motion } from "framer-motion";
 
 interface Research {
   _id: string;
@@ -19,57 +20,61 @@ const ResearchSection = () => {
   }, []);
 
   return (
-    <section id="research" className="py-24 bg-[#f8fafc]">
-      <div className="container mx-auto px-6 max-w-5xl">
-        <div className="flex items-center gap-3 mb-16">
-          <h2 className="text-3xl font-bold text-[#1a1a1a]">Publications & Research Work</h2>
-          <div className="h-[2px] w-12 bg-primary mt-2" />
-        </div>
+    <section id="research" className="py-32 relative bg-[#020617] overflow-hidden">
+      {/* Background Decor */}
+      <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-primary/5 rounded-full blur-[100px] pointer-events-none" />
 
-        <div className="space-y-6">
-          {research.map((item) => (
-            <div 
+      <div className="container mx-auto px-6 max-w-5xl relative z-10">
+        <motion.div 
+          initial={{ opacity: 0, x: -20 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          className="mb-20 section-title-accent"
+        >
+           <span className="subheading-premium font-black">Scholarly Pursuit</span>
+           <h2 className="heading-premium text-white">Publications & <span className="gradient-text-premiumitalic">Research</span></h2>
+        </motion.div>
+
+        <div className="space-y-8">
+          {(research.length > 0 ? research : [
+            { 
+              _id: '1', 
+              title: "AI and IoT in Sustainable Agriculture: A Review", 
+              description: "Exploring the intersection of edge computing and machine learning for precision farming optimization.", 
+              status: "Published" 
+            },
+            { 
+              _id: '2', 
+              title: "Advanced Embedded Systems in Robotics", 
+              description: "Researching real-time operating systems and their performance in autonomous robotic platforms.", 
+              status: "Research" 
+            }
+          ]).map((item, idx) => (
+            <motion.div 
               key={item._id} 
-              className="bg-white p-8 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-all group flex items-start gap-6 relative overflow-hidden"
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: idx * 0.1 }}
+              className="glass-card p-8 rounded-[2.5rem] border-white/5 hover:border-primary/20 transition-all group flex items-start gap-6 relative overflow-hidden"
             >
-              <div className="absolute left-0 top-0 bottom-0 w-1 bg-primary/20 group-hover:bg-primary transition-colors" />
-              <div className="w-10 h-10 bg-blue-50 text-primary rounded-lg flex items-center justify-center shrink-0">
-                 <BookOpen size={20} />
+              <div className="absolute left-0 top-0 bottom-0 w-1 bg-primary/20 group-hover:bg-primary transition-all duration-500" />
+              <div className="w-12 h-12 glass text-primary rounded-xl flex items-center justify-center shrink-0 border-white/10 group-hover:bg-primary group-hover:text-white transition-all">
+                 <FileText size={20} />
               </div>
               <div className="flex-1">
-                 <h3 className="text-lg font-bold text-gray-900 group-hover:text-primary transition-colors mb-2">
+                 <h3 className="text-xl font-black text-white group-hover:text-primary transition-colors mb-3 leading-tight uppercase italic tracking-tighter">
                     {item.title}
                  </h3>
-                 <p className="text-sm text-gray-500 mb-4 leading-relaxed">
+                 <p className="text-sm text-gray-400 mb-6 leading-relaxed font-medium">
                     {item.description}
                  </p>
-                 <div className="text-[10px] text-primary font-bold uppercase tracking-widest flex items-center gap-1 hover:underline cursor-pointer">
-                    View Publication <ChevronRight size={10} />
+                 <div className="inline-flex items-center gap-2 text-[10px] text-gray-500 font-black uppercase tracking-widest hover:text-white cursor-pointer transition-colors group/link">
+                    View Publication <ChevronRight size={14} className="text-primary group-hover/link:translate-x-1 transition-transform" />
                  </div>
               </div>
-            </div>
+            </motion.div>
           ))}
-
-          {/* Static placeholders if empty per reference image style */}
-          {research.length === 0 && (
-            <>
-              <div className="bg-white p-8 rounded-xl border border-gray-100 shadow-sm flex items-start gap-6 relative overflow-hidden">
-                <div className="absolute left-0 top-0 bottom-0 w-1 bg-primary/20" />
-                <div className="w-10 h-10 bg-blue-50 text-primary rounded-lg flex items-center justify-center shrink-0">
-                   <BookOpen size={20} />
-                </div>
-                <div className="flex-1">
-                   <h3 className="text-lg font-bold text-gray-900 mb-2">AI and IoT in Sustainable Agriculture: A Review</h3>
-                   <p className="text-sm text-gray-500 mb-4 leading-relaxed">
-                     Rohit Sandip Birdawade, ... Journal of Instrumentation Technology & Innovations, 2025
-                   </p>
-                   <div className="text-[10px] text-primary font-bold uppercase tracking-widest flex items-center gap-1 hover:underline cursor-pointer">
-                      View Publication <ChevronRight size={10} />
-                   </div>
-                </div>
-              </div>
-            </>
-          )}
         </div>
       </div>
     </section>
