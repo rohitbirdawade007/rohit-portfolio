@@ -1,9 +1,13 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { getProjects } from '@/services/api';
+import { getProjects, getAssetUrl } from '@/services/api';
 import { Github, ExternalLink, Code2, ChevronRight, ArrowLeft } from 'lucide-react';
 import { Badge } from "@/components/ui/badge";
 import SEO from "@/components/SEO";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import { Button } from "@/components/ui/button";
+import { motion } from "framer-motion";
 
 interface Project {
   _id: string;
@@ -28,133 +32,122 @@ const ProjectsPage = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-950 text-white font-jakarta">
+    <div className="min-h-screen bg-white text-slate-900 flex flex-col">
       <SEO title="Project Archive | Rohit Birdawade" />
-      
-      {/* Dynamic Background */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[120px] animate-pulse-slow" />
-        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-secondary/5 rounded-full blur-[120px] animate-pulse-slow" style={{ animationDelay: '2s' }} />
-      </div>
+      <Navbar />
 
-      <div className="relative z-10 container mx-auto px-4 py-20 max-w-7xl">
-        <div className="mb-20 animate-fadeUp">
-          <Link 
-            to="/" 
-            className="group inline-flex items-center gap-2 text-sm text-gray-400 hover:text-primary transition-all duration-300 mb-8"
-          >
-            <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
-              <ArrowLeft size={16} />
-            </div>
-            Back to Command Center
-          </Link>
-          
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-            <div>
-              <h1 className="text-5xl md:text-7xl font-black tracking-tighter mb-4 italic">PROJECT <span className="text-gradient">ARCHIVE</span></h1>
-              <p className="text-gray-400 text-lg max-w-2xl font-medium">A comprehensive collection of engineering systems, machine learning models, and full-stack deployments.</p>
-            </div>
-            <div className="h-14 px-6 bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl flex items-center gap-3 text-sm font-bold">
-               <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-               {projects.length} SYSTEMS DEPLOYED
-            </div>
-          </div>
-        </div>
-
-        {loading ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {Array.from({ length: 6 }).map((_, i) => (
-              <div key={i} className="animate-pulse bg-white/5 rounded-[2rem] h-[450px] border border-white/10" />
-            ))}
-          </div>
-        ) : projects.length === 0 ? (
-          <div className="text-center py-32 glass rounded-[3rem] border-white/10">
-            <Code2 size={64} className="mx-auto mb-6 text-primary animate-float" />
-            <h3 className="text-2xl font-bold mb-2">Systems Offline</h3>
-            <p className="text-gray-400">Database is currently empty. Check back later.</p>
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {projects.map((project, idx) => (
-              <div
-                key={project._id}
-                className="group relative bg-[#0a0a0b] border border-white/10 rounded-[2.5rem] overflow-hidden hover:border-primary/50 transition-all duration-500 flex flex-col animate-fadeUp self-start"
-                style={{ animationDelay: `${idx * 0.1}s` }}
-              >
-                {/* Image Section */}
-                <div className="relative h-64 overflow-hidden">
-                  {project.image ? (
-                    <img 
-                      src={project.image} 
-                      alt={project.title} 
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
-                    />
-                  ) : (
-                    <div className="w-full h-full bg-gradient-to-br from-gray-900 to-black flex items-center justify-center">
-                      <Code2 size={48} className="text-white/10" />
-                    </div>
-                  )}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0b] to-transparent opacity-80" />
-                  
-                  <div className="absolute top-6 left-6 flex gap-2">
-                    {project.category && (
-                      <Badge className="bg-white/10 backdrop-blur-md border-white/10 text-white font-black px-3 py-1 scale-90">
-                        {project.category}
-                      </Badge>
-                    )}
-                  </div>
-                </div>
-
-                {/* Content Section */}
-                <div className="p-8 pt-0 -mt-12 relative z-10 flex flex-col flex-1">
-                  <h2 className="text-2xl font-black mb-3 tracking-tight group-hover:text-primary transition-colors line-clamp-2">
-                    {project.title}
-                  </h2>
-                  <p className="text-gray-400 text-sm leading-relaxed mb-6 line-clamp-3 font-medium">
-                    {project.description}
-                  </p>
-                  
-                  {project.techStack?.length > 0 && (
-                    <div className="flex flex-wrap gap-2 mb-8">
-                      {project.techStack.slice(0, 4).map((t, i) => (
-                        <span key={i} className="text-[10px] font-black uppercase tracking-widest px-3 py-1 bg-white/5 rounded-lg border border-white/5 text-gray-300">
-                          {t}
-                        </span>
-                      ))}
-                      {project.techStack.length > 4 && (
-                        <span className="text-[10px] font-black text-gray-500">+{project.techStack.length - 4} MORE</span>
-                      )}
-                    </div>
-                  )}
-
-                  <div className="flex items-center justify-between mt-auto pt-6 border-t border-white/5">
-                    <Link
-                      to={`/projects/${project._id}`}
-                      className="flex items-center gap-2 text-xs font-black uppercase tracking-[0.2em] text-white hover:text-primary transition-all group/link"
-                    >
-                      Explore Case Study
-                      <ChevronRight size={14} className="group-hover/link:translate-x-1 transition-transform" />
-                    </Link>
-                    
-                    <div className="flex items-center gap-4">
-                      {project.githubUrl && (
-                        <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="p-2 bg-white/5 hover:bg-primary/20 rounded-xl text-gray-400 hover:text-white transition-all transform hover:scale-110">
-                          <Github size={18} />
-                        </a>
-                      )}
-                      {project.demoUrl && (
-                        <a href={project.demoUrl} target="_blank" rel="noopener noreferrer" className="p-2 bg-white/5 hover:bg-primary/20 rounded-xl text-gray-400 hover:text-white transition-all transform hover:scale-110">
-                          <ExternalLink size={18} />
-                        </a>
-                      )}
-                    </div>
-                  </div>
-                </div>
+      <main className="flex-grow pt-32 pb-20">
+        <div className="container max-w-7xl">
+          <div className="mb-20 animate-fadeUp">
+            <Link 
+              to="/" 
+              className="group inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-slate-400 hover:text-sky-500 transition-all mb-12"
+            >
+              <ArrowLeft size={16} /> Back to Portfolio
+            </Link>
+            
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-10">
+              <div className="max-w-3xl">
+                <h1 className="text-4xl md:text-7xl font-bold tracking-tight mb-6 leading-tight">
+                   Project <span className="text-sky-500">Archive</span>
+                </h1>
+                <p className="text-lg md:text-xl text-slate-600 font-medium leading-relaxed">
+                   A comprehensive collection of intelligent systems, deep learning models, and complex software architectures engineered for reliability and performance.
+                </p>
               </div>
-            ))}
+              <div className="h-20 px-8 bg-sky-50 border border-sky-100 rounded-3xl flex flex-col justify-center gap-1 min-w-[200px]">
+                 <span className="text-[10px] font-bold text-sky-600 uppercase tracking-[0.2em]">Active Systems</span>
+                 <span className="text-3xl font-black text-slate-900">{projects.length} Total</span>
+              </div>
+            </div>
           </div>
-        )}
-      </div>
+
+          {loading ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {Array.from({ length: 6 }).map((_, i) => (
+                <div key={i} className="animate-pulse bg-slate-50 rounded-[2.5rem] h-[450px] border border-slate-100" />
+              ))}
+            </div>
+          ) : projects.length === 0 ? (
+            <div className="text-center py-40 bg-slate-50 rounded-[3rem] border border-slate-100">
+              <Code2 size={64} className="mx-auto mb-6 text-slate-200" />
+              <h3 className="text-2xl font-bold mb-2">Workspace Empty</h3>
+              <p className="text-slate-500">Project database is currently being initialized.</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+              {projects.map((project, idx) => (
+                <motion.div
+                  key={project._id}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: idx * 0.1 }}
+                  className="bg-white border border-slate-100 rounded-[2.5rem] overflow-hidden hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 flex flex-col shadow-sm"
+                >
+                  {/* Image */}
+                  <div className="relative h-64 overflow-hidden">
+                    <img 
+                      src={getAssetUrl(project.image)} 
+                      alt={project.title} 
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
+                    />
+                    <div className="absolute top-6 left-6">
+                      <div className="badge-tech bg-white/90 backdrop-blur-sm border-none shadow-lg">
+                        {project.category || "ENGINEERING"}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Content */}
+                  <div className="p-8 flex flex-col flex-1">
+                    <h2 className="text-xl font-bold mb-3 tracking-snug hover:text-sky-500 transition-colors line-clamp-2">
+                      {project.title}
+                    </h2>
+                    <p className="text-slate-600 text-sm leading-relaxed mb-6 line-clamp-3 font-medium">
+                      {project.description}
+                    </p>
+                    
+                    {project.techStack?.length > 0 && (
+                      <div className="flex flex-wrap gap-2 mb-8">
+                        {project.techStack.slice(0, 3).map((t, i) => (
+                          <span key={i} className="text-[10px] font-bold uppercase tracking-widest px-3 py-1 bg-slate-50 rounded-lg border border-slate-100 text-slate-500">
+                            {t}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+
+                    <div className="flex items-center justify-between mt-auto pt-6 border-t border-slate-100">
+                      <Link
+                        to={`/projects/${project._id}`}
+                        className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-sky-500 hover:text-sky-700 transition-all"
+                      >
+                        Explore Details
+                        <ChevronRight size={16} />
+                      </Link>
+                      
+                      <div className="flex items-center gap-3">
+                        {project.githubUrl && (
+                          <Button variant="ghost" size="sm" className="w-9 h-9 p-0 text-slate-400 hover:text-sky-500" onClick={() => window.open(project.githubUrl, '_blank')}>
+                            <Github size={18} />
+                          </Button>
+                        )}
+                        {project.demoUrl && (
+                          <Button variant="ghost" size="sm" className="w-9 h-9 p-0 text-slate-400 hover:text-sky-500" onClick={() => window.open(project.demoUrl, '_blank')}>
+                            <ExternalLink size={18} />
+                          </Button>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          )}
+        </div>
+      </main>
+      <Footer />
     </div>
   );
 };

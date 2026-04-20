@@ -114,13 +114,13 @@ const AdminLayout = () => {
                   className={cn(
                     "flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 group relative",
                     location.pathname === item.to
-                      ? "bg-indigo-600 text-white shadow-lg shadow-indigo-900/40"
+                      ? "bg-sky-500 text-white shadow-lg shadow-sky-900/40"
                       : "hover:bg-slate-800 hover:text-white"
                   )}
                 >
                   <span className={cn(
                     "transition-transform group-hover:scale-110",
-                    location.pathname === item.to ? "text-white" : "text-slate-400 group-hover:text-indigo-400"
+                    location.pathname === item.to ? "text-white" : "text-slate-400 group-hover:text-sky-400"
                   )}>
                     {item.icon}
                   </span>

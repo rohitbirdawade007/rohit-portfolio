@@ -1,7 +1,10 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { getAchievements } from '@/services/api';
-import { Trophy, Medal, BookOpen, Star, Award, Check, ChevronRight } from 'lucide-react';
+import { getAchievements, getAssetUrl } from '@/services/api';
+import { Trophy, Medal, BookOpen, Star, Award, Check, ChevronRight, ArrowLeft } from 'lucide-react';
+import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
+import { motion } from 'framer-motion';
 
 interface Achievement {
   _id: string;
@@ -23,9 +26,9 @@ const iconMap: Record<string, React.ReactNode> = {
 };
 
 const CATEGORIES = [
-  { key: 'achievements',    label: '🏆 Achievements & Awards',   borderColor: 'border-yellow-500', iconBg: 'bg-yellow-500/10 text-yellow-400', linkColor: 'text-yellow-400' },
-  { key: 'cocurricular',   label: '📚 Co-Curricular Activities', borderColor: 'border-blue-500',   iconBg: 'bg-blue-500/10 text-blue-400',   linkColor: 'text-blue-400' },
-  { key: 'extracurricular',label: '✨ Extracurricular Activities',borderColor: 'border-green-500',  iconBg: 'bg-green-500/10 text-green-400', linkColor: 'text-green-400' },
+  { key: 'achievements',    label: 'Major Honors', icon: <Trophy size={18} /> },
+  { key: 'cocurricular',   label: 'Technical Activities', icon: <Medal size={18} /> },
+  { key: 'extracurricular',label: 'Leadership & Events', icon: <Star size={18} /> },
 ];
 
 const AchievementsPage = () => {
@@ -40,72 +43,91 @@ const AchievementsPage = () => {
   }, []);
 
   if (loading) return (
-    <div className="min-h-screen bg-gray-950 flex items-center justify-center">
+    <div className="min-h-screen bg-white flex items-center justify-center">
       <div className="animate-pulse space-y-4 w-full max-w-5xl px-4">
         {Array.from({ length: 6 }).map((_, i) => (
-          <div key={i} className="h-24 bg-gray-800 rounded-xl" />
+          <div key={i} className="h-32 bg-slate-50 rounded-2xl border border-slate-100" />
         ))}
       </div>
     </div>
   );
 
   return (
-    <div className="min-h-screen bg-gray-950 text-white">
-      <div className="container mx-auto px-4 py-16 max-w-6xl">
-        <div className="mb-12">
-          <Link to="/" className="text-sm text-gray-400 hover:text-white transition-colors">← Back to Portfolio</Link>
-          <h1 className="text-4xl font-bold mt-4 mb-3">Achievements & Recognition</h1>
-          <p className="text-gray-400">Awards, competitions, research, and leadership roles</p>
-        </div>
+    <div className="min-h-screen bg-white text-slate-900 flex flex-col">
+      <Navbar />
+      <main className="flex-grow pt-32 pb-20">
+        <div className="container max-w-6xl">
+          <div className="mb-16 animate-fadeUp">
+            <Link to="/" className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-slate-400 hover:text-sky-500 transition-colors mb-8">
+              <ArrowLeft size={16} /> Back to Portfolio
+            </Link>
+            <h1 className="text-4xl md:text-6xl font-bold tracking-tight mb-4">Recognitions & <span className="text-sky-500">Excellence</span></h1>
+            <p className="text-slate-500 max-w-xl text-lg font-medium">Tracing consistent technical performance, leadership, and scholarly achievements.</p>
+          </div>
 
-        {CATEGORIES.map(cat => {
-          const items = achievements.filter(a => a.category === cat.key);
-          if (items.length === 0) return null;
-          return (
-            <div key={cat.key} className="mb-14">
-              <h2 className="text-2xl font-bold mb-6">{cat.label}</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-                {items.map(item => (
-                  <div
-                    key={item._id}
-                    className={`bg-gray-900 rounded-xl border-t-4 ${cat.borderColor} border border-gray-800 p-5 hover:border-gray-700 hover:-translate-y-1 transition-all duration-300`}
-                  >
-                    <div className="flex items-start gap-3">
-                      <div className={`p-2.5 rounded-full ${cat.iconBg}`}>
-                        {iconMap[item.type] || <Check size={20} />}
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <h3 className="font-semibold text-sm leading-snug mb-1 line-clamp-2">{item.title}</h3>
-                        {item.organization && (
-                          <p className="text-gray-500 text-xs mb-1 line-clamp-1">{item.organization}</p>
-                        )}
-                        {item.date && <p className="text-gray-600 text-xs mb-2">{item.date}</p>}
+          {CATEGORIES.map((cat, idx) => {
+            const items = achievements.filter(a => a.category === cat.key);
+            if (items.length === 0) return null;
+            return (
+              <div key={cat.key} className="mb-16 animate-fadeUp" style={{ animationDelay: `${idx * 0.1}s` }}>
+                <div className="flex items-center gap-3 mb-10">
+                   <div className="p-3 rounded-xl bg-sky-50 text-sky-500 border border-sky-100">
+                      {cat.icon}
+                   </div>
+                   <h2 className="text-2xl font-bold uppercase tracking-tight text-slate-900">{cat.label}</h2>
+                   <div className="h-px flex-1 bg-slate-100 ml-4" />
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                  {items.map(item => (
+                    <motion.div
+                      key={item._id}
+                      whileHover={{ y: -5 }}
+                      className="bg-white rounded-3xl border border-slate-100 p-8 hover:shadow-xl transition-all duration-300 shadow-sm"
+                    >
+                      <div className="flex flex-col h-full">
+                        <div className="flex items-center justify-between mb-6">
+                           <div className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center text-sky-500">
+                              {iconMap[item.type] || <Check size={18} />}
+                           </div>
+                           <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{item.date}</span>
+                        </div>
+                        
+                        <h3 className="text-lg font-bold mb-3 tracking-tight text-slate-900 leading-snug">{item.title}</h3>
+                        <p className="text-sky-600 text-xs font-bold uppercase tracking-widest mb-4">{item.organization}</p>
+                        
                         {item.images?.[0] && (
-                          <img src={item.images[0]} alt={item.title} className="w-full h-28 object-cover rounded-lg mb-3 border border-gray-800" />
+                          <div className="mb-6 rounded-2xl overflow-hidden border border-slate-100 aspect-video">
+                             <img src={getAssetUrl(item.images[0])} alt={item.title} className="w-full h-full object-cover" />
+                          </div>
                         )}
-                        <p className="text-gray-400 text-xs line-clamp-2 mb-3">{item.description}</p>
+                        
+                        <p className="text-slate-600 text-xs line-clamp-2 mb-8 font-medium italic">"{item.description}"</p>
+                        
                         <Link
                           to={`/achievements/${item._id}`}
-                          className={`text-xs font-medium flex items-center gap-1 ${cat.linkColor} hover:underline`}
+                          className="mt-auto text-[10px] font-bold flex items-center justify-between gap-1 text-slate-400 hover:text-sky-500 transition-colors uppercase tracking-widest"
                         >
-                          View Details <ChevronRight size={12} />
+                          View Case Details <ChevronRight size={14} className="text-sky-500" />
                         </Link>
                       </div>
-                    </div>
-                  </div>
-                ))}
+                    </motion.div>
+                  ))}
+                </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
 
-        {achievements.length === 0 && (
-          <div className="text-center py-20 text-gray-500">
-            <Trophy size={48} className="mx-auto mb-4 opacity-30" />
-            <p>No achievements yet. Add some from the Admin Dashboard.</p>
-          </div>
-        )}
-      </div>
+          {achievements.length === 0 && (
+            <div className="text-center py-32 bg-slate-50 rounded-[3rem] border border-slate-100">
+              <Trophy size={64} className="mx-auto mb-6 text-slate-200" />
+              <h3 className="text-2xl font-bold mb-2">Honors Under Review</h3>
+              <p className="text-slate-500 uppercase tracking-widest text-[10px] font-bold">Certification database is updating</p>
+            </div>
+          )}
+        </div>
+      </main>
+      <Footer />
     </div>
   );
 };
