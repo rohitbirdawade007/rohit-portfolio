@@ -7,7 +7,6 @@ import {
   ChevronRight, PanelLeftClose, PanelLeft, Settings, Bell
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import Login from './Login';
 import Dashboard from './Dashboard';
 import ProjectManager from './ProjectManager';
 import SkillManager from './SkillManager';
@@ -69,12 +68,12 @@ const AdminLayout = () => {
   };
 
   useEffect(() => {
-    if (token && location.pathname === '/admin/login') {
-      navigate('/admin/dashboard', { replace: true });
+    if (!token && !['/admin/login', '/admin/register'].includes(location.pathname)) {
+      navigate('/admin/login', { replace: true });
     }
   }, [token, location.pathname, navigate]);
 
-  if (!token) return <Login />;
+  if (!token) return null;
 
   return (
     <div className="flex h-screen bg-slate-50 dark:bg-[#0f172a] transition-colors font-sans selection:bg-indigo-100 selection:text-indigo-900">

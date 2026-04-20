@@ -18,6 +18,8 @@ import NotFound from "./pages/NotFound";
 
 // ─── Lazy Load (code splitting) ───────────────────────────────────────────────
 const AdminLayout        = lazy(() => import("./admin/AdminLayout"));
+const Login              = lazy(() => import("./admin/Login"));
+const Register           = lazy(() => import("./admin/Register"));
 const ProjectsPage       = lazy(() => import("./pages/projects/ProjectsPage"));
 const ProjectDetailPage  = lazy(() => import("./pages/projects/ProjectDetailPage"));
 const AchievementsPage   = lazy(() => import("./pages/achievements/AchievementsPage"));
@@ -121,7 +123,9 @@ const App = () => {
                   <Route path="/blog" element={<BlogPage />} />
                   <Route path="/blog/:id" element={<BlogDetailPage />} />
 
-                  {/* ── Admin Dashboard ────────────────────────────────── */}
+                  {/* ── Admin Auth & Dashboard ────────────────────────── */}
+                  <Route path="/admin/login" element={<Login />} />
+                  <Route path="/admin/register" element={<Register />} />
                   <Route path="/admin/*" element={<AdminLayout />} />
 
                   {/* ── 404 ────────────────────────────────────────────── */}
