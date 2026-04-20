@@ -11,12 +11,12 @@ interface SEOProps {
 }
 
 const DEFAULTS = {
-  title: 'Rohit Birdawade — AI & IoT Engineer Portfolio',
-  description: 'Full-stack engineer specializing in AI/ML, IoT systems, and scalable software solutions. Browse projects, research, achievements, and more.',
-  image: 'https://rohitbirdawade.vercel.app/og-image.png',
-  url: 'https://rohitbirdawade.vercel.app',
+  title: 'Rohit Birdawade — Premium AI & IoT Engineer Portfolio',
+  description: 'Elite-tier AI/ML and IoT Engineer specializing in neural architectures and real-time edge intelligence. Explore high-accuracy models and IoT dashboard solutions.',
+  image: 'https://rohitbirdawade007.vercel.app/og-image.png',
+  url: 'https://rohitbirdawade007.vercel.app',
   type: 'website' as const,
-  keywords: 'AI engineer, IoT, machine learning, full stack developer, React, Python, portfolio',
+  keywords: 'AI Engineer Portfolio, IoT Developer, Machine Learning Expert, Deep Learning Solutions, Rohit Birdawade, National Prize Winner, NLPC-2025, ESP32 AI, Neural Networks',
   author: 'Rohit Birdawade'
 };
 
