@@ -1,4 +1,4 @@
-import { useEffect, lazy, Suspense } from "react";
+import { useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import AboutSection from "@/components/AboutSection";
@@ -44,12 +44,12 @@ const Index = () => {
   }, []);
   
   return (
-    <div className="min-h-screen overflow-x-hidden bg-[#020617] text-white selection:bg-primary/30">
+    <div className="min-h-screen overflow-x-hidden bg-[#020617] text-white selection:bg-blue-500/30">
       <SEO />
       
       {/* Global Progress Bar */}
       <motion.div 
-        className="fixed top-0 left-0 right-0 h-1 bg-primary z-[60] origin-left"
+        className="fixed top-0 left-0 right-0 h-1 bg-blue-600 z-[60] origin-left"
         style={{ scaleX }}
       />
       
@@ -57,25 +57,12 @@ const Index = () => {
       
       <main className="relative">
         <HeroSection />
-        
-        <motion.div 
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1 }}
-        >
-          <AboutSection />
-        
+        <AboutSection />
         <SkillsSection />
-        
         <ProjectsSection />
-        
         <ExperienceSection />
-        
         <ResearchSection />
-
         <BlogsSection />
-        
         <ContactSection />
       </main>
 
