@@ -3,98 +3,133 @@ import { ArrowRight, FileText, Sparkles } from "lucide-react";
 import { useProfile } from "@/context/ProfileContext";
 import { motion } from "framer-motion";
 import { getAssetUrl } from "@/services/api";
+import TechMarquee from "./TechMarquee";
+import TiltCard from "./TiltCard";
 
 const HeroSection = () => {
   const { profile } = useProfile();
   const name = profile?.name || "Rohit Birdawade";
 
   return (
-    <section id="home" className="pt-32 pb-20 md:pt-48 md:pb-32 bg-mesh-glow relative overflow-hidden">
+    <section id="home" className="pt-32 pb-10 md:pt-48 bg-mesh-glow relative overflow-hidden">
       {/* Premium Background Layers */}
       <div className="absolute inset-0 bg-grid-slate opacity-[0.2]" />
-      <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-sky-200/20 rounded-full blur-[140px] -translate-y-1/2 translate-x-1/2" />
-      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-indigo-100/30 rounded-full blur-[100px] translate-y-1/2 -translate-x-1/2" />
+      <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-sky-100/30 rounded-full blur-[140px] -translate-y-1/2 translate-x-1/2" />
       
-      {/* HUD System telemetry */}
-      <div className="absolute top-40 left-10 hidden xl:block animate-fadeUp">
-        <div className="space-y-4 text-[8px] font-mono text-slate-400 mix-blend-multiply uppercase tracking-[0.4em] font-bold">
-           <p className="flex items-center gap-2"><span className="w-1 h-1 bg-sky-500 rounded-full" /> LOC: [18.5204° N, 73.8567° E]</p>
-           <p className="flex items-center gap-2"><span className="w-1 h-1 bg-sky-500 rounded-full" /> UPLINK: STABLE_V4</p>
-           <p className="flex items-center gap-2"><span className="w-1 h-1 bg-sky-500 rounded-full" /> CORES: 16_VIRTUAL</p>
-        </div>
-      </div>
-
       <div className="container relative z-10">
-        <div className="flex flex-col-reverse lg:flex-row items-center justify-between gap-12 lg:gap-20">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
           
-          {/* Text Content */}
+          {/* Main Info Tile (7 cols) */}
           <motion.div 
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            className="flex-1 text-center lg:text-left"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="lg:col-span-7 bg-white/70 backdrop-blur-xl rounded-[3rem] p-10 md:p-16 border border-slate-100 shadow-sm flex flex-col justify-center"
           >
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-sky-50 text-sky-600 font-bold text-xs uppercase tracking-widest mb-8 border border-sky-100">
-               <Sparkles size={14} className="animate-pulse" />
-               Available for new opportunities
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-sky-50 text-sky-600 font-bold text-[10px] uppercase tracking-[0.2em] mb-10 border border-sky-100 w-fit">
+               <span className="w-1.5 h-1.5 rounded-full bg-sky-500 animate-pulse" /> SYSTEM READY: AVAILABLE
             </div>
-
-            <h1 className="text-5xl md:text-7xl font-bold text-slate-900 mb-6 leading-[1.1] tracking-tight">
-               AI & IoT <span className="text-sky-500">Solutions</span> <br/>
-               Engineered for Impact
+            
+            <h1 className="text-5xl md:text-8xl font-black tracking-tighter text-slate-900 mb-8 leading-[0.95]">
+              AI <span className="text-sky-500">ENGINEER</span> <br/>
+              DESIGNING <br/>
+              INTELLIGENCE.
             </h1>
-
-            <p className="text-lg md:text-xl text-slate-600 mb-10 max-w-xl mx-auto lg:mx-0 leading-relaxed font-medium">
-               I build intelligent systems that bridge the gap between AI, IoT, and high-performance software. Focused on creating real-world value through data.
+            
+            <p className="text-lg md:text-xl text-slate-500 font-medium max-w-xl leading-relaxed mb-12">
+               Architecting high-performance machine learning systems and intelligent hardware interfaces for modern analytical problems.
             </p>
 
-            <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+            <div className="flex flex-wrap gap-4">
                <Button 
-                 className="btn-primary w-full sm:w-auto h-14"
+                 className="btn-primary h-14 px-8"
                  onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
                >
-                 View Projects <ArrowRight size={18} className="ml-2" />
+                 View Systems <ArrowRight size={18} className="ml-2" />
                </Button>
                <Button 
                  variant="outline"
-                 className="btn-secondary w-full sm:w-auto h-14"
+                 className="btn-secondary h-14 px-8"
                  onClick={() => window.open('/resume.pdf', '_blank')}
                >
-                 Download CV <FileText size={18} className="ml-2" />
+                 Uplink CV <FileText size={18} className="ml-2" />
                </Button>
             </div>
           </motion.div>
 
-          {/* Visual Side: Circular Profile */}
+          {/* Profile Tile (5 cols) */}
           <motion.div 
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8 }}
-            className="flex-1 relative"
+            transition={{ delay: 0.1 }}
+            className="lg:col-span-5 relative"
           >
-             <div className="relative w-[300px] h-[300px] md:w-[450px] md:h-[450px] mx-auto group">
-                <div className="absolute inset-0 bg-sky-100 rounded-full scale-105 group-hover:scale-110 transition-transform duration-700" />
-                <div className="relative h-full w-full rounded-full overflow-hidden border-8 border-white shadow-xl">
-                   <img 
-                     src={getAssetUrl(profile?.profileImage || "/profile.png")} 
-                     alt={name}
-                     className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-1000"
-                   />
+            <TiltCard className="h-full">
+              <div className="relative h-full w-full rounded-[3rem] overflow-hidden border border-slate-100 group shadow-lg">
+                <img 
+                  src={getAssetUrl(profile?.profileImage || "/profile.png")} 
+                  alt={name}
+                  className="w-full h-full object-cover transition-all duration-1000 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent flex flex-col justify-end p-10 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <h3 className="text-white text-2xl font-bold tracking-tight">ROHIT BIRDAWADE</h3>
+                  <p className="text-sky-300 font-mono text-[10px] uppercase tracking-widest mt-1">Machine Learning Researcher</p>
                 </div>
-                {/* Float floating badges */}
-                <div className="absolute top-10 -right-4 bg-white p-4 rounded-2xl shadow-xl animate-float border border-slate-100">
-                   <span className="text-[10px] font-bold text-slate-400 block mb-1">ACCURACY</span>
-                   <span className="text-2xl font-bold text-sky-500">96.4%</span>
-                </div>
-                <div className="absolute bottom-20 -left-10 bg-white p-4 rounded-2xl shadow-xl animate-float-slow border border-slate-100">
-                   <span className="text-[10px] font-bold text-slate-400 block mb-1">EXPERIENCE</span>
-                   <span className="text-2xl font-bold text-slate-800">2+ Years</span>
-                </div>
-             </div>
+              </div>
+            </TiltCard>
+          </motion.div>
+
+          {/* Sub-Metrics Bento */}
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="lg:col-span-4 bg-slate-900 rounded-[2.5rem] p-10 text-white flex flex-col justify-between group overflow-hidden relative"
+          >
+            <div className="absolute top-0 right-0 p-10 opacity-10 group-hover:opacity-30 transition-opacity">
+              <Sparkles size={120} />
+            </div>
+            <div>
+              <span className="text-sky-400 font-mono text-[10px] font-bold uppercase tracking-widest mb-2 block">System Performance</span>
+              <h3 className="text-4xl font-black tracking-tighter">96.4%</h3>
+            </div>
+            <p className="text-slate-400 text-sm font-medium leading-relaxed mt-10 uppercase tracking-widest text-[9px]">Average Predictive Model Precision across production deployments</p>
+          </motion.div>
+
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+            className="lg:col-span-4 bg-sky-50 rounded-[2.5rem] p-10 border border-sky-100 flex flex-col justify-between"
+          >
+            <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-sky-500 shadow-sm mb-6">
+              <FileText size={24} />
+            </div>
+            <div>
+               <h3 className="text-2xl font-bold text-slate-900 tracking-tight mb-2">2+ Years</h3>
+               <p className="text-slate-500 text-xs font-bold uppercase tracking-widest">Industry Experience</p>
+            </div>
+          </motion.div>
+
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4 }}
+            className="lg:col-span-4 bg-white rounded-[2.5rem] p-10 border border-slate-100 flex flex-col justify-between shadow-sm"
+          >
+            <div className="flex items-center justify-between mb-8">
+               <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Global Node</span>
+               <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+            </div>
+            <div className="space-y-1">
+               <p className="text-2xl font-bold text-slate-900 tracking-tighter">PUNE, IN</p>
+               <p className="text-[10px] font-mono text-slate-400 tracking-widest uppercase">LAT: 18.5204° N</p>
+            </div>
           </motion.div>
 
         </div>
       </div>
+      
+      <TechMarquee />
     </section>
   );
 };
