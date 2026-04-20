@@ -10,8 +10,8 @@ import ScrollProgressBar from "@/components/ScrollProgressBar";
 import { ThemeProvider } from "@/context/ThemeContext";
 import { ProfileProvider } from "@/context/ProfileContext";
 import { CommandPalette } from "@/components/CommandPalette";
-import CursorFollower from "@/components/CursorFollower";
-import Particles from "@/components/Particles";
+import NeuralCursor from "@/components/NeuralCursor";
+import LiveConsole from "@/components/LiveConsole";
 
 // ─── Eager Load (above the fold) ─────────────────────────────────────────────
 import Index from "./pages/Index";
@@ -84,6 +84,8 @@ const App = () => {
       <ThemeProvider>
         <QueryClientProvider client={queryClient}>
           <ProfileProvider>
+            <NeuralCursor />
+            <LiveConsole />
             <ScrollProgress />
             <div className="min-h-screen">
             <TooltipProvider>
