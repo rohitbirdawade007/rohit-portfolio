@@ -1,135 +1,206 @@
-import { Button } from "@/components/ui/button";
-import { ArrowRight, FileText, Sparkles } from "lucide-react";
+import { ArrowRight, Download, Sparkles, Zap, Globe, Layers } from "lucide-react";
 import { useProfile } from "@/context/ProfileContext";
 import { motion } from "framer-motion";
-import { getAssetUrl } from "@/services/api";
 import TechMarquee from "./TechMarquee";
-import TiltCard from "./TiltCard";
+
+const resolveImage = (path?: string | null): string => {
+  if (!path) return "/profile.png";
+  if (path.startsWith("http://") || path.startsWith("https://")) return path;
+  if (path.startsWith("/")) return path;
+  return "/profile.png";
+};
+
+const fadeUp = (delay = 0) => ({
+  initial: { opacity: 0, y: 28 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.55, delay, ease: [0.16, 1, 0.3, 1] },
+});
 
 const HeroSection = () => {
   const { profile } = useProfile();
-  const name = profile?.name || "Rohit Birdawade";
+  const imgSrc = resolveImage(profile?.profileImage);
 
   return (
-    <section id="home" className="pt-32 pb-10 md:pt-48 bg-mesh-glow relative overflow-hidden">
-      {/* Premium Background Layers */}
-      <div className="absolute inset-0 bg-grid-slate opacity-[0.2]" />
-      <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-sky-100/30 rounded-full blur-[140px] -translate-y-1/2 translate-x-1/2" />
-      
-      <div className="container relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
-          
-          {/* Main Info Tile (7 cols) */}
-          <motion.div 
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="lg:col-span-7 bg-white/70 backdrop-blur-xl rounded-[3rem] p-10 md:p-16 border border-slate-100 shadow-sm flex flex-col justify-center"
-          >
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-sky-50 text-sky-600 font-bold text-[10px] uppercase tracking-[0.2em] mb-10 border border-sky-100 w-fit">
-               <span className="w-1.5 h-1.5 rounded-full bg-sky-500 animate-pulse" /> SYSTEM READY: AVAILABLE
-            </div>
-            
-            <h1 className="text-5xl md:text-8xl font-black tracking-tighter text-slate-900 mb-8 leading-[0.95]">
-              AI <span className="text-sky-500">ENGINEER</span> <br/>
-              DESIGNING <br/>
-              INTELLIGENCE.
-            </h1>
-            
-            <p className="text-lg md:text-xl text-slate-500 font-medium max-w-xl leading-relaxed mb-12">
-               Architecting high-performance machine learning systems and intelligent hardware interfaces for modern analytical problems.
-            </p>
+    <section
+      id="home"
+      className="relative min-h-screen pt-20 pb-0 overflow-hidden flex flex-col"
+    >
+      {/* ── Canvas background elements ── */}
+      <div className="absolute inset-0 bg-dot-grid opacity-[0.35] pointer-events-none" />
+      <div className="absolute -top-[30%] -right-[10%] w-[700px] h-[700px] rounded-full bg-blue-100/60 blur-[140px] pointer-events-none" />
+      <div className="absolute -bottom-[10%] -left-[10%] w-[500px] h-[500px] rounded-full bg-violet-100/40 blur-[140px] pointer-events-none" />
 
-            <div className="flex flex-wrap gap-4">
-               <Button 
-                 className="btn-primary h-14 px-8"
-                 onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
-               >
-                 View Systems <ArrowRight size={18} className="ml-2" />
-               </Button>
-               <Button 
-                 variant="outline"
-                 className="btn-secondary h-14 px-8"
-                 onClick={() => window.open('/resume.pdf', '_blank')}
-               >
-                 Uplink CV <FileText size={18} className="ml-2" />
-               </Button>
-            </div>
-          </motion.div>
+      <div className="container flex-1 flex flex-col justify-center py-12 lg:py-20 relative z-10">
 
-          {/* Profile Tile (5 cols) */}
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.1 }}
-            className="lg:col-span-5 relative"
+        {/* ── Bento Grid Layout ── */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 grid-rows-auto gap-4">
+
+          {/* ──  CELL 1: Main Identity (7 cols, tall) ── */}
+          <motion.div
+            {...fadeUp(0)}
+            className="lg:col-span-7 card p-8 lg:p-12 flex flex-col justify-between min-h-[500px] group"
+            style={{ background: "var(--surface)" }}
           >
-            <TiltCard className="h-full">
-              <div className="relative h-full w-full rounded-[3rem] overflow-hidden border border-slate-100 group shadow-lg">
-                <img 
-                  src={getAssetUrl(profile?.profileImage || "/profile.png")} 
-                  alt={name}
-                  className="w-full h-full object-cover transition-all duration-1000 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent flex flex-col justify-end p-10 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <h3 className="text-white text-2xl font-bold tracking-tight">ROHIT BIRDAWADE</h3>
-                  <p className="text-sky-300 font-mono text-[10px] uppercase tracking-widest mt-1">Machine Learning Researcher</p>
-                </div>
+            {/* Status + System ID */}
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(5,150,105,0.6)] animate-pulse" />
+                <span className="mono text-[10px] font-600 text-[#737373] uppercase tracking-widest">
+                  SYSTEM_ONLINE · PUNE_IN
+                </span>
               </div>
-            </TiltCard>
+              <span className="mono text-[10px] text-[#A3A3A3] hidden sm:block">v5.0 · 2026</span>
+            </div>
+
+            {/* Main headline */}
+            <div className="my-auto py-8">
+              <p className="eyebrow mb-5">
+                <span className="eyebrow-dot" />
+                Data Scientist · AI Engineer
+              </p>
+
+              <h1 className="font-black text-[clamp(3rem,7vw,5.5rem)] tracking-[-0.04em] leading-[0.95] text-[#0A0A0A] mb-6">
+                Rohit<br />
+                <span style={{
+                  background: "linear-gradient(135deg, #1A56DB 0%, #7C3AED 60%)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  backgroundClip: "text",
+                }}>
+                  Birdawade
+                </span>
+              </h1>
+
+              <p className="text-[#525252] text-lg leading-relaxed max-w-lg font-[450]">
+                Architecting high-performance ML pipelines, edge AI
+                deployments, and data-driven systems — from prototype to
+                production scale.
+              </p>
+            </div>
+
+            {/* CTA row */}
+            <div className="flex flex-wrap gap-3 items-center">
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.97 }}
+                onClick={() => document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })}
+                className="btn-primary flex items-center gap-2 text-sm"
+              >
+                View Projects <ArrowRight size={15} />
+              </motion.button>
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.97 }}
+                onClick={() => window.open("/resume.pdf", "_blank")}
+                className="btn-secondary flex items-center gap-2 text-sm"
+              >
+                <Download size={15} /> Resume
+              </motion.button>
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.97 }}
+                onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
+                className="btn-blue flex items-center gap-2 text-sm"
+              >
+                Hire Me <Zap size={14} />
+              </motion.button>
+            </div>
           </motion.div>
 
-          {/* Sub-Metrics Bento */}
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="lg:col-span-4 bg-slate-900 rounded-[2.5rem] p-10 text-white flex flex-col justify-between group overflow-hidden relative"
+          {/* ── CELL 2: Profile Photo (5 cols, tall) ── */}
+          <motion.div
+            {...fadeUp(0.1)}
+            className="lg:col-span-5 relative overflow-hidden rounded-[1.125rem] min-h-[500px]"
+            style={{ background: "#0A0A0A" }}
           >
-            <div className="absolute top-0 right-0 p-10 opacity-10 group-hover:opacity-30 transition-opacity">
-              <Sparkles size={120} />
+            {/* Photo */}
+            <img
+              src={imgSrc}
+              alt="Rohit Birdawade"
+              className="w-full h-full object-cover object-top absolute inset-0"
+              style={{ objectFit: "cover", objectPosition: "center top" }}
+              onError={(e) => { (e.currentTarget as HTMLImageElement).src = "/profile.png"; }}
+            />
+
+            {/* Gradient overlays */}
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-[#0A0A0A]/30 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#0A0A0A]/20 to-transparent" />
+
+            {/* Bottom name plate */}
+            <div className="absolute bottom-0 left-0 right-0 p-7">
+              <p className="mono text-[10px] text-blue-400 uppercase tracking-widest mb-1.5 font-semibold">
+                ML Researcher · B.E. Computer Science
+              </p>
+              <h3 className="text-white text-xl font-bold tracking-tight">Rohit Sandip Birdawade</h3>
+            </div>
+
+            {/* Floating accuracy chip */}
+            <div className="absolute top-5 left-5 bg-[#1A56DB] text-white rounded-xl px-4 py-3 shadow-xl">
+              <p className="mono text-[9px] text-blue-200 uppercase tracking-wider mb-0.5">Model Precision</p>
+              <p className="text-2xl font-black leading-none tracking-tight">96.4%</p>
+            </div>
+
+            {/* Floating active badge */}
+            <div className="absolute top-5 right-5 flex items-center gap-1.5 bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-3 py-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              <span className="text-white text-[10px] font-semibold tracking-wider uppercase">Active</span>
+            </div>
+          </motion.div>
+
+          {/* ── CELL 3: Dark stats panel (4 cols) ── */}
+          <motion.div
+            {...fadeUp(0.15)}
+            className="lg:col-span-4 card-dark p-8 flex flex-col justify-between min-h-[180px]"
+          >
+            <div className="flex items-center justify-between">
+              <Sparkles size={18} className="text-blue-400" />
+              <span className="mono text-[9px] text-white/30 uppercase tracking-widest">Performance</span>
             </div>
             <div>
-              <span className="text-sky-400 font-mono text-[10px] font-bold uppercase tracking-widest mb-2 block">System Performance</span>
-              <h3 className="text-4xl font-black tracking-tighter">96.4%</h3>
+              <p className="text-[4rem] font-black text-white leading-none tracking-[-0.05em]">96.4<span className="text-2xl text-blue-400 font-bold">%</span></p>
+              <p className="text-white/40 text-[10px] mono uppercase tracking-widest mt-2 font-semibold">Avg. Predictive Accuracy</p>
             </div>
-            <p className="text-slate-400 text-sm font-medium leading-relaxed mt-10 uppercase tracking-widest text-[9px]">Average Predictive Model Precision across production deployments</p>
           </motion.div>
 
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-            className="lg:col-span-4 bg-sky-50 rounded-[2.5rem] p-10 border border-sky-100 flex flex-col justify-between"
+          {/* ── CELL 4: Stats row (4 cols) ── */}
+          <motion.div
+            {...fadeUp(0.2)}
+            className="lg:col-span-4 card p-8 flex flex-col justify-between min-h-[180px]"
           >
-            <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-sky-500 shadow-sm mb-6">
-              <FileText size={24} />
+            <Layers size={18} className="text-[#A3A3A3]" />
+            <div>
+              <p className="text-[4rem] font-black text-[#0A0A0A] leading-none tracking-[-0.05em]">15<span className="text-2xl text-[#1A56DB] font-bold">+</span></p>
+              <p className="text-[#A3A3A3] text-[10px] mono uppercase tracking-widest mt-2 font-semibold">Projects Shipped</p>
+            </div>
+          </motion.div>
+
+          {/* ── CELL 5: Location tile (4 cols) ── */}
+          <motion.div
+            {...fadeUp(0.25)}
+            className="lg:col-span-4 card p-8 flex flex-col justify-between min-h-[180px] overflow-hidden"
+          >
+            <div className="flex items-center gap-2">
+              <Globe size={16} className="text-[#A3A3A3]" />
+              <span className="mono text-[9px] text-[#A3A3A3] uppercase tracking-widest">Location</span>
             </div>
             <div>
-               <h3 className="text-2xl font-bold text-slate-900 tracking-tight mb-2">2+ Years</h3>
-               <p className="text-slate-500 text-xs font-bold uppercase tracking-widest">Industry Experience</p>
+              <p className="text-2xl font-black text-[#0A0A0A] leading-tight tracking-tight mb-1">Pune, IN</p>
+              <p className="mono text-[9px] text-[#A3A3A3] uppercase tracking-widest">18.5204°N · 73.8567°E</p>
+            </div>
+            {/* Abstract map decoration */}
+            <div className="absolute right-3 bottom-3 w-24 h-24 opacity-5">
+              <div className="w-full h-full border-2 border-current rounded-full" />
+              <div className="absolute inset-3 border border-current rounded-full" />
+              <div className="absolute inset-6 border border-current rounded-full" />
             </div>
           </motion.div>
-
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4 }}
-            className="lg:col-span-4 bg-white rounded-[2.5rem] p-10 border border-slate-100 flex flex-col justify-between shadow-sm"
-          >
-            <div className="flex items-center justify-between mb-8">
-               <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Global Node</span>
-               <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-            </div>
-            <div className="space-y-1">
-               <p className="text-2xl font-bold text-slate-900 tracking-tighter">PUNE, IN</p>
-               <p className="text-[10px] font-mono text-slate-400 tracking-widest uppercase">LAT: 18.5204° N</p>
-            </div>
-          </motion.div>
-
         </div>
       </div>
-      
-      <TechMarquee />
+
+      {/* Tech Marquee */}
+      <div className="relative z-10">
+        <TechMarquee />
+      </div>
     </section>
   );
 };

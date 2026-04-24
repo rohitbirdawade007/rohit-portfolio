@@ -1,10 +1,22 @@
 export const API_URL = import.meta.env.VITE_API_URL || "https://rohit-portfolio-qgd8.onrender.com/api";
 export const BASE_URL = API_URL.replace('/api', '');
 
+/**
+ * Resolves an asset path to a full URL.
+ * - Full HTTP URLs are returned as-is.
+ * - Backend-uploaded paths (contain /uploads/ or similar) get BASE_URL prepended.
+ * - Local public-folder paths (short paths like /profile.png) are returned as-is
+ *   so the browser serves them from the Vite dev server or the deployed CDN.
+ */
 export const getAssetUrl = (path: string) => {
   if (!path) return '';
-  if (path.startsWith('http')) return path;
-  return `${BASE_URL}${path}`;
+  if (path.startsWith('http://') || path.startsWith('https://')) return path;
+  // Backend-stored files typically live under /uploads/
+  if (path.includes('/uploads/') || path.includes('/api/')) {
+    return `${BASE_URL}${path}`;
+  }
+  // Local public-folder file (e.g., /profile.png) — serve from origin
+  return path;
 };
 
 // ─── Auth helper ──────────────────────────────────────────────────────────────
