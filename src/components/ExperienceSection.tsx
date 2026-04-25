@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { getExperiences } from "@/services/api";
 import { motion } from "framer-motion";
-import { Building2, Calendar, Tag } from "lucide-react";
+import { Building2, Calendar, Tag, Briefcase, ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
 
 interface Exp { _id: string; role: string; company: string; duration: string; description: string; techStack: string[]; }
 
@@ -17,27 +18,40 @@ const ExperienceSection = () => {
   }, []);
 
   return (
-    <section id="experience" className="py-28 relative" style={{ background: "var(--surface)" }}>
-      <div className="container">
+    <section id="experience" className="py-28 relative overflow-hidden" style={{ background: "var(--surface)" }}>
+      {/* Subtle mesh */}
+      <div className="absolute inset-0 bg-dot-grid opacity-[0.12] pointer-events-none" />
+      {/* Glow blobs */}
+      <div className="absolute top-20 right-0 w-[400px] h-[400px] bg-blue-50/50 rounded-full blur-[120px] pointer-events-none" />
+
+      <div className="container relative">
         {/* Label */}
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="section-label">
           <span className="eyebrow"><span className="eyebrow-dot" />System Log</span>
         </motion.div>
 
-        {/* Headline */}
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.05 }} className="mb-14">
-          <h2 className="text-[clamp(2.25rem,4vw,3.5rem)] font-black tracking-[-0.04em] leading-[1.05]">
-            Professional{" "}
-            <span style={{ background: "linear-gradient(135deg,#1A56DB,#7C3AED)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
-              Timeline
-            </span>
-          </h2>
-        </motion.div>
+        {/* Headline + CTA */}
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-14">
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.05 }}>
+            <h2 className="display-md font-black tracking-[-0.04em] leading-[1.05]">
+              Professional{" "}
+              <span style={{ background: "linear-gradient(135deg,#1A56DB,#7C3AED)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
+                Timeline
+              </span>
+            </h2>
+            <p className="text-[#737373] mt-2 text-[15px]">Career milestones and technical contributions.</p>
+          </motion.div>
+          <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }}>
+            <Link to="/experience" className="btn-secondary flex items-center gap-2 text-sm whitespace-nowrap">
+              Full History <ArrowRight size={14} />
+            </Link>
+          </motion.div>
+        </div>
 
         {/* Timeline */}
         <div className="max-w-3xl space-y-0 relative">
-          {/* Vertical line */}
-          <div className="absolute left-[19px] top-6 bottom-6 w-px bg-gradient-to-b from-[#1A56DB]/30 via-[#E5E5E5] to-transparent" />
+          {/* Vertical line — gradient */}
+          <div className="absolute left-[19px] top-6 bottom-6 w-[2px] timeline-line rounded-full" />
 
           {loading
             ? Array.from({ length: 3 }).map((_, i) => (
@@ -56,17 +70,17 @@ const ExperienceSection = () => {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.1 }}
-                  className="flex gap-8 relative pb-8 last:pb-0"
+                  className="flex gap-6 sm:gap-8 relative pb-8 last:pb-0"
                 >
                   {/* Dot */}
                   <div className="relative z-10 shrink-0 mt-6">
-                    <div className="w-9 h-9 rounded-xl bg-white border-2 border-[#1A56DB]/30 flex items-center justify-center shadow-sm">
-                      <div className="w-2.5 h-2.5 rounded-full bg-[#1A56DB]" />
+                    <div className="w-10 h-10 rounded-xl bg-white border-2 border-[#1A56DB]/30 flex items-center justify-center shadow-sm animate-glow-pulse">
+                      <Briefcase size={14} className="text-[#1A56DB]" />
                     </div>
                   </div>
 
                   {/* Card */}
-                  <div className="flex-1 card p-6 hover-lift">
+                  <div className="flex-1 card shimmer-card p-6 hover-lift hover-glow">
                     {/* Top row */}
                     <div className="flex items-start justify-between gap-3 mb-4 flex-wrap">
                       <div>
@@ -83,14 +97,14 @@ const ExperienceSection = () => {
                     </div>
 
                     {/* Description */}
-                    <p className="text-[13px] text-[#737373] leading-relaxed border-l-2 border-[#F0F0EE] pl-4 mb-5">
+                    <p className="text-[13px] text-[#737373] leading-relaxed border-l-2 border-[#1A56DB]/20 pl-4 mb-5">
                       {e.description}
                     </p>
 
                     {/* Tags */}
                     {e.techStack?.length > 0 && (
                       <div className="flex items-center gap-2 flex-wrap">
-                        <Tag size={10} className="text-[#A3A3A3]" />
+                        <Tag size={10} className="text-[#A3A3A3] shrink-0" />
                         {e.techStack.map(t => <span key={t} className="tag">{t}</span>)}
                       </div>
                     )}

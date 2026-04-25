@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Mail, Linkedin, Github, Send, MapPin, Clock, ArrowUpRight } from "lucide-react";
+import { Mail, Linkedin, Github, Send, MapPin, Clock, ArrowUpRight, Rocket } from "lucide-react";
 import { sendMessage } from "@/services/api";
 import { useToast } from "@/hooks/use-toast";
 
@@ -15,7 +15,7 @@ const ContactSection = () => {
     setSending(true);
     try {
       await sendMessage(form);
-      toast({ title: "Message sent!", description: "I'll get back to you within 24 hours." });
+      toast({ title: "Message sent! 🚀", description: "I'll get back to you within 24 hours." });
       setForm({ name: "", email: "", message: "" });
     } catch {
       toast({ title: "Error", description: "Failed to send. Email me directly.", variant: "destructive" });
@@ -25,16 +25,18 @@ const ContactSection = () => {
   };
 
   const socials = [
-    { icon: <Github size={16} />,   label: "GitHub",   sub: "@rohitbirdawade007",        url: "https://github.com/rohitbirdawade007" },
-    { icon: <Linkedin size={16} />, label: "LinkedIn", sub: "rohitbirdawade007",          url: "https://linkedin.com/in/rohitbirdawade007" },
-    { icon: <Mail size={16} />,     label: "Email",    sub: "rohitbirdawade007@gmail.com",url: "mailto:rohitbirdawade007@gmail.com" },
+    { icon: <Github size={16} />,   label: "GitHub",   sub: "@rohitbirdawade007",         url: "https://github.com/rohitbirdawade007",  color: "#0A0A0A" },
+    { icon: <Linkedin size={16} />, label: "LinkedIn", sub: "rohitbirdawade007",           url: "https://linkedin.com/in/rohitbirdawade007", color: "#0A66C2" },
+    { icon: <Mail size={16} />,     label: "Email",    sub: "rohitbirdawade007@gmail.com", url: "mailto:rohitbirdawade007@gmail.com",    color: "#EA4335" },
   ];
 
   return (
-    <section id="contact" className="py-28 relative" style={{ background: "var(--canvas)" }}>
-      <div className="absolute inset-0 bg-dot-grid opacity-[0.25] pointer-events-none" />
+    <section id="contact" className="py-28 relative overflow-hidden" style={{ background: "var(--canvas)" }}>
+      <div className="absolute inset-0 bg-dot-grid opacity-[0.2] pointer-events-none" />
+      <div className="absolute top-1/2 left-0 w-[400px] h-[400px] bg-blue-50/50 rounded-full blur-[140px] -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
+      <div className="absolute top-1/2 right-0 w-[400px] h-[400px] bg-violet-50/40 rounded-full blur-[140px] translate-x-1/2 -translate-y-1/2 pointer-events-none" />
 
-      <div className="container relative">
+      <div className="container relative z-10">
         {/* Label */}
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="section-label">
           <span className="eyebrow"><span className="eyebrow-dot" />Connect Panel</span>
@@ -42,7 +44,7 @@ const ContactSection = () => {
 
         {/* Headline */}
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.05 }} className="mb-14">
-          <h2 className="text-[clamp(2.25rem,4vw,3.5rem)] font-black tracking-[-0.04em] leading-[1.05]">
+          <h2 className="display-md font-black tracking-[-0.04em] leading-[1.05]">
             Let's Build{" "}
             <span style={{ background: "linear-gradient(135deg,#1A56DB,#7C3AED)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
               Together
@@ -60,24 +62,39 @@ const ContactSection = () => {
             initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}
             className="lg:col-span-2 space-y-4"
           >
+            {/* Availability card — prominent */}
+            <div className="card-feature p-6">
+              <div className="flex items-center gap-2 mb-4">
+                <div className="glow-dot" />
+                <p className="text-sm font-bold text-[#059669]">Currently Available</p>
+              </div>
+              <p className="text-[13px] text-[#525252] leading-relaxed mb-4">
+                Looking for AI/ML roles, research positions, and exciting freelance projects.
+              </p>
+              <div className="flex flex-wrap gap-2">
+                <span className="tag-green">Full-Time</span>
+                <span className="tag-blue">Freelance</span>
+                <span className="tag-violet">Research</span>
+              </div>
+            </div>
+
             {/* Quick info card */}
-            <div className="card p-6 space-y-5">
+            <div className="card p-5 space-y-4">
               {[
-                { icon: <MapPin size={14} className="text-[#1A56DB]" />, label: "Location", value: "Pune, Maharashtra, India" },
-                { icon: <Clock size={14} className="text-emerald-500" />, label: "Response Time", value: "Within 24 hours" },
+                { icon: <MapPin size={14} className="text-[#1A56DB]" />,    label: "Location",      value: "Pune, Maharashtra, India",  color: "#1A56DB" },
+                { icon: <Clock size={14} className="text-emerald-500" />,   label: "Response Time", value: "Within 24 hours",           color: "#059669" },
+                { icon: <Rocket size={14} className="text-[#D97706]" />,    label: "Availability",  value: "Open to opportunities",     color: "#D97706" },
               ].map((item, i) => (
                 <div key={i} className="flex items-start gap-3">
-                  <div className="w-8 h-8 rounded-lg bg-[#F5F5F5] border border-[#EBEBEB] flex items-center justify-center shrink-0">{item.icon}</div>
+                  <div className="w-8 h-8 rounded-lg bg-[#F5F5F5] border border-[#EBEBEB] flex items-center justify-center shrink-0">
+                    {item.icon}
+                  </div>
                   <div>
                     <p className="mono text-[10px] font-semibold text-[#A3A3A3] uppercase tracking-widest mb-0.5">{item.label}</p>
                     <p className="text-[13px] font-medium text-[#404040]">{item.value}</p>
                   </div>
                 </div>
               ))}
-              <div className="flex items-center gap-2 pt-1 border-t border-[#F0F0EE]">
-                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_6px_rgba(5,150,105,0.5)]" />
-                <span className="text-[11px] font-semibold text-emerald-700">Available · Open to opportunities</span>
-              </div>
             </div>
 
             {/* Social links */}
@@ -88,10 +105,13 @@ const ContactSection = () => {
                   href={s.url}
                   target="_blank"
                   rel="noreferrer"
-                  whileHover={{ x: 3 }}
-                  className="flex items-center gap-3 p-4 card group hover:border-[#BFDBFE] transition-all"
+                  whileHover={{ x: 4 }}
+                  className="flex items-center gap-3 p-4 card group hover:border-[#BFDBFE] shimmer-card transition-all hover-glow"
                 >
-                  <div className="w-8 h-8 rounded-lg bg-[#F5F5F5] border border-[#EBEBEB] flex items-center justify-center text-[#737373] group-hover:bg-[#0A0A0A] group-hover:text-white group-hover:border-transparent transition-all shrink-0">
+                  <div
+                    className="w-8 h-8 rounded-lg flex items-center justify-center text-white shrink-0 transition-all"
+                    style={{ background: s.color }}
+                  >
                     {s.icon}
                   </div>
                   <div className="min-w-0 flex-1">
@@ -110,7 +130,10 @@ const ContactSection = () => {
             className="lg:col-span-3"
           >
             <div className="card p-8">
-              <h3 className="text-[15px] font-bold text-[#0A0A0A] mb-6">Send a message</h3>
+              <div className="flex items-center gap-2 mb-6">
+                <h3 className="text-[15px] font-bold text-[#0A0A0A]">Send a message</h3>
+                <div className="ml-auto glow-dot" />
+              </div>
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {[
@@ -125,7 +148,7 @@ const ContactSection = () => {
                         onChange={e => setForm(prev => ({ ...prev, [f.key]: e.target.value }))}
                         placeholder={f.placeholder}
                         required
-                        className="w-full px-4 py-3 bg-[#F7F7F5] border border-[#E5E5E5] rounded-xl text-[13px] text-[#0A0A0A] placeholder-[#A3A3A3] focus:outline-none focus:border-[#1A56DB] focus:ring-2 focus:ring-[#1A56DB]/15 transition-all"
+                        className="input-field"
                       />
                     </div>
                   ))}
@@ -137,15 +160,15 @@ const ContactSection = () => {
                     onChange={e => setForm(prev => ({ ...prev, message: e.target.value }))}
                     placeholder="Tell me about your project or idea..."
                     required rows={5}
-                    className="w-full px-4 py-3 bg-[#F7F7F5] border border-[#E5E5E5] rounded-xl text-[13px] text-[#0A0A0A] placeholder-[#A3A3A3] focus:outline-none focus:border-[#1A56DB] focus:ring-2 focus:ring-[#1A56DB]/15 transition-all resize-none"
+                    className="input-field resize-none"
                   />
                 </div>
                 <motion.button
                   type="submit"
                   disabled={sending}
-                  whileHover={{ scale: 1.01 }}
+                  whileHover={{ scale: 1.01, y: -1 }}
                   whileTap={{ scale: 0.98 }}
-                  className="w-full btn-primary py-3.5 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full btn-blue py-3.5 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
                 >
                   {sending
                     ? <><div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /> Sending...</>
