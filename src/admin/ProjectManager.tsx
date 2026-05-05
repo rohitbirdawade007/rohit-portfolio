@@ -115,7 +115,7 @@ const ProjectManager = () => {
     <div className="space-y-10 pb-20">
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 px-2">
         <div>
-           <h1 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tighter leading-none mb-4">Project <span className="text-sky-500">Registry</span></h1>
+           <h1 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tighter leading-none mb-4">Project <span className="text-[#6C63FF]">Registry</span></h1>
            <p className="text-slate-500 font-medium text-lg">Manage technical artifacts and case studies.</p>
         </div>
       </div>
@@ -126,7 +126,7 @@ const ProjectManager = () => {
            <Card className="border border-slate-100 bg-white shadow-sm rounded-[2.5rem] overflow-hidden">
              <CardHeader className="p-10 border-b border-slate-50 bg-slate-50/30">
                <div className="flex items-center gap-3">
-                 <div className="w-10 h-10 rounded-2xl bg-white flex items-center justify-center text-sky-500 shadow-sm">
+                 <div className="w-10 h-10 rounded-2xl bg-white flex items-center justify-center text-[#6C63FF] shadow-sm">
                     <Package size={20} />
                  </div>
                  <CardTitle className="text-xl font-black tracking-tighter">
@@ -153,19 +153,19 @@ const ProjectManager = () => {
                     </div>
                     <div className="space-y-3">
                        <Label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Visual Asset</Label>
-                       <Input id="image" type="file" onChange={(e) => setFile(e.target.files?.[0] || null)} className="h-12 bg-slate-50/50 border-slate-100 rounded-2xl text-[10px] font-bold file:bg-sky-50 file:text-sky-600 file:border-0 file:rounded-full file:mr-2 cursor-pointer" />
+                       <Input id="image" type="file" onChange={(e) => setFile(e.target.files?.[0] || null)} className="h-12 bg-slate-50/50 border-slate-100 rounded-2xl text-[10px] font-bold file:bg-[#6C63FF]/5 file:text-[#6C63FF] file:border-0 file:rounded-full file:mr-2 cursor-pointer" />
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-4 p-5 bg-sky-50 rounded-[2rem] border border-sky-100 shadow-sm">
-                     <input type="checkbox" id="featured" checked={featured} onChange={(e) => setFeatured(e.target.checked)} className="w-5 h-5 rounded-md border-sky-200 text-sky-500 focus:ring-sky-500" />
-                     <Label htmlFor="featured" className="cursor-pointer font-black text-[10px] uppercase tracking-widest text-sky-700 flex items-center gap-2">
-                        <Star size={14} className="fill-sky-500" /> Promote as Featured System
+                  <div className="flex items-center gap-4 p-5 bg-[#6C63FF]/5 rounded-[2rem] border border-[#6C63FF]/15 shadow-sm">
+                     <input type="checkbox" id="featured" checked={featured} onChange={(e) => setFeatured(e.target.checked)} className="w-5 h-5 rounded-md border-sky-200 text-[#6C63FF] focus:ring-[#6C63FF]" />
+                     <Label htmlFor="featured" className="cursor-pointer font-black text-[10px] uppercase tracking-widest text-[#5B54E6] flex items-center gap-2">
+                        <Star size={14} className="fill-[#6C63FF]" /> Promote as Featured System
                      </Label>
                   </div>
 
                   <div className="flex gap-4 pt-6 border-t border-slate-50">
-                    <Button type="submit" className="flex-1 h-14 bg-sky-500 hover:bg-sky-600 text-white rounded-2xl font-black uppercase tracking-widest shadow-xl shadow-sky-500/20 active:scale-95 transition-all">
+                    <Button type="submit" className="flex-1 h-14 bg-[#6C63FF] hover:bg-[#5B54E6] text-white rounded-2xl font-black uppercase tracking-widest shadow-xl shadow-[#6C63FF]/20 active:scale-95 transition-all">
                       {isEditing ? 'Synchronize' : 'Deploy Node'}
                     </Button>
                     {isEditing && (
@@ -200,17 +200,17 @@ const ProjectManager = () => {
                        <div className="h-44 bg-slate-50 relative overflow-hidden">
                           {p.featured && (
                              <div className="absolute top-6 left-6 z-10">
-                               <Badge className="bg-sky-500 text-white font-black px-3 py-1 rounded-full uppercase text-[9px] tracking-widest border-none shadow-lg">FEATURED</Badge>
+                               <Badge className="bg-[#6C63FF] text-white font-black px-3 py-1 rounded-full uppercase text-[9px] tracking-widest border-none shadow-lg">FEATURED</Badge>
                              </div>
                           )}
                           <img src={getAssetUrl(p.image)} alt={p.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
                        </div>
                        <CardContent className="p-8 flex flex-col flex-1">
-                          <h3 className="font-black text-xl mb-3 tracking-tighter text-slate-900 group-hover:text-sky-500 transition-colors uppercase italic">{p.title}</h3>
+                          <h3 className="font-black text-xl mb-3 tracking-tighter text-slate-900 group-hover:text-[#6C63FF] transition-colors uppercase italic">{p.title}</h3>
                           <p className="text-slate-500 text-sm font-medium line-clamp-2 mb-8 italic">"{p.description}"</p>
                           
                           <div className="flex gap-2 mt-auto">
-                             <Button variant="ghost" onClick={() => editProject(p)} className="flex-1 h-12 bg-slate-50 hover:bg-sky-50 text-sky-600 rounded-xl font-black uppercase tracking-widest text-[10px] transition-all border border-slate-100">
+                             <Button variant="ghost" onClick={() => editProject(p)} className="flex-1 h-12 bg-slate-50 hover:bg-[#6C63FF]/5 text-[#6C63FF] rounded-xl font-black uppercase tracking-widest text-[10px] transition-all border border-slate-100">
                                <Edit size={14} className="mr-2"/> Recalibrate
                              </Button>
                              <Button variant="ghost" onClick={() => deleteProject(p._id)} className="h-12 w-12 bg-rose-50/50 hover:bg-rose-50 text-rose-500 rounded-xl border border-rose-100 transition-all">

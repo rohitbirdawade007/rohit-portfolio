@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { getEducations } from "@/services/api";
 import { GraduationCap, Calendar, MapPin, Award, BookOpen } from "lucide-react";
+import { motion } from "framer-motion";
 
 const EducationSection = () => {
   const [educations, setEducations] = useState<any[]>([]);
@@ -22,10 +23,10 @@ const EducationSection = () => {
 
   if (loading) {
     return (
-      <section id="education" className="py-24 bg-white dark:bg-[#020617] transition-colors">
-        <div className="container mx-auto px-6 text-center">
-           <div className="w-12 h-12 border-2 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-           <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Accessing Academic Records...</p>
+      <section id="education" className="py-28" style={{ background: "var(--canvas)" }}>
+        <div className="container text-center">
+           <div className="w-10 h-10 border-2 border-[#6C63FF] border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+           <p className="mono text-[10px] font-semibold text-[#A3A3A3] uppercase tracking-widest">Loading academic records...</p>
         </div>
       </section>
     );
@@ -34,92 +35,110 @@ const EducationSection = () => {
   if (educations.length === 0) return null;
 
   return (
-    <section id="education" className="py-24 md:py-32 relative overflow-hidden bg-white dark:bg-[#020617]">
-      <div className="container mx-auto px-6 relative z-10">
-        <div className="max-w-4xl mb-24 animate-fadeUp">
-          <span className="subheading-premium">Academic Foundation</span>
-          <h2 className="heading-premium dark:text-white">Educational <span className="text-primary italic">Architecture</span></h2>
-          <p className="text-xl text-muted-foreground mt-4 leading-relaxed">
-             A structured roadmap of specialized learning and domain expertise.
+    <section id="education" className="py-28 relative overflow-hidden" style={{ background: "var(--surface)" }}>
+      {/* Decorative elements */}
+      <div className="absolute inset-0 bg-dot-grid opacity-[0.12] pointer-events-none" />
+      <div className="absolute top-1/3 right-0 w-[400px] h-[400px] bg-violet-50/40 rounded-full blur-[130px] pointer-events-none" />
+
+      <div className="container relative z-10">
+        {/* Section label */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }} className="section-label reveal"
+        >
+          <span className="eyebrow"><span className="eyebrow-dot" />Academic Foundation</span>
+        </motion.div>
+
+        {/* Headline */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }} transition={{ delay: 0.05 }}
+          className="mb-14"
+        >
+          <h2 className="display-md font-black tracking-[-0.04em] leading-[1.05] reveal">
+            Educational{" "}
+            <span style={{ background: "linear-gradient(135deg,#6C63FF,#7C3AED)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
+              Architecture
+            </span>
+          </h2>
+          <p className="text-[#737373] mt-3 text-[15px] max-w-lg">
+            A structured roadmap of specialized learning and domain expertise.
           </p>
-        </div>
-        
-        <div className="relative max-w-7xl mx-auto">
-          {/* Vertical Center Line */}
-          <div className="absolute left-[20px] md:left-1/2 top-0 bottom-0 w-[1px] bg-gradient-to-b from-primary via-primary/20 to-transparent -translate-x-1/2 hidden md:block" />
+        </motion.div>
 
-          <div className="space-y-24 relative">
-            {educations.map((edu, index) => (
-              <div 
-                key={edu._id} 
-                className={`relative flex flex-col md:flex-row items-center gap-12 group animate-fadeUp ${index % 2 === 0 ? 'md:flex-row-reverse' : ''}`}
-                style={{ animationDelay: `${index * 150}ms` }}
-              >
-                {/* Timeline Node */}
-                <div className="absolute left-[20px] md:left-1/2 top-0 md:top-1/2 w-10 h-10 bg-white dark:bg-[#020617] border-2 border-primary/20 rounded-xl flex items-center justify-center -translate-x-[18px] md:-translate-x-1/2 md:-translate-y-1/2 z-20 group-hover:border-primary group-hover:rotate-45 transition-all duration-500 shadow-xl">
-                   <GraduationCap size={18} className="text-primary transform group-hover:-rotate-45 transition-all" />
+        {/* Timeline */}
+        <div className="max-w-3xl space-y-0 relative">
+          {/* Vertical line */}
+          <div className="absolute left-[19px] top-6 bottom-6 w-[2px] timeline-line rounded-full" />
+
+          {educations.map((edu, index) => (
+            <motion.div
+              key={edu._id}
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.12 }}
+              className="flex gap-6 sm:gap-8 relative pb-10 last:pb-0 reveal"
+            >
+              {/* Timeline dot */}
+              <div className="relative z-10 shrink-0 mt-6">
+                <div className="w-10 h-10 rounded-xl bg-white border-2 border-[#6C63FF]/30 flex items-center justify-center shadow-sm group-hover:border-[#6C63FF] transition-colors">
+                  <GraduationCap size={16} className="text-[#6C63FF]" />
                 </div>
+              </div>
 
-                {/* Content Side */}
-                <div className="w-full md:w-1/2 pl-12 md:pl-0">
-                  <div className={`bento-item border-white/5 dark:hover:bg-primary/5 transition-all duration-700 relative overflow-hidden ${index % 2 === 0 ? 'md:mr-8' : 'md:ml-8'}`}>
-                    <div className="absolute top-0 right-0 p-8 text-primary/5 pointer-events-none group-hover:text-primary/10 transition-all">
-                       <Award size={100} />
+              {/* Card */}
+              <div className="flex-1 card shimmer-card p-6 hover-lift hover-glow group">
+                {/* Top row: degree + duration */}
+                <div className="flex items-start justify-between gap-3 mb-4 flex-wrap">
+                  <div>
+                    <div className="flex items-center gap-1.5 mb-1.5">
+                      <Award size={12} className="text-[#6C63FF] shrink-0" />
+                      <span className="mono text-[10px] font-semibold text-[#737373] uppercase tracking-widest">{edu.institution}</span>
                     </div>
-
-                    <div className="flex flex-col gap-6 relative z-10">
-                       <div className="flex flex-col gap-2">
-                          <div className="flex items-center gap-3 text-primary">
-                             <Calendar size={14} />
-                             <span className="text-[10px] font-black uppercase tracking-widest">{edu.startDate} — {edu.endDate}</span>
-                          </div>
-                          <h3 className="text-3xl font-black tracking-tighter leading-tight group-hover:text-primary transition-colors">
-                             {edu.degree}
-                          </h3>
-                          <p className="text-lg font-bold text-muted-foreground italic">{edu.institution}</p>
-                       </div>
-
-                       <p className="text-sm leading-relaxed text-muted-foreground/80 line-clamp-3">
-                          {edu.description}
-                       </p>
-
-                       {edu.grade && (
-                         <div className="flex flex-col">
-                            <span className="text-[9px] font-black uppercase tracking-widest text-muted-foreground mb-1">CUMULATIVE SCORE</span>
-                            <span className="text-2xl font-black text-primary">{edu.grade}</span>
-                         </div>
-                       )}
-
-                       {edu.location && (
-                         <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-muted-foreground">
-                            <MapPin size={12} className="text-primary/50" />
-                            {edu.location}
-                         </div>
-                       )}
-                    </div>
+                    <h3 className="text-[15px] font-bold text-[#0A0A0A] group-hover:text-[#6C63FF] transition-colors">{edu.degree}</h3>
+                  </div>
+                  <div className="flex items-center gap-1.5 px-3 py-1.5 bg-[#6C63FF]/5 border border-[#6C63FF]/15 rounded-lg shrink-0">
+                    <Calendar size={11} className="text-[#6C63FF]" />
+                    <span className="mono text-[10px] font-semibold text-[#6C63FF]">{edu.startDate} — {edu.endDate}</span>
                   </div>
                 </div>
 
-                {/* Coursework Side (Visible on Desktop) */}
-                <div className="hidden md:block w-1/2 overflow-hidden">
-                   {edu.coursework && edu.coursework.length > 0 && (
-                      <div className={`flex flex-wrap gap-3 ${index % 2 === 0 ? 'justify-start ml-8' : 'justify-end mr-8'}`}>
-                         {edu.coursework.map((course: string, ci: number) => (
-                           <div key={ci} className="glass px-5 py-3 rounded-2xl border-white/5 hover:border-primary/20 hover:bg-primary/5 transition-all group/sub animate-fadeUp" style={{ animationDelay: `${ci * 50}ms` }}>
-                             <div className="flex items-center gap-2">
-                                <BookOpen size={12} className="text-primary opacity-0 group-hover/sub:opacity-100 transition-opacity" />
-                                <span className="text-[10px] font-black uppercase tracking-widest text-white/40 group-hover/sub:text-white transition-colors">
-                                   {course}
-                                </span>
-                             </div>
-                           </div>
-                         ))}
-                      </div>
-                   )}
+                {/* Description */}
+                {edu.description && (
+                  <p className="text-[13px] text-[#737373] leading-relaxed border-l-2 border-[#6C63FF]/20 pl-4 mb-4">
+                    {edu.description}
+                  </p>
+                )}
+
+                {/* Grade + Location row */}
+                <div className="flex items-center gap-4 flex-wrap">
+                  {edu.grade && (
+                    <div className="flex items-center gap-2 px-3 py-1.5 bg-emerald-50 border border-emerald-200/50 rounded-lg">
+                      <span className="mono text-[9px] font-semibold text-emerald-600 uppercase tracking-widest">Grade:</span>
+                      <span className="text-[13px] font-bold text-emerald-700">{edu.grade}</span>
+                    </div>
+                  )}
+                  {edu.location && (
+                    <div className="flex items-center gap-1.5 text-[#A3A3A3]">
+                      <MapPin size={11} />
+                      <span className="mono text-[10px] font-semibold uppercase tracking-widest">{edu.location}</span>
+                    </div>
+                  )}
                 </div>
+
+                {/* Coursework tags */}
+                {edu.coursework && edu.coursework.length > 0 && (
+                  <div className="flex flex-wrap gap-1.5 mt-4 pt-4 border-t border-[#F0F0EE]">
+                    <BookOpen size={11} className="text-[#A3A3A3] mt-0.5 shrink-0" />
+                    {edu.coursework.map((course: string, ci: number) => (
+                      <span key={ci} className="tag text-[10px]">{course}</span>
+                    ))}
+                  </div>
+                )}
               </div>
-            ))}
-          </div>
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>

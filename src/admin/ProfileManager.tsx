@@ -74,7 +74,7 @@ const ProfileManager = () => {
   if (loading && !formData.name) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh]">
-         <div className="w-12 h-12 border-4 border-sky-500 border-t-transparent rounded-full animate-spin mb-6 shadow-xl shadow-sky-500/20"></div>
+         <div className="w-12 h-12 border-4 border-sky-500 border-t-transparent rounded-full animate-spin mb-6 shadow-xl shadow-[#6C63FF]/20"></div>
          <p className="text-slate-400 font-black uppercase tracking-widest text-xs">Accessing Core Identity Hub...</p>
       </div>
     );
@@ -84,13 +84,13 @@ const ProfileManager = () => {
     <div className="space-y-10 pb-32">
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 px-2">
         <div>
-           <h1 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tighter leading-none mb-4">Core <span className="text-sky-500">Identity</span></h1>
+           <h1 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tighter leading-none mb-4">Core <span className="text-[#6C63FF]">Identity</span></h1>
            <p className="text-slate-500 font-medium text-lg">Manage global parameters for your professional digital persona.</p>
         </div>
         <Button 
           onClick={handleSubmit} 
           disabled={saving} 
-          className="h-16 px-10 bg-sky-500 hover:bg-sky-600 text-white rounded-3xl font-black uppercase tracking-widest shadow-xl shadow-sky-500/20 active:scale-95 transition-all"
+          className="h-16 px-10 bg-[#6C63FF] hover:bg-[#5B54E6] text-white rounded-3xl font-black uppercase tracking-widest shadow-xl shadow-[#6C63FF]/20 active:scale-95 transition-all"
         >
           <Save size={18} className="mr-2" /> {saving ? 'TRANSMITTING...' : 'SYNC IDENTITY'}
         </Button>
@@ -102,7 +102,7 @@ const ProfileManager = () => {
           <Card className="border border-slate-100 bg-white rounded-[3rem] overflow-hidden shadow-sm">
             <CardHeader className="p-10 border-b border-slate-50 bg-slate-50/20">
                <div className="flex items-center gap-3">
-                 <div className="w-10 h-10 rounded-2xl bg-white border border-slate-50 text-sky-500 flex items-center justify-center shadow-sm">
+                 <div className="w-10 h-10 rounded-2xl bg-white border border-slate-50 text-[#6C63FF] flex items-center justify-center shadow-sm">
                     <User size={20} />
                  </div>
                  <CardTitle className="text-xl font-black tracking-tighter uppercase italic">Biometric Asset</CardTitle>
@@ -118,7 +118,7 @@ const ProfileManager = () => {
                   )}
                 </div>
                 <div className="absolute -bottom-2 -right-2">
-                   <div className="w-12 h-12 bg-sky-500 text-white rounded-2xl flex items-center justify-center shadow-xl shadow-sky-500/30 border-4 border-white">
+                   <div className="w-12 h-12 bg-[#6C63FF] text-white rounded-2xl flex items-center justify-center shadow-xl shadow-[#6C63FF]/25 border-4 border-white">
                       <Fingerprint size={20} />
                    </div>
                 </div>
@@ -133,7 +133,7 @@ const ProfileManager = () => {
           <Card className="border border-slate-100 bg-white rounded-[3rem] overflow-hidden shadow-sm">
             <CardHeader className="p-10 border-b border-slate-50 bg-slate-50/20">
                <div className="flex items-center gap-3">
-                 <div className="w-10 h-10 rounded-2xl bg-white border border-slate-50 text-sky-500 flex items-center justify-center shadow-sm">
+                 <div className="w-10 h-10 rounded-2xl bg-white border border-slate-50 text-[#6C63FF] flex items-center justify-center shadow-sm">
                     <Globe size={20} />
                  </div>
                  <CardTitle className="text-xl font-black tracking-tighter uppercase italic">Identity Logo</CardTitle>
@@ -160,7 +160,7 @@ const ProfileManager = () => {
           <Card className="border border-slate-100 bg-white rounded-[3rem] overflow-hidden shadow-sm">
             <CardContent className="p-10 space-y-8">
               <div className="flex items-center gap-3 mb-6">
-                 <Shield size={20} className="text-sky-500" />
+                 <Shield size={20} className="text-[#6C63FF]" />
                  <h3 className="font-black text-xl italic tracking-tighter uppercase text-slate-900 border-b-2 border-sky-500 pb-1">Essential Parameters</h3>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -191,7 +191,7 @@ const ProfileManager = () => {
           <Card className="border border-slate-100 bg-white rounded-[3rem] overflow-hidden shadow-sm">
             <CardContent className="p-10 space-y-10">
               <h3 className="font-black text-xl italic tracking-tighter uppercase text-slate-900 mb-8 flex items-center gap-3">
-                 <div className="w-1.5 h-6 bg-sky-500 rounded-full" />
+                 <div className="w-1.5 h-6 bg-[#6C63FF] rounded-full" />
                  Transmission & Privacy
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
@@ -202,7 +202,7 @@ const ProfileManager = () => {
                     </div>
                     <div className="flex items-center justify-between p-6 bg-slate-50 rounded-2xl border border-slate-50">
                         <Label htmlFor="showEmail" className="font-black text-[10px] uppercase tracking-widest text-slate-500">Public Channel Link</Label>
-                        <Switch id="showEmail" checked={formData.visibility?.showEmail ?? true} onCheckedChange={(c) => handleVisibilityChange('showEmail', c)} className="data-[state=checked]:bg-sky-500" />
+                        <Switch id="showEmail" checked={formData.visibility?.showEmail ?? true} onCheckedChange={(c) => handleVisibilityChange('showEmail', c)} className="data-[state=checked]:bg-[#6C63FF]" />
                     </div>
                 </div>
                 <div className="space-y-6">
@@ -212,7 +212,7 @@ const ProfileManager = () => {
                     </div>
                     <div className="flex items-center justify-between p-6 bg-slate-50 rounded-2xl border border-slate-50">
                         <Label htmlFor="showPhone" className="font-black text-[10px] uppercase tracking-widest text-slate-500">Public Protocol Display</Label>
-                        <Switch id="showPhone" checked={formData.visibility?.showPhone ?? true} onCheckedChange={(c) => handleVisibilityChange('showPhone', c)} className="data-[state=checked]:bg-sky-500" />
+                        <Switch id="showPhone" checked={formData.visibility?.showPhone ?? true} onCheckedChange={(c) => handleVisibilityChange('showPhone', c)} className="data-[state=checked]:bg-[#6C63FF]" />
                     </div>
                 </div>
                 <div className="md:col-span-2 space-y-6">
@@ -222,7 +222,7 @@ const ProfileManager = () => {
                     </div>
                     <div className="flex items-center justify-between p-6 bg-slate-50 rounded-2xl border border-slate-50">
                         <Label htmlFor="showLocation" className="font-black text-[10px] uppercase tracking-widest text-slate-500">Sector Coordinates Visibility</Label>
-                        <Switch id="showLocation" checked={formData.visibility?.showLocation ?? true} onCheckedChange={(c) => handleVisibilityChange('showLocation', c)} className="data-[state=checked]:bg-sky-500" />
+                        <Switch id="showLocation" checked={formData.visibility?.showLocation ?? true} onCheckedChange={(c) => handleVisibilityChange('showLocation', c)} className="data-[state=checked]:bg-[#6C63FF]" />
                     </div>
                 </div>
               </div>
@@ -232,20 +232,20 @@ const ProfileManager = () => {
           <Card className="border border-slate-100 bg-white rounded-[3rem] overflow-hidden shadow-sm">
              <CardContent className="p-10">
                 <h3 className="font-black text-xl italic tracking-tighter uppercase text-slate-900 mb-10 flex items-center gap-3">
-                   <div className="w-1.5 h-6 bg-sky-500 rounded-full" />
+                   <div className="w-1.5 h-6 bg-[#6C63FF] rounded-full" />
                    Network Matrix Links
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   <div className="space-y-3">
-                    <Label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1 flex items-center gap-2"><Github size={12} className="text-sky-500"/> Neural Repo (GitHub)</Label>
+                    <Label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1 flex items-center gap-2"><Github size={12} className="text-[#6C63FF]"/> Neural Repo (GitHub)</Label>
                     <Input name="github" value={formData.socialLinks?.github || ''} onChange={handleSocialChange} className="h-14 bg-slate-50/50 border-slate-100 rounded-2xl font-bold" />
                   </div>
                   <div className="space-y-3">
-                    <Label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1 flex items-center gap-2"><Linkedin size={12} className="text-sky-500"/> Professional Node (LinkedIn)</Label>
+                    <Label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1 flex items-center gap-2"><Linkedin size={12} className="text-[#6C63FF]"/> Professional Node (LinkedIn)</Label>
                     <Input name="linkedin" value={formData.socialLinks?.linkedin || ''} onChange={handleSocialChange} className="h-14 bg-slate-50/50 border-slate-100 rounded-2xl font-bold" />
                   </div>
                   <div className="md:col-span-2 space-y-3">
-                    <Label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1 flex items-center gap-2"><Twitter size={12} className="text-sky-500"/> Broadcast Channel (Twitter/X)</Label>
+                    <Label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1 flex items-center gap-2"><Twitter size={12} className="text-[#6C63FF]"/> Broadcast Channel (Twitter/X)</Label>
                     <Input name="twitter" value={formData.socialLinks?.twitter || ''} onChange={handleSocialChange} className="h-14 bg-slate-50/50 border-slate-100 rounded-2xl font-bold" />
                   </div>
                 </div>

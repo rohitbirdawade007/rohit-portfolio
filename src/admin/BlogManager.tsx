@@ -111,12 +111,12 @@ const BlogManager = () => {
     <div className="space-y-10 pb-20">
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 px-2">
         <div>
-          <h1 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tighter leading-none mb-4">Article <span className="text-sky-500">Registry</span></h1>
+          <h1 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tighter leading-none mb-4">Article <span className="text-[#6C63FF]">Registry</span></h1>
           <p className="text-slate-500 font-medium text-lg">Initialize and broadcast technical insights and research papers.</p>
         </div>
         <Button
           onClick={() => { setForm(EMPTY); setEditing(null); setShowForm(true); }}
-          className="bg-sky-500 hover:bg-sky-600 text-white rounded-2xl h-14 px-8 font-black uppercase tracking-widest shadow-xl shadow-sky-500/20 active:scale-95 transition-all"
+          className="bg-[#6C63FF] hover:bg-[#5B54E6] text-white rounded-2xl h-14 px-8 font-black uppercase tracking-widest shadow-xl shadow-[#6C63FF]/20 active:scale-95 transition-all"
         >
           <Plus size={18} className="mr-2" /> Initialze Article
         </Button>
@@ -129,7 +129,7 @@ const BlogManager = () => {
               <Card className="border border-slate-100 shadow-2xl rounded-[3rem] overflow-hidden bg-white">
                 <CardHeader className="p-10 border-b border-slate-50 flex flex-row items-center justify-between bg-slate-50/20">
                   <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-2xl bg-white border border-slate-100 text-sky-500 flex items-center justify-center shadow-sm">
+                    <div className="w-12 h-12 rounded-2xl bg-white border border-slate-100 text-[#6C63FF] flex items-center justify-center shadow-sm">
                        <FileText size={24} />
                     </div>
                     <div>
@@ -173,13 +173,13 @@ const BlogManager = () => {
 
                          <div className="md:col-span-4 space-y-3">
                             <Label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Visibility Status</Label>
-                            <select name="status" value={form.status} onChange={handleChange} className="w-full h-14 bg-slate-50/50 border border-slate-100 rounded-2xl px-4 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-sky-500 transition-all">
+                            <select name="status" value={form.status} onChange={handleChange} className="w-full h-14 bg-slate-50/50 border border-slate-100 rounded-2xl px-4 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-[#6C63FF] transition-all">
                               <option value="draft">Internal Draft</option>
                               <option value="published">Production Sync</option>
                             </select>
                          </div>
                          <div className="md:col-span-8 flex items-center gap-4 px-6 bg-slate-50/50 rounded-2xl border border-slate-100 mt-auto h-14">
-                           <input type="checkbox" name="featured" checked={form.featured} onChange={handleChange} id="featured" className="w-5 h-5 rounded-md border-sky-200 text-sky-500 focus:ring-sky-500" />
+                           <input type="checkbox" name="featured" checked={form.featured} onChange={handleChange} id="featured" className="w-5 h-5 rounded-md border-sky-200 text-[#6C63FF] focus:ring-[#6C63FF]" />
                            <Label htmlFor="featured" className="cursor-pointer font-black text-[10px] uppercase tracking-widest text-slate-600">Promote to Knowledge Hub (Featured)</Label>
                          </div>
 
@@ -198,7 +198,7 @@ const BlogManager = () => {
                     )}
 
                     <div className="pt-6">
-                      <Button type="submit" disabled={saving} className="w-full h-16 bg-sky-500 hover:bg-sky-600 text-white rounded-3xl font-black uppercase tracking-widest shadow-xl shadow-sky-500/20 active:scale-95 transition-all">
+                      <Button type="submit" disabled={saving} className="w-full h-16 bg-[#6C63FF] hover:bg-[#5B54E6] text-white rounded-3xl font-black uppercase tracking-widest shadow-xl shadow-[#6C63FF]/20 active:scale-95 transition-all">
                         {saving ? 'Transmitting Data...' : (editing ? 'Recalibrate Master Archive' : 'Broadcast Article Node')}
                       </Button>
                     </div>
@@ -228,7 +228,7 @@ const BlogManager = () => {
                         </div>
                      )}
                      <div className="absolute top-6 left-6 z-10 flex gap-2">
-                        {blog.featured && <div className="p-2 bg-white/90 backdrop-blur rounded-xl text-sky-500 shadow-xl shadow-sky-500/10"><Star size={14} fill="currentColor" /></div>}
+                        {blog.featured && <div className="p-2 bg-white/90 backdrop-blur rounded-xl text-[#6C63FF] shadow-xl shadow-sky-500/10"><Star size={14} fill="currentColor" /></div>}
                         <div className={`px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest shadow-xl flex items-center ${blog.status === 'published' ? 'bg-emerald-500 text-white' : 'bg-slate-200 text-slate-500'}`}>
                            {blog.status}
                         </div>
@@ -240,7 +240,7 @@ const BlogManager = () => {
                         <span className="w-1 h-1 rounded-full bg-slate-200" />
                         <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">{blog.views || 0} READS</span>
                      </div>
-                     <h3 className="text-xl font-black text-slate-900 tracking-tighter uppercase italic line-clamp-2 leading-tight group-hover:text-sky-500 transition-colors mb-4">
+                     <h3 className="text-xl font-black text-slate-900 tracking-tighter uppercase italic line-clamp-2 leading-tight group-hover:text-[#6C63FF] transition-colors mb-4">
                         {blog.title}
                      </h3>
                      <p className="text-slate-500 text-sm font-medium line-clamp-2 mb-8 italic">
@@ -248,7 +248,7 @@ const BlogManager = () => {
                      </p>
                      
                      <div className="mt-auto flex items-center gap-2">
-                        <Button variant="ghost" onClick={() => handleEdit(blog)} className="h-11 px-6 bg-slate-50 hover:bg-sky-50 text-sky-600 rounded-xl font-black uppercase tracking-widest text-[10px] transition-all border border-slate-100 flex-1">
+                        <Button variant="ghost" onClick={() => handleEdit(blog)} className="h-11 px-6 bg-slate-50 hover:bg-[#6C63FF]/5 text-[#6C63FF] rounded-xl font-black uppercase tracking-widest text-[10px] transition-all border border-slate-100 flex-1">
                           Recalibrate
                         </Button>
                         <Button variant="ghost" onClick={() => toggleStatus(blog)} className={`h-11 w-11 rounded-xl border border-slate-100 transition-all ${blog.status === 'published' ? 'bg-emerald-50 text-emerald-500 hover:bg-emerald-100' : 'bg-slate-50 text-slate-400'}`}>

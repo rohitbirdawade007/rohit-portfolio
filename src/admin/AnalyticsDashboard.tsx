@@ -86,17 +86,17 @@ const AnalyticsDashboard = () => {
     <div className="space-y-10 pb-20">
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 px-2">
         <div>
-           <h1 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tighter leading-none mb-4">Performance <span className="text-sky-500">Telemetry</span></h1>
+           <h1 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tighter leading-none mb-4">Performance <span className="text-[#6C63FF]">Telemetry</span></h1>
            <p className="text-slate-500 font-medium text-lg">Real-time engagement metrics and traffic distribution signatures.</p>
         </div>
       </div>
 
       {/* Stat Grid */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
-        <StatCard icon={<Eye size={22} className="text-sky-500" />} label="Surface Scans" value={data.totalViews} color="text-sky-500" sub="Total Page Views" />
-        <StatCard icon={<Zap size={22} className="text-sky-500" />} label="Action Events" value={data.demoClicks} color="text-sky-500" sub="Interactive Clicks" />
+        <StatCard icon={<Eye size={22} className="text-[#6C63FF]" />} label="Surface Scans" value={data.totalViews} color="text-[#6C63FF]" sub="Total Page Views" />
+        <StatCard icon={<Zap size={22} className="text-[#6C63FF]" />} label="Action Events" value={data.demoClicks} color="text-[#6C63FF]" sub="Interactive Clicks" />
         <StatCard icon={<Github size={22} className="text-slate-700" />} label="Repo Syncs" value={data.githubClicks} color="text-slate-700" sub="GitHub Inbound" />
-        <StatCard icon={<Mail size={22} className="text-sky-600" />} label="Inbound Leads" value={data.contactSubmissions} color="text-sky-600" sub="Form Submissions" />
+        <StatCard icon={<Mail size={22} className="text-[#6C63FF]" />} label="Inbound Leads" value={data.contactSubmissions} color="text-[#6C63FF]" sub="Form Submissions" />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
@@ -104,7 +104,7 @@ const AnalyticsDashboard = () => {
         <Card className="lg:col-span-2 border border-slate-100 bg-white rounded-[3rem] overflow-hidden shadow-sm">
            <CardHeader className="p-10 pb-4 flex flex-row items-center justify-between">
               <div className="flex items-center gap-3">
-                 <div className="w-10 h-10 rounded-2xl bg-sky-50 text-sky-500 flex items-center justify-center border border-sky-100">
+                 <div className="w-10 h-10 rounded-2xl bg-[#6C63FF]/5 text-[#6C63FF] flex items-center justify-center border border-[#6C63FF]/15">
                     <TrendingUp size={20} />
                  </div>
                  <div>
@@ -142,7 +142,7 @@ const AnalyticsDashboard = () => {
         <Card className="border border-slate-100 bg-white rounded-[3rem] overflow-hidden shadow-sm flex flex-col">
            <CardHeader className="p-10 pb-4">
               <div className="flex items-center gap-3">
-                 <div className="w-10 h-10 rounded-2xl bg-sky-50 text-sky-500 flex items-center justify-center border border-sky-100">
+                 <div className="w-10 h-10 rounded-2xl bg-[#6C63FF]/5 text-[#6C63FF] flex items-center justify-center border border-[#6C63FF]/15">
                     <Target size={20} />
                  </div>
                  <div>
@@ -157,15 +157,15 @@ const AnalyticsDashboard = () => {
                     {data.topProjects.slice(0, 5).map((project, i) => (
                        <div key={i} className="flex flex-col gap-2 group">
                           <div className="flex items-center justify-between">
-                             <span className="text-[10px] font-black uppercase tracking-widest text-slate-600 truncate max-w-[70%] group-hover:text-sky-500 transition-colors italic">{project.title}</span>
-                             <span className="text-[10px] font-black text-sky-500 bg-sky-50 px-3 py-1 rounded-full">{project.count} hits</span>
+                             <span className="text-[10px] font-black uppercase tracking-widest text-slate-600 truncate max-w-[70%] group-hover:text-[#6C63FF] transition-colors italic">{project.title}</span>
+                             <span className="text-[10px] font-black text-[#6C63FF] bg-[#6C63FF]/5 px-3 py-1 rounded-full">{project.count} hits</span>
                           </div>
                           <div className="h-1.5 w-full bg-slate-50 rounded-full overflow-hidden">
                              <motion.div 
                                initial={{ width: 0 }} 
                                animate={{ width: `${(project.count / data.totalViews) * 500}%` }} 
                                transition={{ duration: 1, delay: i * 0.1 }}
-                               className="h-full bg-sky-500 rounded-full"
+                               className="h-full bg-[#6C63FF] rounded-full"
                              />
                           </div>
                        </div>
@@ -209,13 +209,13 @@ const AnalyticsDashboard = () => {
                           <tr key={i} className="hover:bg-slate-50/50 transition-colors group">
                              <td className="p-6 pl-10">
                                 <span className={`px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest ${
-                                  e.type === 'page_view' ? 'bg-sky-50 text-sky-600' :
+                                  e.type === 'page_view' ? 'bg-[#6C63FF]/5 text-[#6C63FF]' :
                                   e.type === 'demo_click' ? 'bg-indigo-50 text-indigo-600' :
                                   'bg-slate-50 text-slate-500'
                                 }`}>{e.type.replace('_', ' ')}</span>
                              </td>
                              <td className="p-6">
-                                <span className="text-[10px] font-black text-slate-900 uppercase italic group-hover:text-sky-500 transition-colors">
+                                <span className="text-[10px] font-black text-slate-900 uppercase italic group-hover:text-[#6C63FF] transition-colors">
                                    {e.path || e.resourceTitle || 'ROOT_NODE'}
                                 </span>
                              </td>

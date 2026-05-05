@@ -65,7 +65,7 @@ const ProjectsSection = () => {
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.05 }}>
             <h2 className="display-md font-black tracking-[-0.04em] leading-[1.05] reveal">
               Featured{" "}
-              <span style={{ background: "linear-gradient(135deg,#1A56DB,#7C3AED)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
+              <span style={{ background: "linear-gradient(135deg,#6C63FF,#7C3AED)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
                 Projects
               </span>
             </h2>

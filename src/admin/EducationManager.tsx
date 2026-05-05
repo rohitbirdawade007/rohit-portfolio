@@ -85,7 +85,7 @@ const EducationManager = () => {
     <div className="space-y-10 pb-32">
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 px-2">
         <div>
-           <h1 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tighter leading-none mb-4">Academic <span className="text-sky-500">Registry</span></h1>
+           <h1 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tighter leading-none mb-4">Academic <span className="text-[#6C63FF]">Registry</span></h1>
            <p className="text-slate-500 font-medium text-lg">Initialize and manage your foundation in engineering and mathematics.</p>
         </div>
       </div>
@@ -96,7 +96,7 @@ const EducationManager = () => {
           <Card className="border border-slate-100 bg-white shadow-sm rounded-[2.5rem] overflow-hidden">
              <CardHeader className="p-10 border-b border-slate-50 bg-slate-50/30">
                <div className="flex items-center gap-3">
-                 <div className="w-10 h-10 rounded-2xl bg-white flex items-center justify-center text-sky-500 shadow-sm border border-slate-50">
+                 <div className="w-10 h-10 rounded-2xl bg-white flex items-center justify-center text-[#6C63FF] shadow-sm border border-slate-50">
                     <School size={20} />
                  </div>
                  <CardTitle className="text-xl font-black tracking-tighter">
@@ -148,7 +148,7 @@ const EducationManager = () => {
                   </div>
 
                   <div className="flex gap-3 pt-6">
-                    <Button type="submit" className="flex-1 h-16 bg-sky-500 hover:bg-sky-600 text-white rounded-3xl font-black uppercase tracking-widest shadow-xl shadow-sky-500/20 active:scale-95 transition-all">
+                    <Button type="submit" className="flex-1 h-16 bg-[#6C63FF] hover:bg-[#5B54E6] text-white rounded-3xl font-black uppercase tracking-widest shadow-xl shadow-[#6C63FF]/20 active:scale-95 transition-all">
                       {editingId ? 'Synchronize Protocol' : 'Deploy Record'}
                     </Button>
                     {editingId && (
@@ -178,22 +178,22 @@ const EducationManager = () => {
               <motion.div key={edu._id} initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: idx * 0.1 }}>
                 <Card className="group border border-slate-100 bg-white rounded-[3rem] overflow-hidden hover:shadow-2xl transition-all duration-500 shadow-sm">
                   <CardContent className="p-10 flex items-start gap-8">
-                     <div className="w-16 h-16 rounded-[2rem] bg-sky-50 text-sky-500 flex items-center justify-center border border-sky-100 shrink-0 group-hover:rotate-6 transition-transform">
+                     <div className="w-16 h-16 rounded-[2rem] bg-[#6C63FF]/5 text-[#6C63FF] flex items-center justify-center border border-[#6C63FF]/15 shrink-0 group-hover:rotate-6 transition-transform">
                         <GradIcon size={28} />
                      </div>
                      <div className="flex-1 min-w-0">
                         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
                            <div>
-                              <h3 className="text-2xl font-black text-slate-900 tracking-tighter uppercase italic group-hover:text-sky-500 transition-colors leading-tight">
+                              <h3 className="text-2xl font-black text-slate-900 tracking-tighter uppercase italic group-hover:text-[#6C63FF] transition-colors leading-tight">
                                 {edu.degree}
                               </h3>
                               <p className="text-slate-400 font-bold uppercase tracking-widest text-[10px] mt-1 flex items-center gap-2">
-                                <Target size={12} className="text-sky-500" /> {edu.institution}
+                                <Target size={12} className="text-[#6C63FF]" /> {edu.institution}
                               </p>
                            </div>
                            <div className="flex flex-col items-end gap-1 shrink-0">
                               <span className="text-[10px] font-black uppercase tracking-widest text-slate-400 px-3 py-1 bg-slate-50 rounded-full">{edu.startDate} — {edu.endDate}</span>
-                              <div className="flex items-center gap-2 text-[10px] font-black text-sky-500 mt-1 uppercase tracking-widest">
+                              <div className="flex items-center gap-2 text-[10px] font-black text-[#6C63FF] mt-1 uppercase tracking-widest">
                                  <MapPin size={10} /> {edu.location}
                               </div>
                            </div>
@@ -223,7 +223,7 @@ const EducationManager = () => {
                               </div>
                            </div>
                            <div className="flex gap-2">
-                              <Button size="icon" variant="ghost" onClick={() => handleEdit(edu)} className="h-12 w-12 rounded-2xl bg-slate-50 hover:bg-sky-50 text-sky-600 transition-all border border-slate-100 shadow-sm"><Edit size={16} /></Button>
+                              <Button size="icon" variant="ghost" onClick={() => handleEdit(edu)} className="h-12 w-12 rounded-2xl bg-slate-50 hover:bg-[#6C63FF]/5 text-[#6C63FF] transition-all border border-slate-100 shadow-sm"><Edit size={16} /></Button>
                               <Button size="icon" variant="ghost" onClick={() => handleDelete(edu._id)} className="h-12 w-12 rounded-2xl bg-rose-50/30 hover:bg-rose-50 text-rose-500 transition-all border border-rose-50"><Trash2 size={16} /></Button>
                            </div>
                         </div>

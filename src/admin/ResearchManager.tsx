@@ -78,7 +78,7 @@ const ResearchManager = () => {
     <div className="space-y-10 pb-32">
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 px-2">
         <div>
-           <h1 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tighter leading-none mb-4">Research <span className="text-sky-500">Protocols</span></h1>
+           <h1 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tighter leading-none mb-4">Research <span className="text-[#6C63FF]">Protocols</span></h1>
            <p className="text-slate-500 font-medium text-lg">Manage technical exploration, experimental documentation, and active papers.</p>
         </div>
       </div>
@@ -89,7 +89,7 @@ const ResearchManager = () => {
           <Card className="border border-slate-100 bg-white shadow-sm rounded-[2.5rem] overflow-hidden">
              <CardHeader className="p-10 border-b border-slate-50 bg-slate-50/20">
                <div className="flex items-center gap-3">
-                 <div className="w-10 h-10 rounded-2xl bg-white border border-slate-50 text-sky-500 flex items-center justify-center shadow-sm">
+                 <div className="w-10 h-10 rounded-2xl bg-white border border-slate-50 text-[#6C63FF] flex items-center justify-center shadow-sm">
                     <Beaker size={20} />
                  </div>
                  <CardTitle className="text-xl font-black tracking-tighter uppercase italic">
@@ -113,7 +113,7 @@ const ResearchManager = () => {
                   </div>
 
                   <div className="flex gap-3 pt-6">
-                    <Button type="submit" className="flex-1 h-16 bg-sky-500 hover:bg-sky-600 text-white rounded-3xl font-black uppercase tracking-widest shadow-xl shadow-sky-500/20 active:scale-95 transition-all">
+                    <Button type="submit" className="flex-1 h-16 bg-[#6C63FF] hover:bg-[#5B54E6] text-white rounded-3xl font-black uppercase tracking-widest shadow-xl shadow-[#6C63FF]/20 active:scale-95 transition-all">
                       <Save size={18} className="mr-2" /> {isEditing ? 'UPDATE' : 'INITIATE'}
                     </Button>
                     {isEditing && (
@@ -146,7 +146,7 @@ const ResearchManager = () => {
                       <Card className="group border border-slate-100 bg-white rounded-[3rem] overflow-hidden hover:shadow-2xl transition-all duration-500 shadow-sm flex flex-col h-full">
                         <CardHeader className="p-8 pb-4 flex items-center justify-between">
                            <div className="flex items-center gap-3">
-                              <div className="w-10 h-10 rounded-2xl bg-sky-50 text-sky-500 flex items-center justify-center border border-sky-100 group-hover:rotate-12 transition-transform">
+                              <div className="w-10 h-10 rounded-2xl bg-[#6C63FF]/5 text-[#6C63FF] flex items-center justify-center border border-[#6C63FF]/15 group-hover:rotate-12 transition-transform">
                                  <Terminal size={18} />
                               </div>
                               <span className={`text-[9px] font-black uppercase tracking-[0.2em] px-3 py-1 rounded-full ${item.status.toLowerCase().includes('pub') ? 'bg-emerald-50 text-emerald-500 border border-emerald-100' : 'bg-slate-50 text-slate-400 border border-slate-100'}`}>
@@ -154,18 +154,18 @@ const ResearchManager = () => {
                               </span>
                            </div>
                            <div className="flex gap-2">
-                             <Button size="icon" variant="ghost" onClick={() => { setIsEditing(true); setCurrentId(item._id); setFormData({title: item.title, status: item.status, description: item.description}); window.scrollTo({top:0, behavior:'smooth'}); }} className="h-10 w-10 rounded-xl bg-slate-50 hover:bg-sky-50 text-sky-600 transition-all border border-slate-50"><Edit size={14}/></Button>
+                             <Button size="icon" variant="ghost" onClick={() => { setIsEditing(true); setCurrentId(item._id); setFormData({title: item.title, status: item.status, description: item.description}); window.scrollTo({top:0, behavior:'smooth'}); }} className="h-10 w-10 rounded-xl bg-slate-50 hover:bg-[#6C63FF]/5 text-[#6C63FF] transition-all border border-slate-50"><Edit size={14}/></Button>
                              <Button size="icon" variant="ghost" className="h-10 w-10 rounded-xl bg-rose-50/30 hover:bg-rose-50 text-rose-500 transition-all border border-rose-50" onClick={() => deleteItem(item._id)}><Trash2 size={14}/></Button>
                            </div>
                         </CardHeader>
                         <CardContent className="p-8 pt-0 flex flex-col flex-1">
-                           <h3 className="text-xl font-black text-slate-900 tracking-tighter uppercase italic mb-4 group-hover:text-sky-500 transition-colors leading-tight">
+                           <h3 className="text-xl font-black text-slate-900 tracking-tighter uppercase italic mb-4 group-hover:text-[#6C63FF] transition-colors leading-tight">
                               {item.title}
                            </h3>
                            <p className="text-slate-500 text-sm font-medium line-clamp-4 italic flex-1">
                               "{item.description}"
                            </p>
-                           <div className="mt-8 pt-6 border-t border-slate-50 flex items-center justify-between text-sky-500 opacity-0 group-hover:opacity-100 transition-all">
+                           <div className="mt-8 pt-6 border-t border-slate-50 flex items-center justify-between text-[#6C63FF] opacity-0 group-hover:opacity-100 transition-all">
                               <span className="text-[9px] font-black uppercase tracking-widest">Protocol Identified</span>
                               <ArrowUpRight size={18} />
                            </div>

@@ -94,12 +94,12 @@ const AchievementManager = () => {
     <div className="space-y-10 pb-20">
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 px-2">
         <div>
-          <h1 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tighter leading-none mb-4">Recognition <span className="text-sky-500">Node</span></h1>
+          <h1 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tighter leading-none mb-4">Recognition <span className="text-[#6C63FF]">Node</span></h1>
           <p className="text-slate-500 font-medium text-lg">Manage professional awards, certifications, and milestones.</p>
         </div>
         <Button
           onClick={() => { setForm(EMPTY); setEditing(null); setShowForm(true); }}
-          className="bg-sky-500 hover:bg-sky-600 text-white rounded-2xl h-14 px-8 font-black uppercase tracking-widest shadow-xl shadow-sky-500/20 active:scale-95 transition-all"
+          className="bg-[#6C63FF] hover:bg-[#5B54E6] text-white rounded-2xl h-14 px-8 font-black uppercase tracking-widest shadow-xl shadow-[#6C63FF]/20 active:scale-95 transition-all"
         >
           <Plus size={18} className="mr-2" /> Add Achievement
         </Button>
@@ -126,7 +126,7 @@ const AchievementManager = () => {
 
                     <div className="space-y-3">
                       <Label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Classification</Label>
-                      <select name="category" value={form.category} onChange={handleChange} className="w-full h-14 bg-slate-50/50 border border-slate-100 rounded-2xl px-4 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-sky-500 transition-all">
+                      <select name="category" value={form.category} onChange={handleChange} className="w-full h-14 bg-slate-50/50 border border-slate-100 rounded-2xl px-4 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-[#6C63FF] transition-all">
                         <option value="achievements">Strategic Milestone</option>
                         <option value="cocurricular">Co-Curricular Node</option>
                         <option value="extracurricular">External Activity</option>
@@ -135,7 +135,7 @@ const AchievementManager = () => {
 
                     <div className="space-y-3">
                       <Label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Node Type</Label>
-                      <select name="type" value={form.type} onChange={handleChange} className="w-full h-14 bg-slate-50/50 border border-slate-100 rounded-2xl px-4 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-sky-500 transition-all">
+                      <select name="type" value={form.type} onChange={handleChange} className="w-full h-14 bg-slate-50/50 border border-slate-100 rounded-2xl px-4 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-[#6C63FF] transition-all">
                         <option value="award">Global Award</option>
                         <option value="competition">Competition</option>
                         <option value="paper">Research Logic</option>
@@ -166,7 +166,7 @@ const AchievementManager = () => {
                     </div>
 
                     <div className="md:col-span-2 pt-4">
-                       <Button type="submit" disabled={saving} className="w-full h-16 bg-sky-500 hover:bg-sky-600 text-white rounded-3xl font-black uppercase tracking-widest shadow-xl shadow-sky-500/20 active:scale-95 transition-all">
+                       <Button type="submit" disabled={saving} className="w-full h-16 bg-[#6C63FF] hover:bg-[#5B54E6] text-white rounded-3xl font-black uppercase tracking-widest shadow-xl shadow-[#6C63FF]/20 active:scale-95 transition-all">
                          {saving ? 'Synchronizing...' : (editing ? 'Recalibrate Item' : 'Synchronize Item')}
                        </Button>
                     </div>
@@ -191,32 +191,32 @@ const AchievementManager = () => {
                   <CardHeader className="p-10 pb-4 flex flex-row items-start justify-between">
                      <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-3">
-                           <div className="w-10 h-10 rounded-2xl bg-sky-50 text-sky-500 flex items-center justify-center shadow-sm">
+                           <div className="w-10 h-10 rounded-2xl bg-[#6C63FF]/5 text-[#6C63FF] flex items-center justify-center shadow-sm">
                               {item.type === 'award' ? <Trophy size={18} /> : 
                                item.type === 'certification' ? <Medal size={18} /> : 
                                <Star size={18} />}
                            </div>
                            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">{item.type}</span>
                         </div>
-                        <h3 className="text-xl font-black text-slate-900 tracking-tighter uppercase italic line-clamp-2 leading-tight group-hover:text-sky-500 transition-colors">
+                        <h3 className="text-xl font-black text-slate-900 tracking-tighter uppercase italic line-clamp-2 leading-tight group-hover:text-[#6C63FF] transition-colors">
                            {item.title}
                         </h3>
                      </div>
                      <div className="flex flex-col gap-2 ml-4">
-                        <Button size="icon" variant="ghost" onClick={() => handleEdit(item)} className="h-10 w-10 rounded-xl bg-slate-50 hover:bg-sky-50 text-sky-600 transition-all border border-slate-100"><Pencil size={14}/></Button>
+                        <Button size="icon" variant="ghost" onClick={() => handleEdit(item)} className="h-10 w-10 rounded-xl bg-slate-50 hover:bg-[#6C63FF]/5 text-[#6C63FF] transition-all border border-slate-100"><Pencil size={14}/></Button>
                         <Button size="icon" variant="ghost" onClick={() => handleDelete(item._id!)} className="h-10 w-10 rounded-xl bg-rose-50/50 hover:bg-rose-50 text-rose-500 transition-all border border-rose-100"><Trash2 size={14}/></Button>
                      </div>
                   </CardHeader>
                   <CardContent className="p-10 pt-0 flex flex-col flex-1">
                      <p className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-4 flex items-center gap-2">
-                        <Target size={12} className="text-sky-500" /> {item.organization}
+                        <Target size={12} className="text-[#6C63FF]" /> {item.organization}
                      </p>
                      <p className="text-slate-500 text-sm font-medium line-clamp-3 mb-8 italic italic">
                         "{item.description}"
                      </p>
                      <div className="mt-auto flex items-center justify-between pt-6 border-t border-slate-50">
                         <span className="text-[10px] font-black uppercase tracking-widest text-slate-400 bg-slate-50 px-3 py-1 rounded-full">{item.date}</span>
-                        <div className="text-sky-500 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <div className="text-[#6C63FF] opacity-0 group-hover:opacity-100 transition-opacity">
                            <ArrowUpRight size={20} />
                         </div>
                      </div>

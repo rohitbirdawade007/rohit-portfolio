@@ -53,7 +53,7 @@ const MessageViewer = () => {
     <div className="space-y-10 pb-20">
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 px-2">
         <div>
-           <h1 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tighter leading-none mb-4">Inbound <span className="text-sky-500">Telemetry</span></h1>
+           <h1 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tighter leading-none mb-4">Inbound <span className="text-[#6C63FF]">Telemetry</span></h1>
            <p className="text-slate-500 font-medium text-lg">Active communication logs and contact leads from the neural portal.</p>
         </div>
       </div>
@@ -77,13 +77,13 @@ const MessageViewer = () => {
                     <div className="p-10">
                       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8">
                         <div className="flex items-center gap-5">
-                          <div className="w-16 h-16 rounded-[2rem] bg-sky-50 text-sky-500 flex items-center justify-center border border-sky-100 shadow-sm group-hover:rotate-6 transition-transform">
+                          <div className="w-16 h-16 rounded-[2rem] bg-[#6C63FF]/5 text-[#6C63FF] flex items-center justify-center border border-[#6C63FF]/15 shadow-sm group-hover:rotate-6 transition-transform">
                             <User size={28} />
                           </div>
                           <div>
                             <h3 className="text-2xl font-black tracking-tighter text-slate-900 uppercase italic leading-none mb-2">{m.name}</h3>
                             <div className="flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">
-                               <Mail size={12} className="text-sky-500" />
+                               <Mail size={12} className="text-[#6C63FF]" />
                                {m.email}
                             </div>
                           </div>
@@ -92,7 +92,7 @@ const MessageViewer = () => {
                            <span className="text-[10px] font-black uppercase tracking-widest text-slate-400 flex items-center gap-2">
                              <Clock size={12} /> {new Date(m.createdAt).toLocaleDateString()}
                            </span>
-                           <span className="text-[10px] font-black uppercase tracking-widest text-sky-500">
+                           <span className="text-[10px] font-black uppercase tracking-widest text-[#6C63FF]">
                              {new Date(m.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                            </span>
                         </div>
@@ -103,7 +103,7 @@ const MessageViewer = () => {
                       </div>
                     </div>
                     <div className="px-10 py-6 bg-slate-50/50 border-t border-slate-50 flex justify-between items-center group-hover:bg-slate-50 transition-colors">
-                      <a href={`mailto:${m.email}`} className="flex items-center gap-3 text-[11px] font-black uppercase tracking-[0.2em] text-sky-500 hover:text-sky-700 transition-colors">
+                      <a href={`mailto:${m.email}`} className="flex items-center gap-3 text-[11px] font-black uppercase tracking-[0.2em] text-[#6C63FF] hover:text-[#5B54E6] transition-colors">
                         INITIATE DIRECT REPLY <ArrowRight size={16} />
                       </a>
                       <Button 

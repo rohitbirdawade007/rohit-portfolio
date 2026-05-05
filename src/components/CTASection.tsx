@@ -1,60 +1,65 @@
 import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
-import { ArrowRight, Send, Download } from "lucide-react";
-import Magnetic from "./Magnetic";
+import { ArrowRight, Send, Download, Sparkles, Zap } from "lucide-react";
 
 const CTASection = () => {
   return (
-    <section className="py-24 relative overflow-hidden bg-[#020617]">
-      <div className="container relative z-10 px-6">
-        <div className="glass-card rounded-[3rem] p-12 md:p-24 relative overflow-hidden group">
+    <section className="py-24 relative overflow-hidden" style={{ background: "var(--canvas)" }}>
+      <div className="container relative z-10">
+        <div className="card overflow-hidden relative group" style={{ background: "#0A0A0A", borderRadius: "1.5rem" }}>
           {/* Animated Background Gradients */}
-          <div className="absolute top-0 right-0 w-64 h-64 bg-primary/20 blur-[100px] animate-pulse" />
-          <div className="absolute bottom-0 left-0 w-64 h-64 bg-accent/10 blur-[100px] animate-float-slow" />
+          <div className="absolute top-0 right-0 w-64 h-64 bg-[#6C63FF]/15 blur-[100px] rounded-full" />
+          <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#1DDBA8]/10 blur-[100px] rounded-full" />
+          {/* Dot-grid overlay */}
+          <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: "radial-gradient(rgba(108,99,255,0.15) 1px, transparent 1px)", backgroundSize: "24px 24px", opacity: 0.3 }} />
           
-          <div className="relative z-10 max-w-4xl">
+          <div className="relative z-10 p-12 md:p-20">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
+              className="max-w-3xl"
             >
-              <span className="subheading-premium">Next Steps</span>
-              <h2 className="text-4xl md:text-7xl font-[800] text-white tracking-tighter leading-none mb-8 italic uppercase">
-                Let's Build <br/>  
-                <span className="gradient-text">The Future.</span>
+              {/* Badge */}
+              <span className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#6C63FF]/10 border border-[#6C63FF]/20 rounded-full text-[10px] font-semibold text-[#6C63FF] uppercase tracking-widest mb-8">
+                <Sparkles size={11} />
+                Open to Opportunities
+              </span>
+
+              <h2 className="text-4xl md:text-6xl font-black text-white tracking-[-0.04em] leading-[0.95] mb-6">
+                Let's Build<br />
+                <span style={{ background: "linear-gradient(135deg,#6C63FF,#1DDBA8)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
+                  The Future.
+                </span>
               </h2>
               
-              <p className="text-xl text-slate-400 mb-12 max-w-2xl leading-relaxed">
-                Currently open to <span className="text-white">AI Engineering</span> and <span className="text-white">IoT Development</span> opportunities. Whether you have a specific project or just want to connect, I'm just a click away.
+              <p className="text-lg text-white/40 mb-10 max-w-xl leading-relaxed">
+                Currently open to <span className="text-white font-semibold">AI Engineering</span> and <span className="text-white font-semibold">IoT Development</span> opportunities. Whether you have a specific project or just want to connect, I'm just a click away.
               </p>
               
-              <div className="flex flex-wrap gap-6">
-                <Magnetic>
-                  <Button 
-                    size="lg"
-                    className="h-16 px-10 rounded-full bg-primary text-white hover:bg-primary/90 font-black uppercase tracking-widest text-[10px] shadow-[0_0_30px_rgba(59,130,246,0.3)] border-none group"
-                    onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-                  >
-                    Send Message <Send size={16} className="ml-3 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-                  </Button>
-                </Magnetic>
+              <div className="flex flex-wrap gap-4">
+                <motion.button
+                  whileHover={{ scale: 1.03, y: -2 }}
+                  whileTap={{ scale: 0.97 }}
+                  onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+                  className="h-14 px-8 rounded-xl bg-[#6C63FF] text-white font-bold text-sm flex items-center gap-2 shadow-xl shadow-[#6C63FF]/25 hover:bg-[#5B54E6] transition-colors"
+                >
+                  Send Message <Send size={15} />
+                </motion.button>
                 
-                <Magnetic>
-                  <Button 
-                    variant="outline"
-                    size="lg"
-                    className="h-16 px-10 rounded-full border-white/10 text-white hover:bg-white/5 font-black uppercase tracking-widest text-[10px] glass"
-                    onClick={() => window.open('/resume.pdf', '_blank')}
-                  >
-                    Download CV <Download size={16} className="ml-3 text-primary animate-bounce-slow" />
-                  </Button>
-                </Magnetic>
+                <motion.button
+                  whileHover={{ scale: 1.03, y: -2 }}
+                  whileTap={{ scale: 0.97 }}
+                  onClick={() => window.open('/resume.pdf', '_blank')}
+                  className="h-14 px-8 rounded-xl bg-white/[0.06] border border-white/[0.1] text-white font-bold text-sm flex items-center gap-2 hover:bg-white/[0.1] transition-colors backdrop-blur-sm"
+                >
+                  Download CV <Download size={15} />
+                </motion.button>
               </div>
             </motion.div>
           </div>
 
           {/* Decorative Large Text */}
-          <div className="absolute -bottom-10 -right-20 text-[15rem] font-black text-white/[0.02] tracking-tighter select-none pointer-events-none uppercase italic leading-none">
+          <div className="absolute -bottom-8 -right-16 text-[12rem] font-black text-white/[0.02] tracking-tighter select-none pointer-events-none uppercase leading-none">
             HIRE
           </div>
         </div>

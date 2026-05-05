@@ -35,7 +35,7 @@ const ExperienceSection = () => {
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.05 }}>
             <h2 className="display-md font-black tracking-[-0.04em] leading-[1.05]">
               Professional{" "}
-              <span style={{ background: "linear-gradient(135deg,#1A56DB,#7C3AED)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
+              <span style={{ background: "linear-gradient(135deg,#6C63FF,#7C3AED)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
                 Timeline
               </span>
             </h2>
@@ -74,8 +74,8 @@ const ExperienceSection = () => {
                 >
                   {/* Dot */}
                   <div className="relative z-10 shrink-0 mt-6">
-                    <div className="w-10 h-10 rounded-xl bg-white border-2 border-[#1A56DB]/30 flex items-center justify-center shadow-sm animate-glow-pulse">
-                      <Briefcase size={14} className="text-[#1A56DB]" />
+                    <div className="w-10 h-10 rounded-xl bg-white border-2 border-[#6C63FF]/30 flex items-center justify-center shadow-sm animate-glow-pulse">
+                      <Briefcase size={14} className="text-[#6C63FF]" />
                     </div>
                   </div>
 
@@ -85,19 +85,19 @@ const ExperienceSection = () => {
                     <div className="flex items-start justify-between gap-3 mb-4 flex-wrap">
                       <div>
                         <div className="flex items-center gap-1.5 mb-1.5">
-                          <Building2 size={12} className="text-[#1A56DB] shrink-0" />
+                          <Building2 size={12} className="text-[#6C63FF] shrink-0" />
                           <span className="mono text-[10px] font-semibold text-[#737373] uppercase tracking-widest">{e.company}</span>
                         </div>
                         <h3 className="text-[15px] font-bold text-[#0A0A0A]">{e.role}</h3>
                       </div>
-                      <div className="flex items-center gap-1.5 px-3 py-1.5 bg-[#EFF6FF] border border-[#BFDBFE] rounded-lg shrink-0">
-                        <Calendar size={11} className="text-[#1A56DB]" />
-                        <span className="mono text-[10px] font-semibold text-[#1A56DB]">{e.duration}</span>
+                      <div className="flex items-center gap-1.5 px-3 py-1.5 bg-[#6C63FF]/5 border border-[#6C63FF]/15 rounded-lg shrink-0">
+                        <Calendar size={11} className="text-[#6C63FF]" />
+                        <span className="mono text-[10px] font-semibold text-[#6C63FF]">{e.duration}</span>
                       </div>
                     </div>
 
                     {/* Description */}
-                    <p className="text-[13px] text-[#737373] leading-relaxed border-l-2 border-[#1A56DB]/20 pl-4 mb-5">
+                    <p className="text-[13px] text-[#737373] leading-relaxed border-l-2 border-[#6C63FF]/20 pl-4 mb-5">
                       {e.description}
                     </p>
 

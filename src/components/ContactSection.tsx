@@ -46,7 +46,7 @@ const ContactSection = () => {
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.05 }} className="mb-14">
           <h2 className="display-md font-black tracking-[-0.04em] leading-[1.05]">
             Let's Build{" "}
-            <span style={{ background: "linear-gradient(135deg,#1A56DB,#7C3AED)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
+            <span style={{ background: "linear-gradient(135deg,#6C63FF,#7C3AED)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
               Together
             </span>
           </h2>
@@ -81,7 +81,7 @@ const ContactSection = () => {
             {/* Quick info card */}
             <div className="card p-5 space-y-4">
               {[
-                { icon: <MapPin size={14} className="text-[#1A56DB]" />,    label: "Location",      value: "Pune, Maharashtra, India",  color: "#1A56DB" },
+                { icon: <MapPin size={14} className="text-[#6C63FF]" />,    label: "Location",      value: "Pune, Maharashtra, India",  color: "#6C63FF" },
                 { icon: <Clock size={14} className="text-emerald-500" />,   label: "Response Time", value: "Within 24 hours",           color: "#059669" },
                 { icon: <Rocket size={14} className="text-[#D97706]" />,    label: "Availability",  value: "Open to opportunities",     color: "#D97706" },
               ].map((item, i) => (
@@ -116,9 +116,9 @@ const ContactSection = () => {
                   </div>
                   <div className="min-w-0 flex-1">
                     <p className="mono text-[9px] font-semibold text-[#A3A3A3] uppercase tracking-widest">{s.label}</p>
-                    <p className="text-[12px] font-semibold text-[#404040] truncate group-hover:text-[#1A56DB] transition-colors">{s.sub}</p>
+                    <p className="text-[12px] font-semibold text-[#404040] truncate group-hover:text-[#6C63FF] transition-colors">{s.sub}</p>
                   </div>
-                  <ArrowUpRight size={13} className="text-[#A3A3A3] group-hover:text-[#1A56DB] shrink-0 transition-colors" />
+                  <ArrowUpRight size={13} className="text-[#A3A3A3] group-hover:text-[#6C63FF] shrink-0 transition-colors" />
                 </motion.a>
               ))}
             </div>

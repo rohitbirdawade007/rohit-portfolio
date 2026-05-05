@@ -80,12 +80,12 @@ const CertificationManager = () => {
     <div className="space-y-10 pb-20">
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 px-2">
         <div>
-           <h1 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tighter leading-none mb-4">Credentials <span className="text-sky-500">Vault</span></h1>
+           <h1 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tighter leading-none mb-4">Credentials <span className="text-[#6C63FF]">Vault</span></h1>
            <p className="text-slate-500 font-medium text-lg">Manage verified certifications and technical licenses.</p>
         </div>
         <Button
           onClick={() => { setForm(EMPTY); setEditing(null); setShowForm(true); }}
-          className="bg-sky-500 hover:bg-sky-600 text-white rounded-2xl h-14 px-8 font-black uppercase tracking-widest shadow-xl shadow-sky-500/20 active:scale-95 transition-all"
+          className="bg-[#6C63FF] hover:bg-[#5B54E6] text-white rounded-2xl h-14 px-8 font-black uppercase tracking-widest shadow-xl shadow-[#6C63FF]/20 active:scale-95 transition-all"
         >
           <Plus size={18} className="mr-2" /> Register Credential
         </Button>
@@ -131,7 +131,7 @@ const CertificationManager = () => {
                       <Input name="image" value={form.image} onChange={handleChange} className="h-14 bg-slate-50/50 border-slate-100 rounded-2xl font-bold" placeholder="/uploads/cert.jpg" />
                     </div>
 
-                    <Button type="submit" disabled={saving} className="w-full h-16 bg-sky-500 hover:bg-sky-600 text-white rounded-3xl font-black uppercase tracking-widest shadow-xl shadow-sky-500/20 active:scale-95 transition-all">
+                    <Button type="submit" disabled={saving} className="w-full h-16 bg-[#6C63FF] hover:bg-[#5B54E6] text-white rounded-3xl font-black uppercase tracking-widest shadow-xl shadow-[#6C63FF]/20 active:scale-95 transition-all">
                       {saving ? 'Syncing...' : (editing ? 'Recalibrate Protocol' : 'Synchronize Protocol')}
                     </Button>
                   </form>
@@ -154,27 +154,27 @@ const CertificationManager = () => {
                  <CardContent className="p-8 flex items-center justify-between gap-6">
                    <div className="flex-1 min-w-0">
                      <div className="flex items-center gap-3 mb-2">
-                        <div className="w-10 h-10 rounded-2xl bg-sky-50 text-sky-500 flex items-center justify-center border border-sky-100 group-hover:rotate-12 transition-transform">
+                        <div className="w-10 h-10 rounded-2xl bg-[#6C63FF]/5 text-[#6C63FF] flex items-center justify-center border border-[#6C63FF]/15 group-hover:rotate-12 transition-transform">
                            <Award size={20} />
                         </div>
                         <div>
                            <h3 className="font-black text-slate-900 uppercase tracking-tighter text-sm italic line-clamp-1">{item.name}</h3>
                            <p className="text-[10px] text-slate-400 font-black uppercase tracking-widest flex items-center gap-2">
-                              <Zap size={10} className="text-sky-500" /> {item.organization}
+                              <Zap size={10} className="text-[#6C63FF]" /> {item.organization}
                            </p>
                         </div>
                      </div>
                      <div className="flex items-center gap-3 mt-4">
                         <span className="text-[10px] font-black uppercase tracking-widest text-slate-300 bg-slate-50 px-2 py-0.5 rounded-full">{item.date}</span>
                         {item.credentialUrl && (
-                           <a href={item.credentialUrl} target="_blank" rel="noopener noreferrer" className="text-sky-500 hover:text-sky-700 transition-colors">
+                           <a href={item.credentialUrl} target="_blank" rel="noopener noreferrer" className="text-[#6C63FF] hover:text-[#5B54E6] transition-colors">
                               <ExternalLink size={14} />
                            </a>
                         )}
                      </div>
                    </div>
                    <div className="flex flex-col gap-1 shrink-0 opacity-100 md:opacity-0 group-hover:opacity-100 transition-all">
-                     <Button size="icon" variant="ghost" onClick={() => handleEdit(item)} className="h-10 w-10 rounded-xl bg-slate-50 hover:bg-sky-50 text-sky-600 transition-all border border-slate-50"><Pencil size={15} /></Button>
+                     <Button size="icon" variant="ghost" onClick={() => handleEdit(item)} className="h-10 w-10 rounded-xl bg-slate-50 hover:bg-[#6C63FF]/5 text-[#6C63FF] transition-all border border-slate-50"><Pencil size={15} /></Button>
                      <Button size="icon" variant="ghost" onClick={() => handleDelete(item._id!)} className="h-10 w-10 rounded-xl bg-rose-50/50 hover:bg-rose-50 text-rose-500 transition-all border border-rose-50"><Trash2 size={15} /></Button>
                    </div>
                  </CardContent>

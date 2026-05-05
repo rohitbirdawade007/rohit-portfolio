@@ -98,12 +98,12 @@ const ExperienceManager = () => {
     <div className="space-y-10 pb-20">
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 px-2">
         <div>
-           <h1 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tighter leading-none mb-4">Professional <span className="text-sky-500">Timeline</span></h1>
+           <h1 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tighter leading-none mb-4">Professional <span className="text-[#6C63FF]">Timeline</span></h1>
            <p className="text-slate-500 font-medium text-lg">Manage your corporate history and technical contribution logs.</p>
         </div>
         <Button
           onClick={() => { setForm(EMPTY); setEditing(null); setShowForm(true); }}
-          className="bg-sky-500 hover:bg-sky-600 text-white rounded-2xl h-14 px-8 font-black uppercase tracking-widest shadow-xl shadow-sky-500/20 active:scale-95 transition-all"
+          className="bg-[#6C63FF] hover:bg-[#5B54E6] text-white rounded-2xl h-14 px-8 font-black uppercase tracking-widest shadow-xl shadow-[#6C63FF]/20 active:scale-95 transition-all"
         >
           <Plus size={18} className="mr-2" /> Log Experience
         </Button>
@@ -116,7 +116,7 @@ const ExperienceManager = () => {
               <Card className="border border-slate-100 shadow-2xl rounded-[3rem] overflow-hidden bg-white">
                 <CardHeader className="p-10 border-b border-slate-50 flex flex-row items-center justify-between">
                   <div className="flex items-center gap-4">
-                     <div className="w-12 h-12 rounded-2xl bg-sky-500 text-white flex items-center justify-center shadow-lg shadow-sky-500/20">
+                     <div className="w-12 h-12 rounded-2xl bg-[#6C63FF] text-white flex items-center justify-center shadow-lg shadow-[#6C63FF]/20">
                         <Briefcase size={24} />
                      </div>
                      <div>
@@ -165,7 +165,7 @@ const ExperienceManager = () => {
                       <Textarea name="fullDescription" value={form.fullDescription} onChange={handleChange} rows={4} className="bg-slate-50/50 border-slate-100 rounded-3xl min-h-[140px] font-medium leading-relaxed" />
                     </div>
 
-                    <Button type="submit" disabled={saving} className="w-full h-16 bg-sky-500 hover:bg-sky-600 text-white rounded-3xl font-black uppercase tracking-widest shadow-xl shadow-sky-500/20 active:scale-95 transition-all">
+                    <Button type="submit" disabled={saving} className="w-full h-16 bg-[#6C63FF] hover:bg-[#5B54E6] text-white rounded-3xl font-black uppercase tracking-widest shadow-xl shadow-[#6C63FF]/20 active:scale-95 transition-all">
                       {saving ? 'Transmitting...' : (editing ? 'Recalibrate Protocol' : 'Synchronize Protocol')}
                     </Button>
                   </form>
@@ -191,16 +191,16 @@ const ExperienceManager = () => {
             <motion.div key={item._id} initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: idx * 0.1 }}>
                <Card className="group border border-slate-100 bg-white rounded-[3rem] overflow-hidden hover:shadow-2xl transition-all duration-500 shadow-sm">
                   <CardContent className="p-10 flex flex-col md:flex-row items-start gap-10">
-                     <div className="w-20 h-20 rounded-[2rem] bg-slate-50 text-slate-300 flex items-center justify-center border border-slate-100 shrink-0 group-hover:bg-sky-50 group-hover:text-sky-500 group-hover:border-sky-100 transition-all duration-500">
+                     <div className="w-20 h-20 rounded-[2rem] bg-slate-50 text-slate-300 flex items-center justify-center border border-slate-100 shrink-0 group-hover:bg-[#6C63FF]/5 group-hover:text-[#6C63FF] group-hover:border-[#6C63FF]/15 transition-all duration-500">
                         <Building size={32} />
                      </div>
                      <div className="flex-1 min-w-0">
                         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
                            <div>
-                              <h3 className="text-3xl font-black text-slate-900 tracking-tighter uppercase italic group-hover:text-sky-500 transition-colors leading-tight">
+                              <h3 className="text-3xl font-black text-slate-900 tracking-tighter uppercase italic group-hover:text-[#6C63FF] transition-colors leading-tight">
                                 {item.role}
                               </h3>
-                              <p className="text-sky-500 font-bold uppercase tracking-widest text-xs mt-2 flex items-center gap-2">
+                              <p className="text-[#6C63FF] font-bold uppercase tracking-widest text-xs mt-2 flex items-center gap-2">
                                 <Target size={14} /> {item.company}
                               </p>
                            </div>
@@ -215,7 +215,7 @@ const ExperienceManager = () => {
 
                         <div className="flex flex-wrap gap-2 mb-8">
                            {Array.isArray(item.techStack) && item.techStack.map((tech: string, i: number) => (
-                             <span key={i} className="text-[10px] font-black uppercase tracking-widest bg-sky-50/30 text-sky-600 px-3 py-1 rounded-full border border-sky-100/50">
+                             <span key={i} className="text-[10px] font-black uppercase tracking-widest bg-[#6C63FF]/5/30 text-[#6C63FF] px-3 py-1 rounded-full border border-[#6C63FF]/15/50">
                                {tech}
                              </span>
                            ))}
@@ -226,7 +226,7 @@ const ExperienceManager = () => {
                               Archive ID: <span className="text-slate-900">{item.slug}</span>
                            </div>
                            <div className="flex gap-3">
-                              <Button variant="ghost" onClick={() => handleEdit(item)} className="h-12 px-6 bg-slate-50 hover:bg-sky-50 text-sky-600 rounded-xl font-black uppercase tracking-widest text-[10px] transition-all border border-slate-100">
+                              <Button variant="ghost" onClick={() => handleEdit(item)} className="h-12 px-6 bg-slate-50 hover:bg-[#6C63FF]/5 text-[#6C63FF] rounded-xl font-black uppercase tracking-widest text-[10px] transition-all border border-slate-100">
                                 <Pencil size={15} className="mr-2" /> Recalibrate
                               </Button>
                               <Button variant="ghost" onClick={() => handleDelete(item._id)} className="h-12 w-12 bg-rose-50/30 hover:bg-rose-50 text-rose-500 rounded-xl border border-rose-50 transition-all">
