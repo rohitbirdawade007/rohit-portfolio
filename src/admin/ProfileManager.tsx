@@ -140,7 +140,30 @@ const ProfileManager = () => {
                 <div className="space-y-3"><Label className="text-[10px] font-black uppercase text-slate-400">Professional Title</Label><Input name="title" value={formData.title || ''} onChange={handleChange} className="h-14 bg-slate-50 border-slate-100 rounded-2xl font-bold" /></div>
               </div>
               <div className="space-y-3"><Label className="text-[10px] font-black uppercase text-slate-400">Teaser Abstract</Label><Textarea name="bio" value={formData.bio || ''} onChange={handleChange} className="bg-slate-50 border-slate-100 rounded-2xl min-h-[100px] font-medium" /></div>
-              <div className="space-y-3"><Label className="text-[10px] font-black uppercase text-slate-400">Comprehensive Identity Log</Label><Textarea name="about" value={formData.about || ''} onChange={handleChange} className="bg-slate-50 border-slate-100 rounded-[2.5rem] p-8 min-h-[200px] font-medium" /></div>
+                <div className="space-y-3"><Label className="text-[10px] font-black uppercase text-slate-400">Comprehensive Identity Log</Label><Textarea name="about" value={formData.about || ''} onChange={handleChange} className="bg-slate-50 border-slate-100 rounded-[2.5rem] p-8 min-h-[200px] font-medium" /></div>
+              <div className="space-y-3"><Label className="text-[10px] font-black uppercase text-slate-400">Resume Link</Label><Input name="resumeLink" value={formData.resumeLink || ''} onChange={handleChange} className="h-14 bg-slate-50 border-slate-100 rounded-2xl font-bold" /></div>
+            </CardContent>
+          </Card>
+
+          <Card className="border border-slate-100 bg-white rounded-[3rem] shadow-sm">
+            <CardContent className="p-10 space-y-8">
+              <div className="flex items-center gap-3 mb-6"><Globe size={20} className="text-[#6C63FF]" /><h3 className="font-black text-xl text-slate-900 uppercase">Transmission & Contact</h3></div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="space-y-3"><Label className="text-[10px] font-black uppercase text-slate-400">Email Address</Label><Input name="email" value={formData.email || ''} onChange={handleChange} className="h-14 bg-slate-50 border-slate-100 rounded-2xl font-bold" /></div>
+                <div className="space-y-3"><Label className="text-[10px] font-black uppercase text-slate-400">Phone Number</Label><Input name="phone" value={formData.phone || ''} onChange={handleChange} className="h-14 bg-slate-50 border-slate-100 rounded-2xl font-bold" /></div>
+                <div className="md:col-span-2 space-y-3"><Label className="text-[10px] font-black uppercase text-slate-400">Location</Label><Input name="location" value={formData.location || ''} onChange={handleChange} className="h-14 bg-slate-50 border-slate-100 rounded-2xl font-bold" /></div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="border border-slate-100 bg-white rounded-[3rem] shadow-sm">
+            <CardContent className="p-10 space-y-8">
+              <div className="flex items-center gap-3 mb-6"><Github size={20} className="text-[#6C63FF]" /><h3 className="font-black text-xl text-slate-900 uppercase">Network Matrix Links</h3></div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="space-y-3"><Label className="text-[10px] font-black uppercase text-slate-400 flex items-center gap-2"><Github size={12}/> GitHub URL</Label><Input name="github" value={formData.socialLinks?.github || ''} onChange={handleSocialChange} className="h-14 bg-slate-50 border-slate-100 rounded-2xl font-bold" /></div>
+                <div className="space-y-3"><Label className="text-[10px] font-black uppercase text-slate-400 flex items-center gap-2"><Linkedin size={12}/> LinkedIn URL</Label><Input name="linkedin" value={formData.socialLinks?.linkedin || ''} onChange={handleSocialChange} className="h-14 bg-slate-50 border-slate-100 rounded-2xl font-bold" /></div>
+                <div className="md:col-span-2 space-y-3"><Label className="text-[10px] font-black uppercase text-slate-400 flex items-center gap-2"><Twitter size={12}/> Twitter URL</Label><Input name="twitter" value={formData.socialLinks?.twitter || ''} onChange={handleSocialChange} className="h-14 bg-slate-50 border-slate-100 rounded-2xl font-bold" /></div>
+              </div>
             </CardContent>
           </Card>
         </div>
