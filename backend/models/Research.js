@@ -7,6 +7,8 @@ const ResearchSchema = new mongoose.Schema({
   year:            { type: String },
   status:          { type: String }, // e.g., "Published in IEEE", "Ongoing"
   description:     { type: String },
+  abstract:        { type: String },
+  keywords:        [{ type: String }],
   fullDescription: { type: String },
   link:            { type: String },
   images:          [{ type: String }],
