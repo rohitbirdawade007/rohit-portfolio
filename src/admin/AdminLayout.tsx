@@ -51,7 +51,7 @@ const NAV_GROUPS = [
   {
     label: 'Interactions',
     items: [
-      { to: '/admin/messages', icon: <MessageSquare size={18}/>, label: 'Contact Leades' },
+      { to: '/admin/messages', icon: <MessageSquare size={18}/>, label: 'Contact Leads' },
     ]
   }
 ];
@@ -76,23 +76,23 @@ const AdminLayout = () => {
   if (!token) return null;
 
   return (
-    <div className="flex h-screen bg-slate-50 dark:bg-[#0f172a] transition-colors font-sans selection:bg-indigo-100 selection:text-indigo-900">
-      {/* Sidebar */}
+    <div className="flex h-screen bg-[#f4f4f8] dark:bg-[#0a0a12] transition-colors font-sans selection:bg-indigo-100 selection:text-indigo-900">
+      {/* Sidebar — upgraded with accent gradient */}
       <aside 
         className={cn(
-          "bg-[#1e293b] text-slate-300 flex flex-col transition-all duration-300 border-r border-slate-800 z-50",
+          "flex flex-col transition-all duration-300 z-50 admin-sidebar",
           sidebarOpen ? "w-72" : "w-20"
         )}
       >
-        <div className="h-16 flex items-center justify-between px-6 border-b border-slate-800">
+        <div className="h-16 flex items-center justify-between px-6 border-b border-white/[0.06]">
           {sidebarOpen && (
             <span className="text-white font-black tracking-tighter text-lg uppercase">
-              Control <span className="text-indigo-400">Panel</span>
+              Control <span className="text-[#6C63FF]">Panel</span>
             </span>
           )}
           <button 
             onClick={() => setSidebarOpen(!sidebarOpen)}
-            className="p-1.5 rounded-lg hover:bg-slate-800 transition-colors text-slate-400"
+            className="p-1.5 rounded-lg hover:bg-white/10 transition-colors text-white/40"
           >
             {sidebarOpen ? <PanelLeftClose size={18} /> : <PanelLeft size={18} />}
           </button>
@@ -102,7 +102,7 @@ const AdminLayout = () => {
           {NAV_GROUPS.map((group, idx) => (
             <div key={idx} className="space-y-1">
               {sidebarOpen && (
-                <p className="px-4 text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 mb-3 ml-1">
+                <p className="px-4 text-[10px] font-black uppercase tracking-[0.2em] text-white/25 mb-3 ml-1">
                   {group.label}
                 </p>
               )}
@@ -113,19 +113,19 @@ const AdminLayout = () => {
                   className={cn(
                     "flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 group relative",
                     location.pathname === item.to
-                      ? "bg-sky-500 text-white shadow-lg shadow-sky-900/40"
-                      : "hover:bg-slate-800 hover:text-white"
+                      ? "bg-[#6C63FF] text-white shadow-lg shadow-[#6C63FF]/30"
+                      : "hover:bg-white/[0.06] text-white/50 hover:text-white"
                   )}
                 >
                   <span className={cn(
                     "transition-transform group-hover:scale-110",
-                    location.pathname === item.to ? "text-white" : "text-slate-400 group-hover:text-sky-400"
+                    location.pathname === item.to ? "text-white" : "text-white/40 group-hover:text-[#6C63FF]"
                   )}>
                     {item.icon}
                   </span>
                   {sidebarOpen && <span className="text-sm font-medium">{item.label}</span>}
                   {!sidebarOpen && location.pathname === item.to && (
-                    <div className="absolute left-0 w-1 h-6 bg-white rounded-r-full" />
+                    <div className="absolute left-0 w-1 h-6 bg-[#6C63FF] rounded-r-full" />
                   )}
                 </Link>
               ))}
@@ -133,12 +133,12 @@ const AdminLayout = () => {
           ))}
         </nav>
 
-        <div className="p-4 border-t border-slate-800">
+        <div className="p-4 border-t border-white/[0.06]">
           <Button
             onClick={handleLogout}
             variant="ghost"
             className={cn(
-              "w-full justify-start text-rose-400 hover:text-white hover:bg-rose-600/20 rounded-xl transition-all",
+              "w-full justify-start text-rose-400 hover:text-white hover:bg-rose-500/20 rounded-xl transition-all",
               !sidebarOpen && "justify-center px-0"
             )}
           >
@@ -150,39 +150,39 @@ const AdminLayout = () => {
 
       {/* Main Content */}
       <main className="flex-grow flex flex-col overflow-hidden relative">
-        {/* Elite Background Animation */}
-        <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none opacity-30">
-          <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-indigo-500/20 blur-[120px] rounded-full animate-pulse-slow" />
-          <div className="absolute bottom-[-10%] right-[-10%] w-[30%] h-[30%] bg-blue-500/10 blur-[120px] rounded-full animate-float-slow" />
+        {/* Subtle background glow */}
+        <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none opacity-20">
+          <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-[#6C63FF]/20 blur-[120px] rounded-full" />
+          <div className="absolute bottom-[-10%] right-[-10%] w-[30%] h-[30%] bg-[#1DDBA8]/10 blur-[120px] rounded-full" />
         </div>
 
-        <header className="h-16 bg-white/70 dark:bg-[#0f172a]/70 backdrop-blur-xl border-b border-slate-200 dark:border-slate-800 flex items-center justify-between px-8 sticky top-0 z-20 overflow-visible transition-colors">
+        <header className="h-16 bg-white/80 dark:bg-[#0f0f1a]/80 backdrop-blur-xl border-b border-slate-200/60 dark:border-white/[0.06] flex items-center justify-between px-8 sticky top-0 z-20 overflow-visible transition-colors">
           <div className="flex items-center gap-4">
-            <h1 className="text-sm font-black uppercase tracking-widest text-slate-400 dark:text-slate-500 flex items-center gap-2">
+            <h1 className="text-sm font-black uppercase tracking-widest text-slate-400 dark:text-white/30 flex items-center gap-2">
               <span className="hidden md:inline">Management</span>
               <ChevronRight size={14} />
-              <span className="text-slate-900 dark:text-white">
+              <span className="text-slate-900 dark:text-white capitalize">
                 {location.pathname.split('/').pop()?.replace('-', ' ')}
               </span>
             </h1>
           </div>
           
           <div className="flex items-center gap-3">
-            <div className="hidden md:flex items-center h-9 px-3 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-[11px] font-bold text-slate-500 gap-2">
+            <div className="hidden md:flex items-center h-9 px-3 bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200/50 dark:border-emerald-500/20 rounded-lg text-[11px] font-bold text-emerald-600 dark:text-emerald-400 gap-2">
                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-               SERVER ONLINE
+               ONLINE
             </div>
-            <button className="p-2 text-slate-500 hover:text-indigo-600 transition-colors">
+            <button className="p-2 text-slate-400 hover:text-[#6C63FF] transition-colors rounded-lg hover:bg-[#6C63FF]/5">
               <Bell size={18} />
             </button>
             <ThemeToggle />
-            <div className="w-8 h-8 rounded-full bg-indigo-600 flex items-center justify-center text-white text-xs font-bold shadow-lg shadow-indigo-600/20">
-              AD
+            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#6C63FF] to-[#1DDBA8] flex items-center justify-center text-white text-xs font-bold shadow-lg shadow-[#6C63FF]/20">
+              RB
             </div>
           </div>
         </header>
 
-        <div className="flex-grow overflow-y-auto p-4 md:p-8 bg-[#f8fafc] dark:bg-[#020617] scroll-smooth custom-scrollbar">
+        <div className="flex-grow overflow-y-auto p-4 md:p-8 bg-[#f4f4f8] dark:bg-[#060610] scroll-smooth custom-scrollbar">
           <div className="max-w-7xl mx-auto animate-in fade-in duration-500 slide-in-from-bottom-4">
             <Routes>
               <Route path="dashboard"      element={<Dashboard />} />

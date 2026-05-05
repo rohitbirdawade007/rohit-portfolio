@@ -1,4 +1,4 @@
-import { Github, Linkedin, Mail, Cpu, ArrowUp, Heart } from "lucide-react";
+import { Github, Linkedin, Mail, Cpu, ArrowUp, Twitter } from "lucide-react";
 import { useProfile } from "@/context/ProfileContext";
 import { motion } from "framer-motion";
 
@@ -34,13 +34,13 @@ const Footer = () => {
             <div className="flex items-center gap-3">
               <motion.div
                 whileHover={{ rotate: 10, scale: 1.1 }}
-                className="w-10 h-10 rounded-xl bg-[#0A0A0A] text-white flex items-center justify-center cursor-pointer"
+                className="w-10 h-10 rounded-xl bg-[#6C63FF] text-white flex items-center justify-center cursor-pointer"
               >
                 <Cpu size={18} />
               </motion.div>
               <div>
                 <p className="text-[14px] font-bold text-[#0A0A0A] tracking-tight">Rohit Birdawade</p>
-                <p className="mono text-[9px] font-semibold text-[#1A56DB] uppercase tracking-widest">AI Engineer · Data Scientist</p>
+                <p className="mono text-[9px] font-semibold text-[#6C63FF] uppercase tracking-widest">AI Engineer · Data Scientist</p>
               </div>
             </div>
             <p className="text-[#737373] text-[14px] leading-relaxed max-w-sm">
@@ -50,11 +50,12 @@ const Footer = () => {
               <span className="status-online">Open to collaboration</span>
             </div>
 
-            {/* Social icons */}
+            {/* Social icons row — UPGRADE 7: GitHub · LinkedIn · Twitter · Email */}
             <div className="flex gap-2">
               {[
                 { href: profile?.socialLinks?.github  || "https://github.com/rohitbirdawade007",       icon: <Github size={14} />,   label: "GitHub" },
                 { href: profile?.socialLinks?.linkedin || "https://linkedin.com/in/rohitbirdawade007",  icon: <Linkedin size={14} />, label: "LinkedIn" },
+                { href: "https://twitter.com/rohitbirdawade",                                            icon: <Twitter size={14} />,  label: "Twitter" },
                 { href: `mailto:${profile?.email || "rohitbirdawade007@gmail.com"}`,                    icon: <Mail size={14} />,     label: "Email" },
               ].map((s, i) => (
                 <motion.a
@@ -64,7 +65,7 @@ const Footer = () => {
                   rel="noreferrer"
                   title={s.label}
                   whileHover={{ y: -3, scale: 1.1 }}
-                  className="w-9 h-9 rounded-xl bg-[#F5F5F5] border border-[#EBEBEB] flex items-center justify-center text-[#737373] hover:bg-[#0A0A0A] hover:text-white hover:border-transparent transition-all"
+                  className="w-9 h-9 rounded-xl bg-[#F5F5F5] border border-[#EBEBEB] flex items-center justify-center text-[#737373] hover:bg-[#6C63FF] hover:text-white hover:border-transparent transition-all"
                 >
                   {s.icon}
                 </motion.a>
@@ -78,8 +79,8 @@ const Footer = () => {
             <ul className="space-y-2.5">
               {nav.map(([label, href]) => (
                 <li key={href}>
-                  <a href={href} className="text-[13px] font-medium text-[#525252] hover:text-[#1A56DB] transition-colors flex items-center gap-1.5 group">
-                    <span className="w-0 group-hover:w-2 h-px bg-[#1A56DB] transition-all duration-200" />
+                  <a href={href} className="text-[13px] font-medium text-[#525252] hover:text-[#6C63FF] transition-colors flex items-center gap-1.5 group">
+                    <span className="w-0 group-hover:w-2 h-px bg-[#6C63FF] transition-all duration-200" />
                     {label}
                   </a>
                 </li>
@@ -93,8 +94,8 @@ const Footer = () => {
             <ul className="space-y-2.5">
               {resources.map(([label, href]) => (
                 <li key={href}>
-                  <a href={href} className="text-[13px] font-medium text-[#525252] hover:text-[#1A56DB] transition-colors flex items-center gap-1.5 group">
-                    <span className="w-0 group-hover:w-2 h-px bg-[#1A56DB] transition-all duration-200" />
+                  <a href={href} className="text-[13px] font-medium text-[#525252] hover:text-[#6C63FF] transition-colors flex items-center gap-1.5 group">
+                    <span className="w-0 group-hover:w-2 h-px bg-[#6C63FF] transition-all duration-200" />
                     {label}
                   </a>
                 </li>
@@ -113,22 +114,24 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Bottom bar */}
+        {/* Bottom bar — UPGRADE 7: updated attribution */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 py-8">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 flex-wrap justify-center">
             <p className="mono text-[11px] text-[#A3A3A3]">© {year} Rohit Birdawade</p>
             <span className="text-[#D4D4D4]">·</span>
             <span className="mono text-[10px] text-[#D4D4D4] flex items-center gap-1">
-              Made with <Heart size={9} className="text-rose-400 fill-rose-400" /> in Pune, India
+              Designed & built by Rohit Sandip Birdawade
             </span>
           </div>
           <div className="flex items-center gap-4">
             <span className="mono text-[10px] text-[#D4D4D4] uppercase tracking-widest">AI Dashboard v5.0</span>
+            {/* Back to top button — UPGRADE 7 */}
             <motion.button
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-              className="w-9 h-9 rounded-xl bg-[#0A0A0A] flex items-center justify-center text-white hover:bg-[#1A56DB] transition-colors shadow-sm"
+              className="w-9 h-9 rounded-xl bg-[#6C63FF] flex items-center justify-center text-white hover:bg-[#7B73FF] transition-colors shadow-sm"
+              aria-label="Back to top"
             >
               <ArrowUp size={15} />
             </motion.button>

@@ -23,6 +23,21 @@ const Index = () => {
     }
   }, []);
 
+  /* ── UPGRADE 6: Global scroll animations via IntersectionObserver ── */
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <div className="min-h-screen" style={{ background: "var(--canvas)" }}>
       <SEO />

@@ -812,3 +812,261 @@
   mix-blend-mode: overlay;
 }
 
+/* ═══════════════════════════════════════════════════════════════════════════════
+   DESIGN UPGRADE — New accent variables & component styles
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+/* ── UPGRADE 8: Accent color variables ─────────────────────────────────────── */
+:root {
+  --accent-primary   : #6C63FF;
+  --accent-secondary : #1DDBA8;
+  --bg-primary       : #0D0D14;
+  --bg-secondary     : #13131F;
+  --bg-card          : #1A1A2E;
+  --text-primary     : #F0F0F0;
+  --text-secondary   : #8888A0;
+  --border-subtle    : rgba(255,255,255,0.07);
+  --glow             : 0 0 20px rgba(108,99,255,0.25);
+}
+
+/* ── UPGRADE 6: Scroll reveal animation ───────────────────────────────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── UPGRADE 1: Hire Me glow button ───────────────────────────────────────── */
+.hire-me-glow {
+  transition: box-shadow 0.3s ease, transform 0.2s ease;
+}
+.hire-me-glow:hover {
+  box-shadow: 0 0 20px rgba(108,99,255,0.5), 0 0 40px rgba(108,99,255,0.2) !important;
+}
+
+/* ── UPGRADE 2: Hero badge pill ───────────────────────────────────────────── */
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.375rem 1rem;
+  border: 1px solid rgba(108,99,255,0.35);
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #6C63FF;
+  background: rgba(108,99,255,0.08);
+  letter-spacing: 0.03em;
+  animation: fade-in 0.8s ease both;
+  animation-delay: 0.3s;
+}
+
+/* ── UPGRADE 2: Tech stack pill ───────────────────────────────────────────── */
+.tech-stack-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.3rem 0.75rem;
+  background: rgba(108,99,255,0.06);
+  border: 1px solid rgba(108,99,255,0.15);
+  border-radius: 9999px;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: #525252;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+.tech-stack-pill:hover {
+  background: rgba(108,99,255,0.12);
+  border-color: rgba(108,99,255,0.3);
+  color: #6C63FF;
+  transform: translateY(-1px);
+}
+
+/* ── UPGRADE 3: Project card hover ────────────────────────────────────────── */
+.project-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.project-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.12), 0 0 0 1px rgba(108,99,255,0.3);
+}
+
+/* ── UPGRADE 3: Colored tag pills for projects ────────────────────────────── */
+.tag-pill-accent {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.625rem;
+  background: rgba(108,99,255,0.1);
+  border: 1px solid rgba(108,99,255,0.25);
+  border-radius: 9999px;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: #6C63FF;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+.tag-pill-green {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.625rem;
+  background: rgba(5,150,105,0.1);
+  border: 1px solid rgba(5,150,105,0.25);
+  border-radius: 9999px;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: #059669;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+.tag-pill-violet {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.625rem;
+  background: rgba(124,58,237,0.1);
+  border: 1px solid rgba(124,58,237,0.25);
+  border-radius: 9999px;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: #7C3AED;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+.tag-pill-amber {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.625rem;
+  background: rgba(217,119,6,0.1);
+  border: 1px solid rgba(217,119,6,0.25);
+  border-radius: 9999px;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: #D97706;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+.tag-pill-sky {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.625rem;
+  background: rgba(2,132,199,0.1);
+  border: 1px solid rgba(2,132,199,0.25);
+  border-radius: 9999px;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: #0284C7;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+/* ── UPGRADE 4: Skill pill badge ──────────────────────────────────────────── */
+.skill-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.375rem 0.875rem;
+  background: rgba(108,99,255,0.1);
+  border: 1px solid rgba(108,99,255,0.25);
+  border-radius: 9999px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #6C63FF;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+  cursor: default;
+}
+.skill-pill:hover {
+  background: rgba(108,99,255,0.18);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(108,99,255,0.15);
+}
+
+/* ── UPGRADE 5: Currently learning badge ──────────────────────────────────── */
+.currently-learning-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.375rem 0.875rem;
+  background: rgba(5,150,105,0.06);
+  border: 1px solid rgba(5,150,105,0.2);
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #059669;
+}
+
+/* ── UPGRADE 5: Pulsing green dot ─────────────────────────────────────────── */
+.pulsing-green-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #059669;
+  display: inline-block;
+  flex-shrink: 0;
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+@keyframes pulse-dot {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(5,150,105,0.4);
+    opacity: 1;
+  }
+  50% {
+    box-shadow: 0 0 0 6px rgba(5,150,105,0);
+    opacity: 0.7;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   ADMIN PANEL — Premium Dark Theme Design System
+   ═══════════════════════════════════════════════════════════════════════════════ */
+
+/* ── Admin sidebar ────────────────────────────────────────────────────────── */
+.admin-sidebar {
+  background: linear-gradient(180deg, #0e0e1a 0%, #12121f 50%, #0a0a14 100%);
+  border-right: 1px solid rgba(255,255,255,0.04);
+  color: rgba(255,255,255,0.5);
+}
+
+/* ── Admin page accent overrides — makes sky-500 → #6C63FF in admin context ── */
+.admin-sidebar .text-sky-500,
+.admin-sidebar .text-sky-400 {
+  color: #6C63FF;
+}
+
+/* ── Admin auth background ────────────────────────────────────────────────── */
+.admin-auth-bg {
+  background: #0a0a12;
+}
+
+/* ── Admin custom scrollbar ───────────────────────────────────────────────── */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(108,99,255,0.15);
+  border-radius: 9999px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(108,99,255,0.3);
+}
+
+/* ── Admin manager page accent consistency ─────────────────────────────────── */
+/* Override sky-500 accent in admin manager pages to use #6C63FF */
+[class*="admin"] .bg-sky-500,
+[class*="admin"] .shadow-sky-500\/20,
+[class*="admin"] .shadow-sky-900\/40 {
+  --tw-bg-opacity: 1;
+  background-color: #6C63FF;
+  --tw-shadow-color: rgba(108,99,255,0.2);
+}
+
+/* Admin heading accent spans */
+.space-y-10 > div > h1 > span.text-sky-500 {
+  color: #6C63FF;
+}

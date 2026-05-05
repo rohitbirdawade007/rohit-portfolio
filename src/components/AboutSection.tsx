@@ -1,6 +1,6 @@
 import { useProfile } from "@/context/ProfileContext";
 import { motion, useInView } from "framer-motion";
-import { Terminal, Github, Linkedin, Mail, Target, Cpu, Award, ArrowRight, TrendingUp, Users, Code2 } from "lucide-react";
+import { Terminal, Github, Linkedin, Mail, Target, Cpu, Award, ArrowRight, TrendingUp, Users, Code2, BookOpen } from "lucide-react";
 import { useRef } from "react";
 
 const resolveImage = (path?: string | null): string => {
@@ -46,9 +46,17 @@ const AboutSection = () => {
   ];
 
   const highlights = [
-    { icon: <Target size={16} className="text-[#1A56DB]" />, t: "Precision Models",      d: "95%+ accuracy production architectures", color: "#1A56DB" },
+    { icon: <Target size={16} className="text-[#6C63FF]" />, t: "Precision Models",      d: "95%+ accuracy production architectures", color: "#6C63FF" },
     { icon: <Cpu size={16} className="text-[#7C3AED]" />,    t: "Edge AI & IoT",        d: "ESP32, Raspberry Pi, sensor integration", color: "#7C3AED" },
     { icon: <Award size={16} className="text-[#D97706]" />,  t: "National Recognition", d: "1st Prize, NLPC-2025 competition",        color: "#D97706" },
+  ];
+
+  /* ── Stats row below bio — UPGRADE 5 ── */
+  const bioStats = [
+    { value: "3+", label: "Projects", icon: <Code2 size={16} />, color: "#6C63FF" },
+    { value: "500+", label: "Commits", icon: <TrendingUp size={16} />, color: "#1A56DB" },
+    { value: "8.5", label: "CGPA", icon: <BookOpen size={16} />, color: "#059669" },
+    { value: "2", label: "Certifications", icon: <Award size={16} />, color: "#D97706" },
   ];
 
   const quickStats = [
@@ -65,14 +73,14 @@ const AboutSection = () => {
       <div className="container relative">
 
         {/* ── Section label ── */}
-        <motion.div {...fadeUp()} className="section-label">
+        <motion.div {...fadeUp()} className="section-label reveal">
           <span className="eyebrow"><span className="eyebrow-dot" />System Metadata</span>
         </motion.div>
 
         {/* ── Headline ── */}
         <motion.div {...fadeUp(0.05)} className="mb-16">
-          <h2 className="display-md font-black tracking-[-0.04em] leading-[1.05] text-[#0A0A0A]">
-            About the <span style={{ background: "linear-gradient(135deg,#1A56DB,#7C3AED)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>Engineer</span>
+          <h2 className="display-md font-black tracking-[-0.04em] leading-[1.05] text-[#0A0A0A] reveal">
+            About the <span style={{ background: "linear-gradient(135deg,#6C63FF,#1A56DB)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>Engineer</span>
           </h2>
         </motion.div>
 
@@ -80,22 +88,33 @@ const AboutSection = () => {
 
           {/* ── Photo column ── */}
           <motion.div {...fadeUp(0.1)} className="lg:col-span-4 space-y-4">
-            {/* Photo card */}
+            {/* Photo card with animated gradient border ring — UPGRADE 5 */}
             <div className="card overflow-hidden group" style={{ background: "#0A0A0A" }}>
               <div className="relative aspect-[4/5]">
-                <img
-                  src={imgSrc}
-                  alt={name}
-                  className="w-full h-full object-cover object-top group-hover:scale-[1.03] transition-transform duration-700"
-                  onError={(e) => { (e.currentTarget as HTMLImageElement).src = "/profile.png"; }}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-transparent to-transparent" />
-                <div className="absolute bottom-0 left-0 right-0 px-6 py-5">
-                  <p className="mono text-[9px] text-blue-400 uppercase tracking-widest mb-1">ML Researcher</p>
+                {/* Gradient border ring — UPGRADE 5 */}
+                <div className="absolute inset-0 z-0">
+                  <div className="absolute top-3 left-3 right-3 bottom-3 rounded-xl overflow-hidden" style={{
+                    padding: "3px",
+                    background: "linear-gradient(135deg, #6C63FF, #1DDBA8)",
+                    borderRadius: "1rem",
+                  }}>
+                    <div className="w-full h-full rounded-[13px] overflow-hidden bg-[#0A0A0A]">
+                      <img
+                        src={imgSrc}
+                        alt={name}
+                        className="w-full h-full object-cover object-top group-hover:scale-[1.03] transition-transform duration-700"
+                        onError={(e) => { (e.currentTarget as HTMLImageElement).src = "/profile.png"; }}
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-transparent to-transparent z-10 pointer-events-none" />
+                <div className="absolute bottom-0 left-0 right-0 px-6 py-5 z-20">
+                  <p className="mono text-[9px] text-[#6C63FF] uppercase tracking-widest mb-1">ML Researcher</p>
                   <p className="text-white font-bold text-base">{name}</p>
                 </div>
                 {/* Floating chip */}
-                <div className="absolute top-4 right-4 status-online text-[9px]">Active</div>
+                <div className="absolute top-7 right-7 z-20 status-online text-[9px]">Active</div>
               </div>
             </div>
 
@@ -119,7 +138,7 @@ const AboutSection = () => {
                   target="_blank"
                   rel="noreferrer"
                   whileHover={{ y: -2 }}
-                  className="flex-1 flex flex-col items-center gap-1.5 py-3 card text-[#737373] hover:text-[#1A56DB] hover:border-[#BFDBFE] transition-all text-[11px] font-semibold"
+                  className="flex-1 flex flex-col items-center gap-1.5 py-3 card text-[#737373] hover:text-[#6C63FF] hover:border-[#6C63FF40] transition-all text-[11px] font-semibold"
                 >
                   {s.icon}
                   {s.label}
@@ -131,7 +150,7 @@ const AboutSection = () => {
           {/* ── Content column ── */}
           <motion.div {...fadeUp(0.15)} className="lg:col-span-8 space-y-5">
             {/* Terminal JSON card */}
-            <div className="card overflow-hidden">
+            <div className="card overflow-hidden reveal">
               {/* Terminal top bar */}
               <div className="flex items-center gap-2 px-5 py-3.5 border-b border-[#F0F0EE] bg-[#FAFAF9]">
                 <div className="flex gap-1.5">
@@ -158,7 +177,7 @@ const AboutSection = () => {
                     transition={{ delay: i * 0.06 }}
                     className="flex gap-4 py-3 first:pt-0 last:pb-0 group"
                   >
-                    <span className="mono text-[11px] font-semibold text-[#1A56DB] w-[90px] shrink-0 pt-0.5">{f.k}</span>
+                    <span className="mono text-[11px] font-semibold text-[#6C63FF] w-[90px] shrink-0 pt-0.5">{f.k}</span>
                     <span className={`text-[13px] font-medium leading-snug ${f.highlight ? "text-emerald-600 font-semibold" : "text-[#404040]"}`}>
                       {f.v}
                     </span>
@@ -167,12 +186,39 @@ const AboutSection = () => {
               </div>
             </div>
 
-            {/* Bio card */}
-            <div className="card p-6">
+            {/* Bio card with stats row — UPGRADE 5 */}
+            <div className="card p-6 reveal">
               <p className="text-[#525252] leading-relaxed text-[15px] mb-4">{about}</p>
               <p className="text-[#737373] leading-relaxed text-[14px]">
                 I specialize in building low-latency AI solutions at the edge. My work combines academic rigor with practical deployment experience, spanning deep learning, hardware engineering, and scalable data systems.
               </p>
+
+              {/* Currently learning badge — UPGRADE 5 */}
+              <div className="mt-4 flex items-center gap-2">
+                <span className="currently-learning-badge">
+                  <span className="pulsing-green-dot" />
+                  Currently learning: Transformers · RAG · LangChain
+                </span>
+              </div>
+
+              {/* Stats row below bio — UPGRADE 5 */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-5 pt-5 border-t border-[#F0F0EE]">
+                {bioStats.map((s, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, y: 12 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.1 + i * 0.08 }}
+                    className="text-center p-3 rounded-xl bg-[#FAFAF9] border border-[#F0F0EE] hover:border-[#6C63FF30] transition-all"
+                  >
+                    <div className="flex justify-center mb-1.5" style={{ color: s.color }}>{s.icon}</div>
+                    <p className="text-lg font-black text-[#0A0A0A] tracking-tight">{s.value}</p>
+                    <p className="mono text-[8px] text-[#A3A3A3] uppercase tracking-widest">{s.label}</p>
+                  </motion.div>
+                ))}
+              </div>
+
               {/* Skill chips */}
               <div className="flex flex-wrap gap-2 mt-4 pt-4 border-t border-[#F0F0EE]">
                 {["Python", "TensorFlow", "PyTorch", "ESP32", "React", "FastAPI", "SQL", "Docker"].map(skill => (
@@ -187,7 +233,7 @@ const AboutSection = () => {
                 <motion.div
                   key={i}
                   {...fadeUp(0.2 + i * 0.07)}
-                  className="card-feature p-5 hover-lift"
+                  className="card-feature p-5 hover-lift reveal"
                 >
                   <div
                     className="w-9 h-9 rounded-xl flex items-center justify-center mb-4"

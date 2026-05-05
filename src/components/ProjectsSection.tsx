@@ -15,6 +15,15 @@ interface Project {
   category: string;
 }
 
+/* Colored pill badge palette for tech tags — UPGRADE 3 */
+const TAG_PILL_COLORS: string[] = [
+  "tag-pill-accent",
+  "tag-pill-green",
+  "tag-pill-violet",
+  "tag-pill-amber",
+  "tag-pill-sky",
+];
+
 const TAG_COLORS: Record<string, string> = {
   "Machine Learning": "tag-blue",
   "AI": "tag-blue",
@@ -48,13 +57,13 @@ const ProjectsSection = () => {
 
       <div className="container relative z-10">
         {/* Section header */}
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="section-label">
+        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="section-label reveal">
           <span className="eyebrow"><span className="eyebrow-dot" />Case Studies</span>
         </motion.div>
 
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.05 }}>
-            <h2 className="display-md font-black tracking-[-0.04em] leading-[1.05]">
+            <h2 className="display-md font-black tracking-[-0.04em] leading-[1.05] reveal">
               Featured{" "}
               <span style={{ background: "linear-gradient(135deg,#1A56DB,#7C3AED)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
                 Projects
@@ -95,11 +104,14 @@ const ProjectsSection = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: idx * 0.08 }}
-                  className="card shimmer-card overflow-hidden group hover-lift hover-glow flex flex-col"
+                  className="project-card card shimmer-card overflow-hidden group flex flex-col reveal"
                 >
+                  {/* Colored accent top border — UPGRADE 3 */}
+                  <div className="h-[3px] w-full bg-gradient-to-r from-[#6C63FF] via-[#1A56DB] to-[#7C3AED]" />
+
                   {/* Featured badge for first project */}
                   {idx === 0 && (
-                    <div className="absolute top-3 left-3 z-10 flex items-center gap-1.5 bg-[#1A56DB] text-white text-[10px] font-semibold px-2.5 py-1 rounded-full">
+                    <div className="absolute top-6 left-3 z-10 flex items-center gap-1.5 bg-[#6C63FF] text-white text-[10px] font-semibold px-2.5 py-1 rounded-full">
                       <Sparkles size={10} />
                       Featured
                     </div>
@@ -122,35 +134,39 @@ const ProjectsSection = () => {
                   </div>
 
                   <div className="p-6 flex flex-col flex-1">
-                    <h3 className="text-[15px] font-bold text-[#0A0A0A] mb-2 group-hover:text-[#1A56DB] transition-colors leading-tight">
+                    {/* Line 1: Project name (bold, large) — UPGRADE 3 */}
+                    <h3 className="text-[16px] font-bold text-[#0A0A0A] mb-2 group-hover:text-[#6C63FF] transition-colors leading-tight">
                       {project.title}
                     </h3>
 
+                    {/* Line 2: One-sentence description */}
                     <p className="text-[#737373] text-[13px] leading-relaxed mb-4 line-clamp-3 flex-1">
                       {project.description}
                     </p>
 
-                    {/* Tags */}
+                    {/* Tech tags as colored pill badges — UPGRADE 3 */}
                     <div className="flex flex-wrap gap-1.5 mb-5">
-                      {(project.tags || []).slice(0, 4).map((tag) => (
-                        <span key={tag} className="tag">{tag}</span>
+                      {(project.tags || []).slice(0, 4).map((tag, tagIdx) => (
+                        <span key={tag} className={TAG_PILL_COLORS[tagIdx % TAG_PILL_COLORS.length]}>
+                          {tag}
+                        </span>
                       ))}
                       {(project.tags || []).length > 4 && (
-                        <span className="tag text-[#A3A3A3]">+{project.tags.length - 4}</span>
+                        <span className="tag-pill-accent opacity-60">+{project.tags.length - 4}</span>
                       )}
                     </div>
 
-                    {/* Links */}
+                    {/* Action buttons — UPGRADE 3: GitHub ↗ and Live Demo ↗ */}
                     <div className="flex items-center gap-3 pt-4 border-t border-[#F0F0EE]">
                       {project.githubUrl && (
                         <motion.a
                           href={project.githubUrl}
                           target="_blank"
                           rel="noreferrer"
-                          whileHover={{ scale: 1.05 }}
-                          className="flex items-center gap-1.5 text-[11px] font-semibold text-[#737373] hover:text-[#0A0A0A] transition-colors"
+                          whileHover={{ scale: 1.05, y: -1 }}
+                          className="flex items-center gap-1.5 text-[11px] font-semibold px-3 py-1.5 rounded-lg bg-[#F5F5F5] border border-[#E5E5E5] text-[#525252] hover:bg-[#0A0A0A] hover:text-white hover:border-transparent transition-all"
                         >
-                          <Github size={13} /> Code
+                          <Github size={12} /> GitHub ↗
                         </motion.a>
                       )}
                       {project.liveUrl && (
@@ -158,15 +174,15 @@ const ProjectsSection = () => {
                           href={project.liveUrl}
                           target="_blank"
                           rel="noreferrer"
-                          whileHover={{ scale: 1.05 }}
-                          className="ml-auto flex items-center gap-1.5 text-[11px] font-semibold text-[#1A56DB] hover:text-[#1648C0] transition-colors"
+                          whileHover={{ scale: 1.05, y: -1 }}
+                          className="flex items-center gap-1.5 text-[11px] font-semibold px-3 py-1.5 rounded-lg bg-[#EFF6FF] border border-[#BFDBFE] text-[#1A56DB] hover:bg-[#1A56DB] hover:text-white hover:border-transparent transition-all"
                         >
-                          Live Demo <ExternalLink size={11} />
+                          <ExternalLink size={11} /> Live Demo ↗
                         </motion.a>
                       )}
                       <Link
                         to={`/projects/${project._id}`}
-                        className="ml-auto text-[11px] font-semibold text-[#A3A3A3] hover:text-[#0A0A0A] flex items-center gap-1 transition-colors"
+                        className="ml-auto text-[11px] font-semibold text-[#A3A3A3] hover:text-[#6C63FF] flex items-center gap-1 transition-colors"
                       >
                         Details <ArrowRight size={11} />
                       </Link>

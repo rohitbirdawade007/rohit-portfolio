@@ -63,6 +63,18 @@ function TypingText({ phrases }: { phrases: string[] }) {
   );
 }
 
+/* ── Tech stack icons row ── */
+const TECH_STACK = [
+  { name: "Python", icon: "🐍" },
+  { name: "PyTorch", icon: "🔥" },
+  { name: "TensorFlow", icon: "🧠" },
+  { name: "React", icon: "⚛️" },
+  { name: "FastAPI", icon: "⚡" },
+  { name: "Docker", icon: "🐳" },
+  { name: "SQL", icon: "🗄️" },
+  { name: "ESP32", icon: "📡" },
+];
+
 const HeroSection = () => {
   const { profile } = useProfile();
   const imgSrc = resolveImage(profile?.profileImage);
@@ -80,7 +92,12 @@ const HeroSection = () => {
       className="relative min-h-screen pt-20 pb-0 overflow-hidden flex flex-col bg-gradient-mesh"
     >
       {/* ── Canvas background elements ── */}
-      <div className="absolute inset-0 bg-dot-grid opacity-[0.28] pointer-events-none" />
+      {/* Dot-grid background — UPGRADE 2 */}
+      <div className="absolute inset-0 pointer-events-none" style={{
+        backgroundImage: "radial-gradient(rgba(108,99,255,0.15) 1px, transparent 1px)",
+        backgroundSize: "28px 28px",
+        opacity: 0.4,
+      }} />
       <div className="absolute -top-[30%] -right-[10%] w-[700px] h-[700px] rounded-full bg-blue-100/60 blur-[140px] pointer-events-none animate-float-slow" />
       <div className="absolute -bottom-[10%] -left-[10%] w-[500px] h-[500px] rounded-full bg-violet-100/40 blur-[140px] pointer-events-none animate-float-slow" style={{ animationDelay: "-3s" }} />
 
@@ -110,15 +127,26 @@ const HeroSection = () => {
 
             {/* Main headline */}
             <div className="my-auto py-8">
+              {/* Open to opportunities badge — UPGRADE 2 */}
+              <motion.span
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.2, duration: 0.5 }}
+                className="hero-badge mb-5 inline-flex"
+              >
+                Open to opportunities ✦
+              </motion.span>
+
               <p className="eyebrow mb-5">
                 <span className="eyebrow-dot" />
                 <TypingText phrases={["Data Scientist", "AI Engineer", "ML Researcher", "Edge AI Builder"]} />
               </p>
 
+              {/* Larger, bolder heading — UPGRADE 2: min clamp(2.5rem, 6vw, 5rem) */}
               <h1 className="font-black tracking-[-0.04em] leading-[0.95] text-[#0A0A0A] mb-6 display-xl">
                 Rohit<br />
                 <span style={{
-                  background: "linear-gradient(135deg, #1A56DB 0%, #7C3AED 60%)",
+                  background: "linear-gradient(135deg, #6C63FF 0%, #1A56DB 60%)",
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
                   backgroundClip: "text",
@@ -161,6 +189,28 @@ const HeroSection = () => {
                 Hire Me <Zap size={14} />
               </motion.button>
             </div>
+
+            {/* Tech stack icon row — UPGRADE 2 */}
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5, duration: 0.5 }}
+              className="flex flex-wrap gap-2 mt-6 pt-5 border-t border-[#F0F0EE]"
+            >
+              {TECH_STACK.map((tech, i) => (
+                <motion.span
+                  key={tech.name}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.6 + i * 0.06 }}
+                  className="tech-stack-pill"
+                  title={tech.name}
+                >
+                  <span className="text-sm">{tech.icon}</span>
+                  {tech.name}
+                </motion.span>
+              ))}
+            </motion.div>
           </motion.div>
 
           {/* ── CELL 2: Profile Photo (5 cols, tall) ── */}
@@ -195,9 +245,9 @@ const HeroSection = () => {
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.6, type: "spring", stiffness: 200 }}
-              className="absolute top-5 left-5 bg-[#1A56DB] text-white rounded-xl px-4 py-3 shadow-xl animate-float"
+              className="absolute top-5 left-5 bg-[#6C63FF] text-white rounded-xl px-4 py-3 shadow-xl animate-float"
             >
-              <p className="mono text-[9px] text-blue-200 uppercase tracking-wider mb-0.5">Model Precision</p>
+              <p className="mono text-[9px] text-purple-200 uppercase tracking-wider mb-0.5">Model Precision</p>
               <p className="text-2xl font-black leading-none tracking-tight">96.4%</p>
             </motion.div>
 

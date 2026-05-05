@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
-import { Menu, X, Cpu, ArrowUpRight, Command } from "lucide-react";
+import { Menu, X, Cpu, ArrowUpRight, Command, Zap } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const ITEMS = [
@@ -54,7 +54,7 @@ const Navbar = () => {
         className={cn(
           "pointer-events-auto w-full transition-all duration-300",
           scrolled
-            ? "bg-[rgba(247,247,245,0.92)] backdrop-blur-xl border-b border-[#E5E5E5] shadow-[0_1px_0_rgba(0,0,0,0.04)]"
+            ? "bg-[rgba(13,13,20,0.85)] backdrop-blur-xl border-b border-[rgba(255,255,255,0.08)] shadow-[0_4px_30px_rgba(0,0,0,0.15)]"
             : "bg-transparent"
         )}
       >
@@ -71,15 +71,26 @@ const Navbar = () => {
           <Link to="/" className="flex items-center gap-2.5 group shrink-0">
             <motion.div
               whileHover={{ rotate: 10, scale: 1.1 }}
-              className="w-8 h-8 rounded-lg bg-[#0A0A0A] text-white flex items-center justify-center shadow-sm transition-all group-hover:bg-[#1A56DB]"
+              className={cn(
+                "w-8 h-8 rounded-lg flex items-center justify-center shadow-sm transition-all",
+                scrolled
+                  ? "bg-[#6C63FF] text-white group-hover:bg-[#7B73FF]"
+                  : "bg-[#0A0A0A] text-white group-hover:bg-[#1A56DB]"
+              )}
             >
               <Cpu size={15} />
             </motion.div>
             <div>
-              <p className="text-[13px] font-bold text-[#0A0A0A] tracking-tight leading-none">
+              <p className={cn(
+                "text-[13px] font-bold tracking-tight leading-none transition-colors",
+                scrolled ? "text-white" : "text-[#0A0A0A]"
+              )}>
                 Rohit Birdawade
               </p>
-              <p className="text-[9px] font-semibold text-[#1A56DB] uppercase tracking-[0.12em] leading-none mt-0.5">
+              <p className={cn(
+                "text-[9px] font-semibold uppercase tracking-[0.12em] leading-none mt-0.5 transition-colors",
+                scrolled ? "text-[#6C63FF]" : "text-[#1A56DB]"
+              )}>
                 AI Engineer
               </p>
             </div>
@@ -95,16 +106,23 @@ const Navbar = () => {
                   onClick={() => scroll(item.id)}
                   className={cn(
                     "relative px-3.5 py-2 text-[13px] font-medium rounded-lg transition-all",
-                    isActive
-                      ? "text-[#0A0A0A] bg-[#F0F0EE]"
-                      : "text-[#525252] hover:text-[#0A0A0A] hover:bg-[#F0F0EE]"
+                    scrolled
+                      ? isActive
+                        ? "text-white bg-white/10"
+                        : "text-white/60 hover:text-white hover:bg-white/10"
+                      : isActive
+                        ? "text-[#0A0A0A] bg-[#F0F0EE]"
+                        : "text-[#525252] hover:text-[#0A0A0A] hover:bg-[#F0F0EE]"
                   )}
                 >
                   {item.label}
                   {isActive && (
                     <motion.div
                       layoutId="nav-indicator"
-                      className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-[#1A56DB]"
+                      className={cn(
+                        "absolute bottom-0 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full",
+                        scrolled ? "bg-[#6C63FF]" : "bg-[#1A56DB]"
+                      )}
                       transition={{ type: "spring", stiffness: 300, damping: 30 }}
                     />
                   )}
@@ -116,20 +134,38 @@ const Navbar = () => {
           {/* Right actions */}
           <div className="flex items-center gap-2 shrink-0">
             {/* Keyboard shortcut badge */}
-            <div className="hidden lg:flex items-center gap-1 px-2 py-1 border border-[#E5E5E5] rounded-md text-[10px] text-[#A3A3A3] font-mono">
+            <div className={cn(
+              "hidden lg:flex items-center gap-1 px-2 py-1 rounded-md text-[10px] font-mono transition-all",
+              scrolled
+                ? "border border-white/10 text-white/30"
+                : "border border-[#E5E5E5] text-[#A3A3A3]"
+            )}>
               <Command size={9} /> K
             </div>
+
+            {/* Hire Me glow button — UPGRADE 1 */}
             <motion.button
-              whileHover={{ scale: 1.03, y: -1 }}
+              whileHover={{ scale: 1.05, y: -1 }}
               whileTap={{ scale: 0.97 }}
               onClick={() => scroll("contact")}
-              className="hidden sm:flex items-center gap-1.5 h-8 px-4 bg-[#0A0A0A] hover:bg-[#1A56DB] text-white text-xs font-semibold rounded-lg transition-all duration-200 shadow-sm"
+              className="hidden sm:flex items-center gap-1.5 h-8 px-4 text-white text-xs font-semibold rounded-lg transition-all duration-300 hire-me-glow"
+              style={{
+                background: "#6C63FF",
+                border: "1px solid #6C63FF",
+                boxShadow: "0 0 12px rgba(108,99,255,0.3)",
+              }}
             >
-              Let's Talk <ArrowUpRight size={12} />
+              <Zap size={12} /> Hire Me
             </motion.button>
+
             <button
               onClick={() => setOpen(!open)}
-              className="md:hidden w-9 h-9 flex items-center justify-center rounded-lg border border-[#E5E5E5] bg-[#FFFFFF] text-[#404040] hover:bg-[#F0F0EE] transition-colors"
+              className={cn(
+                "md:hidden w-9 h-9 flex items-center justify-center rounded-lg transition-colors",
+                scrolled
+                  ? "border border-white/10 bg-white/5 text-white/70 hover:bg-white/10"
+                  : "border border-[#E5E5E5] bg-[#FFFFFF] text-[#404040] hover:bg-[#F0F0EE]"
+              )}
             >
               <AnimatePresence mode="wait">
                 {open
@@ -180,7 +216,7 @@ const Navbar = () => {
                 onClick={() => scroll("contact")}
                 className="w-full btn-blue text-sm py-3"
               >
-                Let's Talk <ArrowUpRight size={14} />
+                Hire Me <Zap size={14} />
               </button>
             </div>
           </motion.div>
