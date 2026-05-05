@@ -44,19 +44,19 @@ const Sidebar = () => {
         <div className="space-y-2">
            <p className="text-[10px] font-mono-system uppercase tracking-widest text-[#94a3b8] mb-4">External Links</p>
            <a 
-              href="/resume.pdf" target="_blank" 
+              href={profile?.resumeLink || "/resume.pdf"} target="_blank" 
               className="flex items-center justify-between w-full px-4 py-2 bg-white/5 border border-white/5 rounded-lg text-[11px] font-mono-system uppercase tracking-wider text-[#94a3b8] hover:bg-white/10 hover:text-white transition-all"
             >
              Resume <FileText size={14} />
            </a>
            <a 
-              href={profile?.socialLinks?.github} target="_blank"
+              href={profile?.socialLinks?.github || "https://github.com/rohitbirdawade007"} target="_blank"
               className="flex items-center justify-between w-full px-4 py-2 border border-white/5 rounded-lg text-[11px] text-[#94a3b8] hover:text-white transition-all"
             >
              GitHub <Github size={14} />
            </a>
            <a 
-              href={profile?.socialLinks?.linkedin} target="_blank"
+              href={profile?.socialLinks?.linkedin || "https://linkedin.com/in/rohitbirdawade007"} target="_blank"
               className="flex items-center justify-between w-full px-4 py-2 border border-white/5 rounded-lg text-[11px] text-[#94a3b8] hover:text-white transition-all"
             >
              LinkedIn <Linkedin size={14} />

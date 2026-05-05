@@ -39,10 +39,10 @@ const AboutSection = () => {
   const fields = [
     { k: "name",      v: name },
     { k: "role",      v: profile?.title || "Data Scientist / AI Engineer" },
-    { k: "location",  v: "Pune, Maharashtra, IN" },
+    { k: "location",  v: profile?.location || "Pune, Maharashtra, IN" },
     { k: "expertise", v: "ML · Deep Learning · IoT · Edge AI" },
     { k: "status",    v: "Active · Open to Opportunities", highlight: true },
-    { k: "email",     v: "rohitbirdawade007@gmail.com" },
+    { k: "email",     v: profile?.email || "rohitbirdawade007@gmail.com" },
   ];
 
   const highlights = [
@@ -130,7 +130,7 @@ const AboutSection = () => {
               {[
                 { href: profile?.socialLinks?.github || "https://github.com/rohitbirdawade007",       icon: <Github size={15} />, label: "GitHub" },
                 { href: profile?.socialLinks?.linkedin || "https://linkedin.com/in/rohitbirdawade007", icon: <Linkedin size={15} />, label: "LinkedIn" },
-                { href: `mailto:rohitbirdawade007@gmail.com`,                                           icon: <Mail size={15} />, label: "Email" },
+                { href: `mailto:${profile?.email || "rohitbirdawade007@gmail.com"}`,                                           icon: <Mail size={15} />, label: "Email" },
               ].map((s, i) => (
                 <motion.a
                   key={i}

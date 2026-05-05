@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { Terminal, Send, Github, Linkedin, Mail } from "lucide-react";
+import { useProfile } from "@/context/ProfileContext";
 
 const ContactTerminal = () => {
+  const { profile } = useProfile();
   const [input, setInput] = useState("");
 
   return (
@@ -24,23 +26,23 @@ const ContactTerminal = () => {
             </p>
          </div>
 
-         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <a 
-              href="mailto:rohitbirdawade007@gmail.com" 
+              href={`mailto:${profile?.email || "rohitbirdawade007@gmail.com"}`}
               className="flex flex-col items-center gap-4 p-6 bg-[#020617] border border-[#1e293b] rounded hover:border-blue-500/50 hover:bg-blue-500/5 transition-all group"
             >
                <Mail size={24} className="text-[#94a3b8] group-hover:text-blue-500" />
                <span className="text-[10px] font-mono-system font-black text-[#94a3b8] uppercase group-hover:text-white">Email_Port</span>
             </a>
             <a 
-              href="https://github.com/rohitbirdawade007" target="_blank"
+              href={profile?.socialLinks?.github || "https://github.com/rohitbirdawade007"} target="_blank"
               className="flex flex-col items-center gap-4 p-6 bg-[#020617] border border-[#1e293b] rounded hover:border-blue-500/50 hover:bg-blue-500/5 transition-all group"
             >
                <Github size={24} className="text-[#94a3b8] group-hover:text-blue-500" />
                <span className="text-[10px] font-mono-system font-black text-[#94a3b8] uppercase group-hover:text-white">Git_Index</span>
             </a>
             <a 
-              href="https://linkedin.com/in/rohitbirdawade007" target="_blank"
+              href={profile?.socialLinks?.linkedin || "https://linkedin.com/in/rohitbirdawade007"} target="_blank"
               className="flex flex-col items-center gap-4 p-6 bg-[#020617] border border-[#1e293b] rounded hover:border-blue-500/50 hover:bg-blue-500/5 transition-all group"
             >
                <Linkedin size={24} className="text-[#94a3b8] group-hover:text-blue-500" />

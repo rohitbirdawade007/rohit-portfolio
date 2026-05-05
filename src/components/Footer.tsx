@@ -55,7 +55,7 @@ const Footer = () => {
               {[
                 { href: profile?.socialLinks?.github  || "https://github.com/rohitbirdawade007",       icon: <Github size={14} />,   label: "GitHub" },
                 { href: profile?.socialLinks?.linkedin || "https://linkedin.com/in/rohitbirdawade007",  icon: <Linkedin size={14} />, label: "LinkedIn" },
-                { href: "https://twitter.com/rohitbirdawade",                                            icon: <Twitter size={14} />,  label: "Twitter" },
+                { href: profile?.socialLinks?.twitter || "https://twitter.com/rohitbirdawade",          icon: <Twitter size={14} />,  label: "Twitter" },
                 { href: `mailto:${profile?.email || "rohitbirdawade007@gmail.com"}`,                    icon: <Mail size={14} />,     label: "Email" },
               ].map((s, i) => (
                 <motion.a

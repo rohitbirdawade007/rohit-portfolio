@@ -3,8 +3,10 @@ import { motion } from "framer-motion";
 import { Mail, Linkedin, Github, Send, MapPin, Clock, ArrowUpRight, Rocket } from "lucide-react";
 import { sendMessage } from "@/services/api";
 import { useToast } from "@/hooks/use-toast";
+import { useProfile } from "@/context/ProfileContext";
 
 const ContactSection = () => {
+  const { profile } = useProfile();
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [sending, setSending] = useState(false);
   const { toast } = useToast();
@@ -24,10 +26,21 @@ const ContactSection = () => {
     }
   };
 
+  // Helper to extract username from URLs
+  const getUsername = (url: string | undefined, defaultName: string) => {
+    if (!url) return defaultName;
+    try {
+      const parts = url.split('/').filter(Boolean);
+      return parts[parts.length - 1];
+    } catch {
+      return defaultName;
+    }
+  };
+
   const socials = [
-    { icon: <Github size={16} />,   label: "GitHub",   sub: "@rohitbirdawade007",         url: "https://github.com/rohitbirdawade007",  color: "#0A0A0A" },
-    { icon: <Linkedin size={16} />, label: "LinkedIn", sub: "rohitbirdawade007",           url: "https://linkedin.com/in/rohitbirdawade007", color: "#0A66C2" },
-    { icon: <Mail size={16} />,     label: "Email",    sub: "rohitbirdawade007@gmail.com", url: "mailto:rohitbirdawade007@gmail.com",    color: "#EA4335" },
+    { icon: <Github size={16} />,   label: "GitHub",   sub: `@${getUsername(profile?.socialLinks?.github, "rohitbirdawade007")}`, url: profile?.socialLinks?.github || "https://github.com/rohitbirdawade007",  color: "#0A0A0A" },
+    { icon: <Linkedin size={16} />, label: "LinkedIn", sub: getUsername(profile?.socialLinks?.linkedin, "rohitbirdawade007"), url: profile?.socialLinks?.linkedin || "https://linkedin.com/in/rohitbirdawade007", color: "#0A66C2" },
+    { icon: <Mail size={16} />,     label: "Email",    sub: profile?.email || "rohitbirdawade007@gmail.com", url: `mailto:${profile?.email || "rohitbirdawade007@gmail.com"}`, color: "#EA4335" },
   ];
 
   return (
@@ -81,7 +94,7 @@ const ContactSection = () => {
             {/* Quick info card */}
             <div className="card p-5 space-y-4">
               {[
-                { icon: <MapPin size={14} className="text-[#6C63FF]" />,    label: "Location",      value: "Pune, Maharashtra, India",  color: "#6C63FF" },
+                { icon: <MapPin size={14} className="text-[#6C63FF]" />,    label: "Location",      value: profile?.location || "Pune, Maharashtra, India",  color: "#6C63FF" },
                 { icon: <Clock size={14} className="text-emerald-500" />,   label: "Response Time", value: "Within 24 hours",           color: "#059669" },
                 { icon: <Rocket size={14} className="text-[#D97706]" />,    label: "Availability",  value: "Open to opportunities",     color: "#D97706" },
               ].map((item, i) => (

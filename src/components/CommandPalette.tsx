@@ -21,6 +21,7 @@ import {
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "@/context/ThemeContext";
+import { useProfile } from "@/context/ProfileContext";
 
 import {
   CommandDialog,
@@ -37,6 +38,7 @@ export function CommandPalette() {
   const [open, setOpen] = React.useState(false);
   const navigate = useNavigate();
   const { theme, setTheme } = useTheme();
+  const { profile } = useProfile();
 
   React.useEffect(() => {
     const down = (e: KeyboardEvent) => {
@@ -93,15 +95,15 @@ export function CommandPalette() {
           </CommandGroup>
           <CommandSeparator />
           <CommandGroup heading="Socials">
-            <CommandItem onSelect={() => runCommand(() => window.open("https://github.com/rohitbirdawade007", "_blank"))}>
+            <CommandItem onSelect={() => runCommand(() => window.open(profile?.socialLinks?.github || "https://github.com/rohitbirdawade007", "_blank"))}>
               <Github className="mr-2 h-4 w-4" />
               <span>GitHub</span>
             </CommandItem>
-            <CommandItem onSelect={() => runCommand(() => window.open("https://linkedin.com/in/rohitbirdawade", "_blank"))}>
+            <CommandItem onSelect={() => runCommand(() => window.open(profile?.socialLinks?.linkedin || "https://linkedin.com/in/rohitbirdawade", "_blank"))}>
               <Linkedin className="mr-2 h-4 w-4" />
               <span>LinkedIn</span>
             </CommandItem>
-            <CommandItem onSelect={() => runCommand(() => window.location.href = "mailto:rohitbirdawade007@gmail.com")}>
+            <CommandItem onSelect={() => runCommand(() => window.location.href = `mailto:${profile?.email || "rohitbirdawade007@gmail.com"}`)}>
               <Mail className="mr-2 h-4 w-4" />
               <span>Email Me</span>
             </CommandItem>

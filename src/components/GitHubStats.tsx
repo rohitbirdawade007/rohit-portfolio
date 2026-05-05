@@ -21,7 +21,7 @@ interface GitHubUser {
   name: string;
 }
 
-const GITHUB_USERNAME = 'rohitbirdawade007';
+import { useProfile } from '@/context/ProfileContext';
 
 const LANG_COLORS: Record<string, string> = {
   Python: '#3572A5',
@@ -36,13 +36,26 @@ const LANG_COLORS: Record<string, string> = {
 };
 
 const GitHubStats = () => {
+  const { profile } = useProfile();
   const [repos, setRepos] = useState<Repo[]>([]);
   const [user, setUser] = useState<GitHubUser | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
+  const getUsername = (url: string | undefined, defaultName: string) => {
+    if (!url) return defaultName;
+    try {
+      const parts = url.split('/').filter(Boolean);
+      return parts[parts.length - 1];
+    } catch {
+      return defaultName;
+    }
+  };
+
+  const username = getUsername(profile?.socialLinks?.github, 'rohitbirdawade007');
+
   useEffect(() => {
-    const cache = sessionStorage.getItem(`gh_stats_${GITHUB_USERNAME}`);
+    const cache = sessionStorage.getItem(`gh_stats_${username}`);
     if (cache) {
       try {
         const { user: u, repos: r } = JSON.parse(cache);
@@ -54,14 +67,14 @@ const GitHubStats = () => {
     }
 
     Promise.all([
-      fetch(`https://api.github.com/users/${GITHUB_USERNAME}`).then(r => r.json()),
-      fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?sort=updated&per_page=6`).then(r => r.json())
+      fetch(`https://api.github.com/users/${username}`).then(r => r.json()),
+      fetch(`https://api.github.com/users/${username}/repos?sort=updated&per_page=6`).then(r => r.json())
     ])
       .then(([userData, reposData]) => {
         if (userData.message) throw new Error(userData.message);
         setUser(userData);
         setRepos(Array.isArray(reposData) ? reposData : []);
-        sessionStorage.setItem(`gh_stats_${GITHUB_USERNAME}`, JSON.stringify({ user: userData, repos: reposData }));
+        sessionStorage.setItem(`gh_stats_${username}`, JSON.stringify({ user: userData, repos: reposData }));
       })
       .catch(() => setError('Could not load GitHub data'))
       .finally(() => setLoading(false));
@@ -95,7 +108,7 @@ const GitHubStats = () => {
             viewport={{ once: true }}
           >
             <a
-              href={`https://github.com/${GITHUB_USERNAME}`}
+              href={`https://github.com/${username}`}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-3 px-8 py-4 glass border-white/10 rounded-2xl hover:bg-white/5 transition-all group"
@@ -147,7 +160,7 @@ const GitHubStats = () => {
           </div>
           <div className="overflow-x-auto pb-4 custom-scrollbar">
             <img
-              src={`https://ghchart.rshah.org/3b82f6/${GITHUB_USERNAME}`}
+              src={`https://ghchart.rshah.org/3b82f6/${username}`}
               alt="GitHub contribution graph"
               className="min-w-[800px] w-full filter hue-rotate-[180deg] invert-[0.1] opacity-60 group-hover:opacity-100 transition-opacity"
               onError={e => (e.currentTarget.style.display = 'none')}
