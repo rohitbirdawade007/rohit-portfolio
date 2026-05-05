@@ -20,7 +20,45 @@ const ProfileSchema = new mongoose.Schema({
     showEmail: { type: Boolean, default: true },
     showPhone: { type: Boolean, default: true },
     showLocation: { type: Boolean, default: true }
-  }
+  },
+  // ─── LinkedIn-style extended fields ─────────────────────────────────
+  languages: [{
+    name:        { type: String },
+    proficiency: { type: String } // Native, Professional, Conversational, Basic
+  }],
+  services: [{
+    title:       { type: String },
+    description: { type: String }
+  }],
+  courses: [{
+    name:         { type: String },
+    platform:     { type: String },
+    completedAt:  { type: String },
+    certificateUrl: { type: String }
+  }],
+  organizations: [{
+    name:     { type: String },
+    role:     { type: String },
+    duration: { type: String }
+  }],
+  volunteer: [{
+    role:         { type: String },
+    organization: { type: String },
+    duration:     { type: String },
+    description:  { type: String }
+  }],
+  testScores: [{
+    name:  { type: String },
+    score: { type: String },
+    date:  { type: String }
+  }],
+  recommendations: [{
+    name:         { type: String },
+    title:        { type: String },
+    relationship: { type: String },
+    text:         { type: String },
+    avatar:       { type: String }
+  }]
 }, { timestamps: true });
 
 module.exports = mongoose.model('Profile', ProfileSchema);

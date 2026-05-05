@@ -6,9 +6,11 @@ import ProjectModules from "@/components/ProjectModules";
 import SkillsSection from "@/components/SkillsSection";
 import ExperienceSection from "@/components/ExperienceSection";
 import EducationSection from "@/components/EducationSection";
+import CertificationsSection from "@/components/CertificationsSection";
 import AchievementsSection from "@/components/AchievementsSection";
 import ResearchSection from "@/components/ResearchSection";
 import BlogsSection from "@/components/BlogsSection";
+import ProfileExtensionsSection from "@/components/ProfileExtensionsSection";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
 import BackToTop from "@/components/BackToTop";
@@ -51,9 +53,11 @@ const Index = () => {
         <ProjectModules />
         <ExperienceSection />
         <EducationSection />
+        <CertificationsSection />
         <AchievementsSection />
         <ResearchSection />
         <BlogsSection />
+        <ProfileExtensionsSection />
         <ContactSection />
       </main>
       <Footer />
