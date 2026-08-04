@@ -169,33 +169,6 @@ const projectsData = [
     image: "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=800&auto=format&fit=crop"
   },
   {
-    title: "Guardian Eye — Missing Person Detection System",
-    slug: "guardian-eye-missing-person",
-    description: "A real-time facial recognition and tracking system that identifies missing persons across distributed camera networks using deep learning. Provides a centralized law enforcement dashboard for active monitoring and alert management.",
-    problemStatement: "Traditional missing person searches are slow, geographically limited, and rely on manual photo matching. There is no scalable system to continuously monitor public spaces using existing CCTV infrastructure.",
-    solution: "Built a distributed facial recognition pipeline using deep metric learning that processes live CCTV feeds from multiple nodes. Matches detected faces against a registered missing persons database with sub-second latency and sends real-time alerts to a central dashboard.",
-    fullDescription: "The system consists of distributed visual recognition nodes running face detection (MTCNN) and face embedding (FaceNet/DeepFace) models. A central FastAPI server manages the missing persons registry, receives detection events from nodes, and powers a React dashboard with real-time map tracking, confidence scores, and alert management. MongoDB stores face embeddings and detection events.",
-    keyFeatures: [
-      "Real-time face detection and recognition across distributed camera nodes",
-      "Deep metric learning for face embedding and similarity matching",
-      "Centralized dashboard with live map tracking and alert management",
-      "Confidence score display for each detection event",
-      "Missing persons registry with face enrollment workflow",
-      "Low-latency distributed architecture for multi-node processing"
-    ],
-    techStack: ["Python", "OpenCV", "FaceNet", "DeepFace", "React", "MongoDB", "FastAPI"],
-    aiModels: ["MTCNN (Face Detection)", "FaceNet (Face Embeddings)", "DeepFace", "Deep Metric Learning"],
-    category: "Computer Vision",
-    difficulty: "Advanced",
-    status: "Completed",
-    featured: true,
-    deployment: "Cloud + Distributed Edge Nodes",
-    architecture: "Distributed OpenCV nodes → FastAPI hub → MongoDB → React dashboard",
-    achievements: ["Real-time multi-node facial recognition with sub-second latency", "Deep metric learning for robust face matching in varying lighting conditions"],
-    githubUrl: "https://github.com/rohitbirdawade007",
-    image: "https://images.unsplash.com/photo-1580910051074-3eb694886505?w=800&auto=format&fit=crop"
-  },
-  {
     title: "Amazon Product Analytics — Power BI Dashboard",
     slug: "amazon-product-analytics-powerbi",
     description: "An interactive business intelligence dashboard analyzing Amazon e-commerce product data, uncovering pricing trends, category performance, rating distributions, and seller insights through rich Power BI visualizations.",
