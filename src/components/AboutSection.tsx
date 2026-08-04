@@ -1,6 +1,6 @@
 import { useProfile } from "@/context/ProfileContext";
 import { motion } from "framer-motion";
-import { Terminal, Github, Linkedin, Mail, Target, Cpu, Award, ArrowRight, TrendingUp, Users, Code2, BookOpen } from "lucide-react";
+import { Terminal, Github, Linkedin, Mail, Target, Cpu, Award, TrendingUp, Code2, BookOpen } from "lucide-react";
 
 const resolveImage = (path?: string | null): string => {
   if (!path) return "/profile.png";
@@ -44,12 +44,6 @@ const AboutSection = () => {
     { value: "2",    label: "Certifications",  icon: <Award size={16} />,     color: "#F59E0B" },
   ];
 
-  const quickStats = [
-    { value: "96.4%", label: "Model Accuracy",   icon: <TrendingUp size={16} />, color: "#6366F1" },
-    { value: "6+",    label: "Projects Built",    icon: <Code2 size={16} />,     color: "#8B5CF6" },
-    { value: "2+",    label: "Years Experience",  icon: <Users size={16} />,     color: "#10B981" },
-  ];
-
   return (
     <section id="about" className="py-24 relative overflow-hidden bg-[#090A0F]">
       <div className="container relative">
@@ -67,7 +61,7 @@ const AboutSection = () => {
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
 
-          {/* Left Column: Photo & Quick Info */}
+          {/* Left Column: Photo & Social */}
           <motion.div {...fadeUp(0.1)} className="lg:col-span-4 space-y-4">
             {/* Profile Photo Card */}
             <div className="card overflow-hidden">
@@ -86,19 +80,6 @@ const AboutSection = () => {
               </div>
             </div>
 
-            {/* Quick Stats Grid */}
-            <div className="grid grid-cols-3 gap-2">
-              {quickStats.map((s, i) => (
-                <div key={i} className="card p-3.5 text-center flex flex-col items-center gap-1.5">
-                  <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: `${s.color}15`, color: s.color }}>
-                    {s.icon}
-                  </div>
-                  <p className="text-lg font-black text-white">{s.value}</p>
-                  <p className="mono text-[8px] text-slate-400 uppercase tracking-widest">{s.label}</p>
-                </div>
-              ))}
-            </div>
-
             {/* Social Links Row */}
             <div className="flex gap-2">
               {[
@@ -115,7 +96,7 @@ const AboutSection = () => {
             </div>
           </motion.div>
 
-          {/* Right Column: Bio & Highlights */}
+          {/* Right Column: Bio & Metadata */}
           <motion.div {...fadeUp(0.15)} className="lg:col-span-8 space-y-5">
 
             {/* Terminal Metadata Card */}
@@ -143,14 +124,14 @@ const AboutSection = () => {
               </div>
             </div>
 
-            {/* Bio Card */}
+            {/* Bio & Stats */}
             <div className="card p-6">
               <p className="text-slate-300 leading-relaxed text-[15px] mb-4">{about}</p>
               <p className="text-slate-400 leading-relaxed text-[14px]">
                 Specialized in deploying edge AI solutions and deep learning architectures with full production pipelines from research to deployment.
               </p>
 
-              {/* Bio Stats Grid */}
+              {/* Stats Row */}
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-6 pt-6 border-t border-white/08">
                 {bioStats.map((s, i) => (
                   <div key={i} className="text-center p-3 rounded-xl bg-white/02 border border-white/05">

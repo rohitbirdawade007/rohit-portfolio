@@ -1,5 +1,4 @@
-import { ArrowRight, Download, Sparkles, Zap, Layers, Star, Code2, Activity } from "lucide-react";
-import { useProfile } from "@/context/ProfileContext";
+import { ArrowRight, Download, Sparkles, Layers, Star, Code2, Activity } from "lucide-react";
 import { motion, animate } from "framer-motion";
 import TechMarquee from "./TechMarquee";
 import { useEffect, useRef, useState } from "react";
@@ -54,14 +53,12 @@ const CODE_LINES = [
   { tokens: [{ t: "  name: ", c: "#89DDFF" }, { t: '"Rohit Birdawade"', c: "#C3E88D" }, { t: ",", c: "#89DDFF" }] },
   { tokens: [{ t: "  role: ", c: "#89DDFF" }, { t: '"AI & ML Engineer"', c: "#C3E88D" }, { t: ",", c: "#89DDFF" }] },
   { tokens: [{ t: "  focus: ", c: "#89DDFF" }, { t: "[", c: "#89DDFF" }] },
-  { tokens: [{ t: "    ", c: "#fff" }, { t: '"RAG & Hybrid Search"', c: "#C3E88D" }, { t: ",", c: "#89DDFF" }] },
-  { tokens: [{ t: "    ", c: "#fff" }, { t: '"Computer Vision & Edge AI"', c: "#C3E88D" }, { t: ",", c: "#89DDFF" }] },
-  { tokens: [{ t: "    ", c: "#fff" }, { t: '"Generative AI Systems"', c: "#C3E88D" }] },
+  { tokens: [{ t: "    ", c: "#fff" }, { t: '"RAG Systems & Generative AI"', c: "#C3E88D" }, { t: ",", c: "#89DDFF" }] },
+  { tokens: [{ t: "    ", c: "#fff" }, { t: '"Computer Vision & Edge AI"', c: "#C3E88D" }] },
   { tokens: [{ t: "  ]", c: "#89DDFF" }, { t: ",", c: "#89DDFF" }] },
   { tokens: [{ t: "  stack: ", c: "#89DDFF" }, { t: "[", c: "#89DDFF" }] },
   { tokens: [{ t: "    ", c: "#fff" }, { t: '"Python / PyTorch / TensorFlow"', c: "#C3E88D" }, { t: ",", c: "#89DDFF" }] },
-  { tokens: [{ t: "    ", c: "#fff" }, { t: '"FastAPI / LangChain / ChromaDB"', c: "#C3E88D" }, { t: ",", c: "#89DDFF" }] },
-  { tokens: [{ t: "    ", c: "#fff" }, { t: '"React / TypeScript / Docker"', c: "#C3E88D" }] },
+  { tokens: [{ t: "    ", c: "#fff" }, { t: '"FastAPI / LangChain / React"', c: "#C3E88D" }] },
   { tokens: [{ t: "  ]", c: "#89DDFF" }, { t: ",", c: "#89DDFF" }] },
   { tokens: [{ t: "  award: ", c: "#89DDFF" }, { t: '"🥇 1st Prize — NLPC-2025"', c: "#C3E88D" }] },
   { tokens: [{ t: "}", c: "#89DDFF" }] },
@@ -70,7 +67,7 @@ const CODE_LINES = [
 const TECH_STACK = [
   { name: "Python", icon: "🐍" }, { name: "PyTorch", icon: "🔥" }, { name: "TensorFlow", icon: "🧠" },
   { name: "FastAPI", icon: "⚡" }, { name: "LangChain", icon: "🔗" }, { name: "React", icon: "⚛️" },
-  { name: "Docker", icon: "🐳" }, { name: "ESP32", icon: "📡" },
+  { name: "Docker", icon: "🐳" },
 ];
 
 const HeroSection = () => {
@@ -84,17 +81,17 @@ const HeroSection = () => {
   return (
     <section id="home" className="relative min-h-screen pt-32 pb-0 overflow-hidden flex flex-col bg-[#090A0F]">
 
-      {/* Subtle Background Glow */}
+      {/* Background Subtle Glow */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[400px] opacity-20 rounded-full"
-          style={{ background: "radial-gradient(circle, rgba(99,102,241,0.25) 0%, transparent 70%)", filter: "blur(60px)" }} />
-        <div className="absolute inset-0 bg-dot-grid opacity-[0.25]" />
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[300px] opacity-15 rounded-full"
+          style={{ background: "radial-gradient(circle, rgba(99,102,241,0.2) 0%, transparent 70%)", filter: "blur(50px)" }} />
+        <div className="absolute inset-0 bg-dot-grid opacity-[0.2]" />
       </div>
 
       <div className="container flex-1 flex flex-col justify-center py-8 lg:py-16 relative z-10">
 
         {/* 2-Column Grid Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-10 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
 
           {/* LEFT: Text & Intro */}
           <div className="lg:col-span-7 flex flex-col gap-6">
@@ -106,25 +103,24 @@ const HeroSection = () => {
               className="flex items-center gap-3"
             >
               <span className="status-online">
-                Open to Opportunities
+                Available for Roles & Projects
               </span>
-              <span className="mono text-[10px] text-slate-500">PUNE, IN · AI ENGINEER</span>
+              <span className="mono text-[10px] text-slate-500">PUNE, IN</span>
             </motion.div>
 
-            {/* Main Headline */}
+            {/* Headline */}
             <motion.div
               initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
             >
               <h1 className="font-black tracking-[-0.04em] leading-[1.02] text-white text-4xl sm:text-6xl lg:text-7xl">
                 Hi, I'm{" "}
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-indigo-300">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400">
                   Rohit Birdawade
                 </span>
               </h1>
-              <p className="mt-4 text-xl font-semibold text-indigo-300 flex items-center gap-2">
-                <Zap size={18} className="text-indigo-400" />
-                <TypingText phrases={["AI Engineer", "ML Researcher", "Generative AI Architect", "Edge AI Builder"]} />
+              <p className="mt-4 text-lg sm:text-xl font-semibold text-indigo-300">
+                <TypingText phrases={["AI & ML Engineer", "Generative AI Architect", "Edge AI Builder"]} />
               </p>
             </motion.div>
 
@@ -132,18 +128,18 @@ const HeroSection = () => {
             <motion.p
               initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="text-base sm:text-lg leading-relaxed text-slate-400 max-w-2xl font-[450]"
+              className="text-base sm:text-lg leading-relaxed text-slate-400 max-w-xl font-[450]"
             >
-              Architecting production-grade <span className="text-white font-medium">RAG systems</span>,{" "}
-              <span className="text-white font-medium">computer vision pipelines</span>, and{" "}
-              <span className="text-white font-medium">edge AI models</span> for healthcare, security, and smart agriculture.
+              Building production-grade <span className="text-white font-medium">RAG systems</span>,{" "}
+              <span className="text-white font-medium">computer vision models</span>, and{" "}
+              <span className="text-white font-medium">edge AI deployments</span> for healthcare, security, and precision agriculture.
             </motion.p>
 
-            {/* Action Buttons */}
+            {/* Streamlined Action Buttons */}
             <motion.div
               initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.3 }}
-              className="flex flex-wrap gap-3.5 items-center pt-2"
+              className="flex flex-wrap gap-3 items-center pt-1"
             >
               <button
                 onClick={() => document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })}
@@ -160,13 +156,6 @@ const HeroSection = () => {
               >
                 <Download size={15} /> Resume
               </a>
-
-              <button
-                onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
-                className="px-5 py-3 rounded-xl border border-indigo-500/30 bg-indigo-500/10 text-indigo-300 font-semibold text-sm hover:bg-indigo-500/20 transition-colors"
-              >
-                Get in Touch
-              </button>
             </motion.div>
 
             {/* Tech Stack Pills */}
@@ -184,28 +173,25 @@ const HeroSection = () => {
             </motion.div>
           </div>
 
-          {/* RIGHT: Code / Architecture Window */}
+          {/* RIGHT: High-Signal Code Card */}
           <motion.div
             initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             className="lg:col-span-5 relative"
           >
-            {/* Card Window */}
-            <div className="card bg-[#11121A] border-white/10 shadow-2xl overflow-hidden">
-              {/* Window Header */}
-              <div className="flex items-center gap-2 px-4 py-3 border-b border-white/08 bg-slate-950/50">
+            <div className="card bg-[#11121A] border-white/10 shadow-xl overflow-hidden">
+              <div className="flex items-center gap-2 px-4 py-3 border-b border-white/08 bg-slate-950/60">
                 <div className="flex gap-1.5">
                   <div className="w-2.5 h-2.5 rounded-full bg-red-500/80" />
                   <div className="w-2.5 h-2.5 rounded-full bg-amber-500/80" />
                   <div className="w-2.5 h-2.5 rounded-full bg-emerald-500/80" />
                 </div>
                 <div className="flex-1 text-center">
-                  <span className="mono text-[11px] text-slate-400">profile_overview.ts</span>
+                  <span className="mono text-[11px] text-slate-400">profile.ts</span>
                 </div>
                 <span className="mono text-[9.5px] text-emerald-400">● live</span>
               </div>
 
-              {/* Code text content */}
               <div className="p-5 font-mono text-[12px] leading-6 text-slate-300">
                 {CODE_LINES.map((line, lineIdx) => (
                   <div key={lineIdx} className="flex items-center gap-3">
@@ -217,26 +203,22 @@ const HeroSection = () => {
                     </span>
                   </div>
                 ))}
-                <div className="flex items-center gap-3">
-                  <span className="w-4 text-[10px] text-right shrink-0 text-slate-600">{CODE_LINES.length + 1}</span>
-                  <span className="typed-cursor">&nbsp;</span>
-                </div>
               </div>
             </div>
 
-            {/* Floating Award Chip */}
+            {/* Award Chip */}
             <motion.div
               initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6 }}
-              className="absolute -bottom-5 -left-4 flex items-center gap-2 px-3.5 py-2 rounded-xl border border-amber-500/30 bg-amber-500/10 backdrop-blur-md shadow-lg"
+              transition={{ delay: 0.5 }}
+              className="absolute -bottom-4 -left-3 flex items-center gap-2 px-3.5 py-1.5 rounded-xl border border-amber-500/30 bg-amber-500/10 backdrop-blur-md shadow-lg"
             >
-              <Sparkles size={14} className="text-amber-400" />
+              <Sparkles size={13} className="text-amber-400" />
               <span className="text-amber-300 text-xs font-bold">🥇 1st Prize — NLPC-2025</span>
             </motion.div>
           </motion.div>
         </div>
 
-        {/* Bottom Stats Grid */}
+        {/* Stats Grid */}
         <motion.div
           initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
@@ -257,7 +239,7 @@ const HeroSection = () => {
       </div>
 
       {/* Tech Marquee */}
-      <div className="relative z-10 mt-10">
+      <div className="relative z-10 mt-8">
         <TechMarquee />
       </div>
     </section>
