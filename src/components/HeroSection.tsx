@@ -79,7 +79,7 @@ const HeroSection = () => {
   ];
 
   return (
-    <section id="home" className="relative min-h-screen pt-32 pb-0 overflow-hidden flex flex-col bg-[#090A0F]">
+    <section id="home" className="relative min-h-screen pt-32 pb-0 overflow-hidden flex flex-col bg-[var(--canvas)] transition-colors duration-300">
 
       {/* Background Subtle Glow */}
       <div className="absolute inset-0 pointer-events-none">
@@ -105,7 +105,7 @@ const HeroSection = () => {
               <span className="status-online">
                 Available for Roles & Projects
               </span>
-              <span className="mono text-[10px] text-slate-500">PUNE, IN</span>
+              <span className="mono text-[10px] text-slate-500 dark:text-slate-400">PUNE, IN</span>
             </motion.div>
 
             {/* Headline */}
@@ -113,13 +113,13 @@ const HeroSection = () => {
               initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
             >
-              <h1 className="font-black tracking-[-0.04em] leading-[1.02] text-white text-4xl sm:text-6xl lg:text-7xl">
+              <h1 className="font-black tracking-[-0.04em] leading-[1.02] text-slate-900 dark:text-white text-4xl sm:text-6xl lg:text-7xl">
                 Hi, I'm{" "}
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400">
                   Rohit Birdawade
                 </span>
               </h1>
-              <p className="mt-4 text-lg sm:text-xl font-semibold text-indigo-300">
+              <p className="mt-4 text-lg sm:text-xl font-semibold text-indigo-600 dark:text-indigo-300">
                 <TypingText phrases={["AI & ML Engineer", "Generative AI Architect", "Edge AI Builder"]} />
               </p>
             </motion.div>
@@ -128,11 +128,11 @@ const HeroSection = () => {
             <motion.p
               initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="text-base sm:text-lg leading-relaxed text-slate-400 max-w-xl font-[450]"
+              className="text-base sm:text-lg leading-relaxed text-slate-600 dark:text-slate-400 max-w-xl font-[450]"
             >
-              Building production-grade <span className="text-white font-medium">RAG systems</span>,{" "}
-              <span className="text-white font-medium">computer vision models</span>, and{" "}
-              <span className="text-white font-medium">edge AI deployments</span> for healthcare, security, and precision agriculture.
+              Building production-grade <span className="text-slate-900 dark:text-white font-semibold">RAG systems</span>,{" "}
+              <span className="text-slate-900 dark:text-white font-semibold">computer vision models</span>, and{" "}
+              <span className="text-slate-900 dark:text-white font-semibold">edge AI deployments</span> for healthcare, security, and precision agriculture.
             </motion.p>
 
             {/* Streamlined Action Buttons */}
@@ -162,7 +162,7 @@ const HeroSection = () => {
             <motion.div
               initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.4 }}
-              className="flex flex-wrap gap-2 pt-4 border-t border-white/08"
+              className="flex flex-wrap gap-2 pt-4 border-t border-slate-200 dark:border-white/08"
             >
               {TECH_STACK.map((tech) => (
                 <span key={tech.name} className="tech-stack-pill">
@@ -179,8 +179,8 @@ const HeroSection = () => {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="lg:col-span-5 relative"
           >
-            <div className="card bg-[#11121A] border-white/10 shadow-xl overflow-hidden">
-              <div className="flex items-center gap-2 px-4 py-3 border-b border-white/08 bg-slate-950/60">
+            <div className="card bg-[#0F172A] border-slate-800 dark:border-white/10 shadow-xl overflow-hidden text-white">
+              <div className="flex items-center gap-2 px-4 py-3 border-b border-slate-800 bg-slate-950/60">
                 <div className="flex gap-1.5">
                   <div className="w-2.5 h-2.5 rounded-full bg-red-500/80" />
                   <div className="w-2.5 h-2.5 rounded-full bg-amber-500/80" />
@@ -212,8 +212,8 @@ const HeroSection = () => {
               transition={{ delay: 0.5 }}
               className="absolute -bottom-4 -left-3 flex items-center gap-2 px-3.5 py-1.5 rounded-xl border border-amber-500/30 bg-amber-500/10 backdrop-blur-md shadow-lg"
             >
-              <Sparkles size={13} className="text-amber-400" />
-              <span className="text-amber-300 text-xs font-bold">🥇 1st Prize — NLPC-2025</span>
+              <Sparkles size={13} className="text-amber-500 dark:text-amber-400" />
+              <span className="text-amber-800 dark:text-amber-300 text-xs font-bold">🥇 1st Prize — NLPC-2025</span>
             </motion.div>
           </motion.div>
         </div>
@@ -226,12 +226,12 @@ const HeroSection = () => {
         >
           {stats.map((s, i) => (
             <div key={i} className="card p-4 flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0 text-indigo-400 bg-indigo-500/10 border border-indigo-500/20">
+              <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0 text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-500/10 border border-indigo-100 dark:border-indigo-500/20">
                 {s.icon}
               </div>
               <div>
-                <p className="text-base font-black text-white"><AnimatedNumber to={s.value} suffix={s.suffix} /></p>
-                <p className="mono text-[9.5px] uppercase tracking-wider text-slate-400">{s.label}</p>
+                <p className="text-base font-black text-slate-900 dark:text-white"><AnimatedNumber to={s.value} suffix={s.suffix} /></p>
+                <p className="mono text-[9.5px] uppercase tracking-wider text-slate-500 dark:text-slate-400">{s.label}</p>
               </div>
             </div>
           ))}

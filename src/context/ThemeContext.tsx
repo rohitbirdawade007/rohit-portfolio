@@ -21,27 +21,24 @@ const ThemeContext = createContext<ThemeContextType>({
 export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   const [publicTheme, setPublicTheme] = useState<Theme>(() => {
     const saved = localStorage.getItem('portfolio-theme') as Theme;
-    return saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    return saved || 'light'; // Default to Light theme
   });
 
   const [adminTheme, setAdminTheme] = useState<Theme>(() => {
     const saved = localStorage.getItem('admin-theme') as Theme;
-    return saved || 'dark'; // Admin defaults to dark for a professional look
+    return saved || 'dark';
   });
 
   const [isAdminPage, setIsAdminPage] = useState(false);
 
   useEffect(() => {
-    // Check if we are on an admin page
     const checkAdmin = () => {
       setIsAdminPage(window.location.pathname.startsWith('/admin'));
     };
     
     checkAdmin();
     window.addEventListener('popstate', checkAdmin);
-    
-    // Also listen for custom navigation events if any (or just use a MutationObserver on body/location works too)
-    const interval = setInterval(checkAdmin, 500); // Fallback for some routers
+    const interval = setInterval(checkAdmin, 500);
     
     return () => {
       window.removeEventListener('popstate', checkAdmin);
