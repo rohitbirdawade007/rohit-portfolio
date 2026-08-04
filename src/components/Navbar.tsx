@@ -81,16 +81,10 @@ const Navbar = () => {
               <Cpu size={15} />
             </motion.div>
             <div>
-              <p className={cn(
-                "text-[13px] font-bold tracking-tight leading-none transition-colors",
-                scrolled ? "text-white" : "text-[#0A0A0A]"
-              )}>
+              <p className="text-[13px] font-bold tracking-tight leading-none text-white">
                 Rohit Birdawade
               </p>
-              <p className={cn(
-                "text-[9px] font-semibold uppercase tracking-[0.12em] leading-none mt-0.5 transition-colors",
-                scrolled ? "text-[#6C63FF]" : "text-[#1A56DB]"
-              )}>
+              <p className="text-[9px] font-semibold uppercase tracking-[0.12em] leading-none mt-0.5 text-indigo-400">
                 AI Engineer
               </p>
             </div>
@@ -106,23 +100,16 @@ const Navbar = () => {
                   onClick={() => scroll(item.id)}
                   className={cn(
                     "relative px-3.5 py-2 text-[13px] font-medium rounded-lg transition-all",
-                    scrolled
-                      ? isActive
-                        ? "text-white bg-white/10"
-                        : "text-white/60 hover:text-white hover:bg-white/10"
-                      : isActive
-                        ? "text-[#0A0A0A] bg-[#F0F0EE]"
-                        : "text-[#525252] hover:text-[#0A0A0A] hover:bg-[#F0F0EE]"
+                    isActive
+                      ? "text-white bg-white/10"
+                      : "text-white/50 hover:text-white hover:bg-white/08"
                   )}
                 >
                   {item.label}
                   {isActive && (
                     <motion.div
                       layoutId="nav-indicator"
-                      className={cn(
-                        "absolute bottom-0 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full",
-                        scrolled ? "bg-[#6C63FF]" : "bg-[#1A56DB]"
-                      )}
+                      className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-indigo-400"
                       transition={{ type: "spring", stiffness: 300, damping: 30 }}
                     />
                   )}
@@ -134,12 +121,7 @@ const Navbar = () => {
           {/* Right actions */}
           <div className="flex items-center gap-2 shrink-0">
             {/* Keyboard shortcut badge */}
-            <div className={cn(
-              "hidden lg:flex items-center gap-1 px-2 py-1 rounded-md text-[10px] font-mono transition-all",
-              scrolled
-                ? "border border-white/10 text-white/30"
-                : "border border-[#E5E5E5] text-[#A3A3A3]"
-            )}>
+            <div className="hidden lg:flex items-center gap-1 px-2 py-1 rounded-md text-[10px] font-mono border border-white/10 text-white/30">
               <Command size={9} /> K
             </div>
 
@@ -160,12 +142,7 @@ const Navbar = () => {
 
             <button
               onClick={() => setOpen(!open)}
-              className={cn(
-                "md:hidden w-9 h-9 flex items-center justify-center rounded-lg transition-colors",
-                scrolled
-                  ? "border border-white/10 bg-white/5 text-white/70 hover:bg-white/10"
-                  : "border border-[#E5E5E5] bg-[#FFFFFF] text-[#404040] hover:bg-[#F0F0EE]"
-              )}
+              className="md:hidden w-9 h-9 flex items-center justify-center rounded-lg transition-colors border border-white/10 bg-white/5 text-white/70 hover:bg-white/10"
             >
               <AnimatePresence mode="wait">
                 {open
@@ -186,7 +163,7 @@ const Navbar = () => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -8, scale: 0.98 }}
             transition={{ duration: 0.18 }}
-            className="pointer-events-auto mx-4 mt-2 bg-[rgba(255,255,255,0.96)] backdrop-blur-xl border border-[#E5E5E5] rounded-2xl shadow-xl overflow-hidden"
+            className="pointer-events-auto mx-4 mt-2 backdrop-blur-xl rounded-2xl shadow-2xl overflow-hidden" style={{ background: "rgba(10,10,20,0.95)", border: "1px solid rgba(99,102,241,0.2)" }}
           >
             <div className="p-3 space-y-0.5">
               {ITEMS.map((item, idx) => {
@@ -201,12 +178,12 @@ const Navbar = () => {
                     className={cn(
                       "w-full text-left px-4 py-3 rounded-xl text-sm font-medium transition-all flex items-center justify-between",
                       isActive
-                        ? "bg-[#EFF6FF] text-[#1A56DB] font-semibold"
-                        : "text-[#404040] hover:text-[#0A0A0A] hover:bg-[#F5F5F5]"
+                        ? "bg-indigo-500/15 text-indigo-300 font-semibold"
+                        : "text-white/50 hover:text-white hover:bg-white/06"
                     )}
                   >
                     {item.label}
-                    {isActive && <div className="w-1.5 h-1.5 rounded-full bg-[#1A56DB]" />}
+                    {isActive && <div className="w-1.5 h-1.5 rounded-full bg-indigo-400" />}
                   </motion.button>
                 );
               })}

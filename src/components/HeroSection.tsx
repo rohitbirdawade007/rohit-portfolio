@@ -98,13 +98,13 @@ const HeroSection = () => {
         backgroundSize: "28px 28px",
         opacity: 0.4,
       }} />
-      <div className="absolute -top-[30%] -right-[10%] w-[700px] h-[700px] rounded-full bg-blue-100/60 blur-[140px] pointer-events-none animate-float-slow" />
-      <div className="absolute -bottom-[10%] -left-[10%] w-[500px] h-[500px] rounded-full bg-violet-100/40 blur-[140px] pointer-events-none animate-float-slow" style={{ animationDelay: "-3s" }} />
+      <div className="absolute -top-[30%] -right-[10%] w-[700px] h-[700px] rounded-full pointer-events-none animate-float-slow" style={{ background: "radial-gradient(circle, rgba(99,102,241,0.18) 0%, transparent 70%)" }} />
+      <div className="absolute -bottom-[10%] -left-[10%] w-[500px] h-[500px] rounded-full pointer-events-none animate-float-slow" style={{ background: "radial-gradient(circle, rgba(236,72,153,0.12) 0%, transparent 70%)", animationDelay: "-3s" }} />
 
       {/* ── Floating decorative orbs ── */}
-      <div className="absolute top-1/3 left-[8%] w-3 h-3 rounded-full bg-blue-400/60 blur-[2px] animate-float" style={{ animationDelay: "0s" }} />
-      <div className="absolute top-1/2 right-[12%] w-2 h-2 rounded-full bg-violet-400/60 blur-[2px] animate-float" style={{ animationDelay: "-1.5s" }} />
-      <div className="absolute bottom-1/3 left-1/3 w-2.5 h-2.5 rounded-full bg-emerald-400/50 blur-[2px] animate-float" style={{ animationDelay: "-2.8s" }} />
+      <div className="absolute top-1/3 left-[8%] w-3 h-3 rounded-full animate-float" style={{ background: "#6366F1", boxShadow: "0 0 16px rgba(99,102,241,0.8)", animationDelay: "0s" }} />
+      <div className="absolute top-1/2 right-[12%] w-2 h-2 rounded-full animate-float" style={{ background: "#EC4899", boxShadow: "0 0 12px rgba(236,72,153,0.8)", animationDelay: "-1.5s" }} />
+      <div className="absolute bottom-1/3 left-1/3 w-2.5 h-2.5 rounded-full animate-float" style={{ background: "#10B981", boxShadow: "0 0 14px rgba(16,185,129,0.7)", animationDelay: "-2.8s" }} />
 
       <div className="container flex-1 flex flex-col justify-center py-12 lg:py-20 relative z-10">
 
@@ -115,7 +115,7 @@ const HeroSection = () => {
           <motion.div
             {...fadeUp(0)}
             className="lg:col-span-7 card shimmer-card p-8 lg:p-12 flex flex-col justify-between min-h-[500px] group hover-glow transition-all duration-300"
-            style={{ background: "var(--surface)" }}
+            style={{ background: "var(--surface)", borderColor: "var(--line)" }}
           >
             {/* Status + System ID */}
             <div className="flex items-center justify-between">
@@ -143,10 +143,10 @@ const HeroSection = () => {
               </p>
 
               {/* Larger, bolder heading — UPGRADE 2: min clamp(2.5rem, 6vw, 5rem) */}
-              <h1 className="font-black tracking-[-0.04em] leading-[0.95] text-[#0A0A0A] mb-6 display-xl">
+              <h1 className="font-black tracking-[-0.04em] leading-[0.95] mb-6 display-xl" style={{ color: "var(--ink)" }}>
                 Rohit<br />
                 <span style={{
-                  background: "linear-gradient(135deg, #6C63FF 0%, #1A56DB 60%)",
+                  background: "linear-gradient(135deg, #6366F1 0%, #EC4899 60%)",
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
                   backgroundClip: "text",
@@ -155,7 +155,7 @@ const HeroSection = () => {
                 </span>
               </h1>
 
-              <p className="text-[#525252] text-lg leading-relaxed max-w-lg font-[450]">
+              <p className="text-lg leading-relaxed max-w-lg font-[450]" style={{ color: "var(--ink-2)" }}>
                 Architecting high-performance ML pipelines, edge AI
                 deployments, and data-driven systems — from prototype to
                 production scale.
@@ -195,7 +195,7 @@ const HeroSection = () => {
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5, duration: 0.5 }}
-              className="flex flex-wrap gap-2 mt-6 pt-5 border-t border-[#F0F0EE]"
+              className="flex flex-wrap gap-2 mt-6 pt-5 border-t border-[#1E1E32]"
             >
               {TECH_STACK.map((tech, i) => (
                 <motion.span
@@ -279,21 +279,23 @@ const HeroSection = () => {
           <motion.div
             {...fadeUp(0.15)}
             className="lg:col-span-4 card-dark p-8 flex flex-col justify-between min-h-[180px] hover-glow transition-all duration-300"
+            style={{ border: "1px solid rgba(99,102,241,0.2)" }}
           >
             <div className="flex items-center justify-between">
-              <Sparkles size={18} className="text-blue-400" />
+              <Sparkles size={18} className="text-indigo-400" />
               <span className="mono text-[9px] text-white/30 uppercase tracking-widest">Performance</span>
             </div>
             <div>
               <p className="text-[4rem] font-black text-white leading-none tracking-[-0.05em]">
-                <AnimatedNumber to={96.4} suffix="%" /><span className="text-2xl text-blue-400 font-bold"></span>
+                <AnimatedNumber to={96.4} suffix="%" /><span className="text-2xl text-indigo-400 font-bold"></span>
               </p>
               <div className="mt-3 w-full bg-white/10 rounded-full h-1">
                 <motion.div
                   initial={{ width: 0 }}
                   animate={{ width: "96.4%" }}
                   transition={{ duration: 1.8, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                  className="h-1 rounded-full bg-gradient-to-r from-blue-400 to-violet-400"
+                  className="h-1 rounded-full"
+                  style={{ background: "linear-gradient(90deg, #6366F1, #EC4899)", boxShadow: "0 0 8px rgba(99,102,241,0.6)" }}
                 />
               </div>
               <p className="text-white/40 text-[10px] mono uppercase tracking-widest mt-2 font-semibold">Avg. Predictive Accuracy</p>
@@ -305,17 +307,17 @@ const HeroSection = () => {
             {...fadeUp(0.2)}
             className="lg:col-span-4 card shimmer-card p-8 flex flex-col justify-between min-h-[180px] hover-glow transition-all duration-300"
           >
-            <Layers size={18} className="text-[#A3A3A3]" />
+            <Layers size={18} style={{ color: "var(--ink-3)" }} />
             <div>
-              <p className="text-[4rem] font-black text-[#0A0A0A] leading-none tracking-[-0.05em]">
-                <AnimatedNumber to={15} /><span className="text-2xl text-[#1A56DB] font-bold">+</span>
+              <p className="text-[4rem] font-black leading-none tracking-[-0.05em]" style={{ color: "var(--ink)" }}>
+                <AnimatedNumber to={15} /><span className="text-2xl font-bold" style={{ color: "#6366F1" }}>+</span>
               </p>
               <div className="flex flex-wrap gap-1.5 mt-2">
                 {["ML", "IoT", "Web", "Edge AI"].map(t => (
                   <span key={t} className="tag-blue text-[9px]">{t}</span>
                 ))}
               </div>
-              <p className="text-[#A3A3A3] text-[10px] mono uppercase tracking-widest mt-2 font-semibold">Projects Shipped</p>
+              <p className="text-[10px] mono uppercase tracking-widest mt-2 font-semibold" style={{ color: "var(--ink-3)" }}>Projects Shipped</p>
             </div>
           </motion.div>
 
@@ -325,12 +327,12 @@ const HeroSection = () => {
             className="lg:col-span-4 card shimmer-card p-8 flex flex-col justify-between min-h-[180px] overflow-hidden hover-glow transition-all duration-300"
           >
             <div className="flex items-center gap-2">
-              <Globe size={16} className="text-[#A3A3A3]" />
-              <span className="mono text-[9px] text-[#A3A3A3] uppercase tracking-widest">Location</span>
+              <Globe size={16} style={{ color: "var(--ink-3)" }} />
+              <span className="mono text-[9px] uppercase tracking-widest" style={{ color: "var(--ink-3)" }}>Location</span>
             </div>
             <div>
-              <p className="text-2xl font-black text-[#0A0A0A] leading-tight tracking-tight mb-1">Pune, IN</p>
-              <p className="mono text-[9px] text-[#A3A3A3] uppercase tracking-widest">18.5204°N · 73.8567°E</p>
+              <p className="text-2xl font-black leading-tight tracking-tight mb-1" style={{ color: "var(--ink)" }}>Pune, IN</p>
+              <p className="mono text-[9px] uppercase tracking-widest" style={{ color: "var(--ink-3)" }}>18.5204°N · 73.8567°E</p>
               <div className="mt-3">
                 <span className="status-online text-[9px]">Open to Work</span>
               </div>
@@ -353,12 +355,12 @@ const HeroSection = () => {
         >
           {stats.map((s, i) => (
             <div key={i} className="card p-4 flex items-center gap-3 hover-glow transition-all duration-200">
-              <div className="icon-sm bg-[#F5F5F5] border border-[#EBEBEB] text-[#737373]">{s.icon}</div>
+              <div className="icon-sm border text-[#6366F1]" style={{ background: "rgba(99,102,241,0.10)", borderColor: "rgba(99,102,241,0.2)" }}>{s.icon}</div>
               <div>
-                <p className="text-[13px] font-black text-[#0A0A0A]">
+                <p className="text-[13px] font-black" style={{ color: "var(--ink)" }}>
                   <AnimatedNumber to={s.value} suffix={s.suffix} />
                 </p>
-                <p className="mono text-[9px] text-[#A3A3A3] uppercase tracking-wider">{s.label}</p>
+                <p className="mono text-[9px] uppercase tracking-wider" style={{ color: "var(--ink-3)" }}>{s.label}</p>
               </div>
             </div>
           ))}
