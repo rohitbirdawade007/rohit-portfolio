@@ -49,54 +49,137 @@ function TypingText({ phrases }: { phrases: string[] }) {
   );
 }
 
-/* ── Floating particles background (Light Mode) ── */
-function Particles() {
-  const particles = Array.from({ length: 30 }, (_, i) => ({
-    id: i,
-    x: Math.random() * 100,
-    y: Math.random() * 100,
-    size: Math.random() * 4 + 2,
-    duration: Math.random() * 8 + 6,
-    delay: Math.random() * 4,
-    opacity: Math.random() * 0.35 + 0.15,
-  }));
+/* ── Interactive Particle Vortex Nebula Canvas (Matches Reference Image) ── */
+function CosmicParticleVortex() {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      {particles.map(p => (
-        <motion.div
-          key={p.id}
-          className="absolute rounded-full"
-          style={{
-            left: `${p.x}%`, top: `${p.y}%`,
-            width: p.size, height: p.size,
-            background: p.id % 3 === 0 ? "#6366F1" : p.id % 3 === 1 ? "#8B5CF6" : "#38BDF8",
-            opacity: p.opacity,
-          }}
-          animate={{ y: [-20, 20, -20], opacity: [p.opacity, p.opacity * 0.3, p.opacity] }}
-          transition={{ duration: p.duration, delay: p.delay, repeat: Infinity, ease: "easeInOut" }}
-        />
-      ))}
-    </div>
-  );
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    let animationFrameId: number;
+    let width = (canvas.width = canvas.parentElement?.offsetWidth || window.innerWidth);
+    let height = (canvas.height = canvas.parentElement?.offsetHeight || window.innerHeight);
+
+    const handleResize = () => {
+      if (!canvas) return;
+      width = canvas.width = canvas.parentElement?.offsetWidth || window.innerWidth;
+      height = canvas.height = canvas.parentElement?.offsetHeight || window.innerHeight;
+    };
+    window.addEventListener("resize", handleResize);
+
+    // Particle Swarm configuration
+    const particleCount = 280;
+    const particles: Array<{
+      x: number;
+      y: number;
+      ox: number;
+      oy: number;
+      vx: number;
+      vy: number;
+      size: number;
+      color: string;
+      alpha: number;
+      speed: number;
+      angle: number;
+    }> = [];
+
+    const colors = ["#818CF8", "#6366F1", "#38BDF8", "#C084FC", "#FFFFFF", "#3B82F6"];
+
+    for (let i = 0; i < particleCount; i++) {
+      const radius = Math.random() * 220 + 20;
+      const angle = Math.random() * Math.PI * 2;
+      const cx = width * 0.5;
+      const cy = height * 0.45;
+      const px = cx + Math.cos(angle) * radius;
+      const py = cy + Math.sin(angle) * radius * 0.8;
+
+      particles.push({
+        x: px,
+        y: py,
+        ox: px,
+        oy: py,
+        vx: (Math.random() - 0.5) * 0.5,
+        vy: (Math.random() - 0.5) * 0.5,
+        size: Math.random() * 2.5 + 0.8,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        alpha: Math.random() * 0.8 + 0.2,
+        speed: Math.random() * 0.008 + 0.003,
+        angle: angle,
+      });
+    }
+
+    let t = 0;
+    const render = () => {
+      t += 0.01;
+      ctx.clearRect(0, 0, width, height);
+
+      const cx = width * 0.5;
+      const cy = height * 0.45;
+
+      // Draw central ambient glow
+      const grad = ctx.createRadialGradient(cx, cy, 10, cx, cy, 250);
+      grad.addColorStop(0, "rgba(99, 102, 241, 0.25)");
+      grad.addColorStop(0.5, "rgba(56, 189, 248, 0.12)");
+      grad.addColorStop(1, "rgba(0, 0, 0, 0)");
+      ctx.fillStyle = grad;
+      ctx.beginPath();
+      ctx.arc(cx, cy, 250, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Render and orbit particles
+      for (let i = 0; i < particles.length; i++) {
+        const p = particles[i];
+        p.angle += p.speed;
+
+        // Spiral vortex movement
+        const radius = 60 + Math.sin(t + i) * 120 + (i % 50) * 3;
+        p.x = cx + Math.cos(p.angle) * radius + Math.sin(t * 0.5 + i) * 20;
+        p.y = cy + Math.sin(p.angle) * (radius * 0.75) + Math.cos(t * 0.5 + i) * 15;
+
+        // Draw particle dot
+        ctx.save();
+        ctx.globalAlpha = p.alpha;
+        ctx.fillStyle = p.color;
+        ctx.shadowColor = p.color;
+        ctx.shadowBlur = p.size > 2 ? 8 : 4;
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      }
+
+      animationFrameId = requestAnimationFrame(render);
+    };
+
+    render();
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      cancelAnimationFrame(animationFrameId);
+    };
+  }, []);
+
+  return <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none z-0" />;
 }
 
 const CODE_LINES = [
   { tokens: [{ t: "const ", c: "#C792EA" }, { t: "developer", c: "#82AAFF" }, { t: " = {", c: "#89DDFF" }] },
-  { tokens: [{ t: "  name: ", c: "#89DDFF" }, { t: '"Rohit Birdawade"', c: "#C3E88D" }, { t: ",", c: "#89DDFF" }] },
-  { tokens: [{ t: "  role: ", c: "#89DDFF" }, { t: '"AI Engineer"', c: "#C3E88D" }, { t: ",", c: "#89DDFF" }] },
   { tokens: [{ t: "  focus: ", c: "#89DDFF" }, { t: "[", c: "#89DDFF" }] },
-  { tokens: [{ t: "    ", c: "#fff" }, { t: '"RAG Pipelines"', c: "#C3E88D" }, { t: ",", c: "#89DDFF" }] },
+  { tokens: [{ t: "    ", c: "#fff" }, { t: '"AI & RAG Systems"', c: "#C3E88D" }, { t: ",", c: "#89DDFF" }] },
+  { tokens: [{ t: "    ", c: "#fff" }, { t: '"Automation Pipelines"', c: "#C3E88D" }, { t: ",", c: "#89DDFF" }] },
   { tokens: [{ t: "    ", c: "#fff" }, { t: '"Computer Vision"', c: "#C3E88D" }, { t: ",", c: "#89DDFF" }] },
-  { tokens: [{ t: "    ", c: "#fff" }, { t: '"Edge AI & IoT"', c: "#C3E88D" }, { t: ",", c: "#89DDFF" }] },
-  { tokens: [{ t: "    ", c: "#fff" }, { t: '"Gen AI Systems"', c: "#C3E88D" }] },
+  { tokens: [{ t: "    ", c: "#fff" }, { t: '"Scalable AI APIs"', c: "#C3E88D" }] },
   { tokens: [{ t: "  ]", c: "#89DDFF" }, { t: ",", c: "#89DDFF" }] },
   { tokens: [{ t: "  stack: ", c: "#89DDFF" }, { t: "[", c: "#89DDFF" }] },
   { tokens: [{ t: "    ", c: "#fff" }, { t: '"Python / PyTorch"', c: "#C3E88D" }, { t: ",", c: "#89DDFF" }] },
-  { tokens: [{ t: "    ", c: "#fff" }, { t: '"LangChain / RAG"', c: "#C3E88D" }, { t: ",", c: "#89DDFF" }] },
-  { tokens: [{ t: "    ", c: "#fff" }, { t: '"FastAPI / React"', c: "#C3E88D" }] },
+  { tokens: [{ t: "    ", c: "#fff" }, { t: '"FastAPI & LangChain"', c: "#C3E88D" }, { t: ",", c: "#89DDFF" }] },
+  { tokens: [{ t: "    ", c: "#fff" }, { t: '"React / TypeScript"', c: "#C3E88D" }] },
   { tokens: [{ t: "  ]", c: "#89DDFF" }, { t: ",", c: "#89DDFF" }] },
-  { tokens: [{ t: "  award: ", c: "#89DDFF" }, { t: '"🥇 NLPC-2025"', c: "#C3E88D" }] },
+  { tokens: [{ t: "  award: ", c: "#89DDFF" }, { t: '"🥇 NLPC-2025 Winner"', c: "#C3E88D" }] },
   { tokens: [{ t: "}", c: "#89DDFF" }] },
 ];
 
@@ -115,20 +198,10 @@ const HeroSection = () => {
   ];
 
   return (
-    <section id="home" className="relative min-h-screen pt-28 pb-0 overflow-hidden flex flex-col" style={{ background: "#FAFAFC" }}>
+    <section id="home" className="relative min-h-screen pt-28 pb-0 overflow-hidden flex flex-col bg-[#020617]">
 
-      {/* ── Ambient background elements ── */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-0 left-1/4 w-[600px] h-[600px] rounded-full opacity-40"
-          style={{ background: "radial-gradient(circle, rgba(99,102,241,0.12) 0%, transparent 70%)" }} />
-        <div className="absolute top-20 right-1/4 w-[400px] h-[400px] rounded-full opacity-30"
-          style={{ background: "radial-gradient(circle, rgba(139,92,246,0.12) 0%, transparent 70%)" }} />
-        {/* Soft Dot Grid */}
-        <div className="absolute inset-0 bg-dot-grid opacity-[0.4]" />
-      </div>
-
-      {/* ── Floating particles ── */}
-      <Particles />
+      {/* ── Particle Vortex Cosmic Background (Matches Reference Image) ── */}
+      <CosmicParticleVortex />
 
       <div className="container flex-1 flex flex-col justify-center py-8 lg:py-16 relative z-10">
 
@@ -144,39 +217,29 @@ const HeroSection = () => {
               transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
               className="flex items-center gap-2"
             >
-              <span className="flex items-center gap-2 px-4 py-1.5 rounded-full text-[11px] font-semibold border shadow-sm"
-                style={{ background: "#ECFDF5", borderColor: "#A7F3D0", color: "#047857" }}>
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                Available for opportunities
+              <span className="flex items-center gap-2 px-4 py-1.5 rounded-full text-[11px] font-semibold border backdrop-blur-md"
+                style={{ background: "rgba(16,185,129,0.1)", borderColor: "rgba(16,185,129,0.3)", color: "#6EE7B7" }}>
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                Available for freelance projects
               </span>
-              <span className="mono text-[10px] text-slate-400">PUNE_IN · v5.0</span>
+              <span className="mono text-[10px] text-slate-500">PUNE_IN · v5.0</span>
             </motion.div>
-
-            {/* Eyebrow */}
-            <motion.p
-              initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
-              className="eyebrow"
-            >
-              <span className="eyebrow-dot" />
-              <TypingText phrases={["AI Engineer", "ML Researcher", "Data Scientist", "Edge AI Builder"]} />
-            </motion.p>
 
             {/* Main heading */}
             <motion.div
               initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.65, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
             >
-              <h1 className="font-black tracking-[-0.04em] leading-[0.95] text-slate-900" style={{ fontSize: "clamp(3rem, 7vw, 5.5rem)" }}>
+              <h1 className="font-black tracking-[-0.04em] leading-[0.95] text-white" style={{ fontSize: "clamp(3rem, 7vw, 5.5rem)" }}>
                 Hi, I'm{" "}
                 <span style={{
-                  background: "linear-gradient(135deg, #4F46E5 0%, #7C3AED 50%, #2563EB 100%)",
+                  background: "linear-gradient(135deg, #818CF8 0%, #6366F1 50%, #38BDF8 100%)",
                   WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text"
                 }}>
                   Rohit
                 </span>
                 <br />
-                <span className="text-slate-900">Birdawade</span>
+                <span className="text-white">AI Engineer</span>
               </h1>
             </motion.div>
 
@@ -184,13 +247,11 @@ const HeroSection = () => {
             <motion.p
               initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.22, ease: [0.16, 1, 0.3, 1] }}
-              className="text-lg leading-relaxed max-w-lg font-[450] text-slate-600"
+              className="text-lg leading-relaxed max-w-lg font-[450] text-slate-400"
             >
-              Architecting high-performance{" "}
-              <span className="text-slate-900 font-semibold">ML pipelines</span>,{" "}
-              <span className="text-slate-900 font-semibold">RAG systems</span>, and{" "}
-              <span className="text-slate-900 font-semibold">edge AI deployments</span>{" "}
-              — from prototype to production scale.
+              Building scalable <span className="text-white font-semibold">full-stack AI systems</span>,{" "}
+              <span className="text-white font-semibold">RAG pipelines</span>, and{" "}
+              <span className="text-white font-semibold">automation-driven products</span> for real-world applications.
             </motion.p>
 
             {/* CTA buttons */}
@@ -201,30 +262,18 @@ const HeroSection = () => {
             >
               <motion.button
                 whileHover={{ scale: 1.03, y: -2 }} whileTap={{ scale: 0.97 }}
-                onClick={() => document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })}
-                className="flex items-center gap-2 px-6 py-3 text-sm font-semibold text-white rounded-xl transition-all shadow-md"
-                style={{
-                  background: "linear-gradient(135deg, #4F46E5, #6366F1)",
-                  boxShadow: "0 4px 14px rgba(79,70,229,0.35)",
-                }}
-              >
-                View Projects <ArrowRight size={15} />
-              </motion.button>
-
-              <motion.button
-                whileHover={{ scale: 1.03, y: -2 }} whileTap={{ scale: 0.97 }}
-                onClick={() => window.open("/resume.pdf", "_blank")}
-                className="flex items-center gap-2 px-6 py-3 text-sm font-semibold rounded-xl transition-all border bg-white border-slate-200 text-slate-700 shadow-sm hover:bg-slate-50"
-              >
-                <Download size={15} /> Resume
-              </motion.button>
-
-              <motion.button
-                whileHover={{ scale: 1.03, y: -2 }} whileTap={{ scale: 0.97 }}
                 onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
-                className="flex items-center gap-2 px-5 py-3 text-sm font-semibold rounded-xl transition-all border bg-rose-50 border-rose-200 text-rose-700 hover:bg-rose-100"
+                className="flex items-center gap-2 px-6 py-3 text-sm font-semibold text-slate-950 bg-white hover:bg-slate-100 rounded-full transition-all shadow-lg shadow-white/10"
               >
-                Hire Me <Zap size={14} />
+                Book a Call <ArrowRight size={15} />
+              </motion.button>
+
+              <motion.button
+                whileHover={{ scale: 1.03, y: -2 }} whileTap={{ scale: 0.97 }}
+                onClick={() => document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })}
+                className="flex items-center gap-2 px-6 py-3 text-sm font-semibold text-white rounded-full transition-all border border-white/15 bg-white/5 hover:bg-white/10 backdrop-blur-md"
+              >
+                View Projects <ArrowRight size={14} />
               </motion.button>
             </motion.div>
 
@@ -232,7 +281,7 @@ const HeroSection = () => {
             <motion.div
               initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-              className="flex flex-wrap gap-2 pt-4 border-t border-slate-200"
+              className="flex flex-wrap gap-2 pt-4 border-t border-slate-800/80"
             >
               {TECH_STACK.map((tech, i) => (
                 <motion.span
@@ -247,54 +296,36 @@ const HeroSection = () => {
                 </motion.span>
               ))}
             </motion.div>
-
-            {/* Quick stats */}
-            <motion.div
-              initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-              className="flex gap-6"
-            >
-              {[
-                { value: "6+", label: "Projects" },
-                { value: "96%", label: "Accuracy" },
-                { value: "🥇", label: "NLPC 2025" },
-              ].map((s, i) => (
-                <div key={i} className="text-center">
-                  <p className="text-xl font-black text-slate-900">{s.value}</p>
-                  <p className="text-[10px] font-semibold uppercase tracking-widest text-slate-500">{s.label}</p>
-                </div>
-              ))}
-            </motion.div>
           </div>
 
-          {/* ── RIGHT: Dark Code editor card for contrast ── */}
+          {/* ── RIGHT: Dark Floating Code Editor Card (Matches Reference Image) ── */}
           <motion.div
             initial={{ opacity: 0, x: 40 }} animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
             className="relative hidden lg:block"
           >
-            {/* Main code card */}
-            <div className="relative rounded-2xl overflow-hidden border shadow-2xl"
+            {/* Code Card Window */}
+            <div className="relative rounded-2xl overflow-hidden border border-white/10 shadow-2xl backdrop-blur-xl"
               style={{
-                background: "#0F172A",
-                borderColor: "#1E293B",
+                background: "rgba(11, 15, 25, 0.85)",
+                boxShadow: "0 25px 60px rgba(0,0,0,0.7), 0 0 40px rgba(99, 102, 241, 0.15)",
               }}>
 
-              {/* Editor header */}
-              <div className="flex items-center gap-2 px-4 py-3.5 border-b border-slate-800 bg-slate-950/60">
+              {/* Editor Window Header */}
+              <div className="flex items-center gap-2 px-4 py-3.5 border-b border-white/10 bg-black/40">
                 <div className="flex gap-1.5">
                   <div className="w-2.5 h-2.5 rounded-full bg-[#FF5F57]" />
                   <div className="w-2.5 h-2.5 rounded-full bg-[#FFBC2E]" />
                   <div className="w-2.5 h-2.5 rounded-full bg-[#28CA41]" />
                 </div>
                 <div className="flex-1 text-center">
-                  <span className="mono text-[10px] text-slate-400">rohit_birdawade.js</span>
+                  <span className="mono text-[10px] text-slate-400">developer.ts</span>
                 </div>
-                <span className="mono text-[9px] text-emerald-400">● live</span>
+                <span className="mono text-[9px] text-emerald-400">● active</span>
               </div>
 
-              {/* Code content */}
-              <div className="p-5 font-mono text-[12.5px] leading-6 space-y-0.5">
+              {/* Code text content */}
+              <div className="p-6 font-mono text-[12.5px] leading-6 space-y-0.5 text-slate-200">
                 {CODE_LINES.map((line, lineIdx) => (
                   <motion.div
                     key={lineIdx}
@@ -311,7 +342,6 @@ const HeroSection = () => {
                     </span>
                   </motion.div>
                 ))}
-                {/* Cursor line */}
                 <div className="flex items-center gap-3">
                   <span className="w-4 text-[10px] text-right shrink-0 text-slate-600">{CODE_LINES.length + 1}</span>
                   <span className="typed-cursor">&nbsp;</span>
@@ -319,38 +349,29 @@ const HeroSection = () => {
               </div>
             </div>
 
-            {/* Floating model precision chip */}
+            {/* Precision Chip */}
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 1.2, type: "spring", stiffness: 200 }}
-              className="absolute -left-8 top-12 rounded-2xl px-4 py-3 shadow-xl animate-float"
+              className="absolute -left-6 top-10 rounded-2xl px-4 py-3 shadow-2xl animate-float backdrop-blur-md"
               style={{
-                background: "linear-gradient(135deg, #4F46E5, #6366F1)",
+                background: "linear-gradient(135deg, #6366F1, #8B5CF6)",
+                boxShadow: "0 8px 32px rgba(99,102,241,0.4)",
               }}
             >
-              <p className="mono text-[8px] text-indigo-200 uppercase tracking-wider mb-0.5">Model Precision</p>
+              <p className="mono text-[8px] text-purple-200 uppercase tracking-wider mb-0.5">Model Accuracy</p>
               <p className="text-xl font-black leading-none text-white tracking-tight">96.4%</p>
             </motion.div>
 
-            {/* Floating active badge */}
-            <motion.div
-              initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 1.4, ease: [0.16, 1, 0.3, 1] }}
-              className="absolute -right-4 top-8 flex items-center gap-1.5 px-3 py-1.5 rounded-full border bg-white border-slate-200 shadow-md"
-            >
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-              <span className="text-slate-800 text-[10px] font-bold tracking-wider uppercase">Active</span>
-            </motion.div>
-
-            {/* Floating award chip */}
+            {/* Award Chip */}
             <motion.div
               initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.6, ease: [0.16, 1, 0.3, 1] }}
-              className="absolute -right-4 bottom-16 flex items-center gap-1.5 px-3 py-2 rounded-xl border bg-amber-50 border-amber-200 shadow-md animate-float"
+              transition={{ delay: 1.5, ease: [0.16, 1, 0.3, 1] }}
+              className="absolute -right-4 bottom-12 flex items-center gap-1.5 px-3.5 py-2 rounded-xl border border-amber-500/30 bg-amber-500/10 backdrop-blur-md shadow-lg animate-float"
               style={{ animationDelay: "-1.5s" }}
             >
-              <Sparkles size={11} className="text-amber-600" />
-              <span className="text-amber-800 text-[10px] font-bold">🥇 NLPC 2025</span>
+              <Sparkles size={11} className="text-amber-400" />
+              <span className="text-amber-300 text-[10px] font-bold">🥇 NLPC 2025 Winner</span>
             </motion.div>
           </motion.div>
         </div>
@@ -362,13 +383,13 @@ const HeroSection = () => {
           className="mt-12 grid grid-cols-2 sm:grid-cols-4 gap-3"
         >
           {stats.map((s, i) => (
-            <div key={i} className="rounded-2xl p-4 flex items-center gap-3 border bg-white border-slate-200 shadow-sm transition-all hover:-translate-y-1 duration-300">
-              <div className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 text-indigo-600 bg-indigo-50 border border-indigo-100">
+            <div key={i} className="rounded-2xl p-4 flex items-center gap-3 border border-white/10 bg-slate-900/60 backdrop-blur-md shadow-lg transition-all hover:-translate-y-1 duration-300">
+              <div className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 text-indigo-400 bg-indigo-500/10 border border-indigo-500/20">
                 {s.icon}
               </div>
               <div>
-                <p className="text-[14px] font-black text-slate-900"><AnimatedNumber to={s.value} suffix={s.suffix} /></p>
-                <p className="mono text-[9px] uppercase tracking-wider text-slate-500">{s.label}</p>
+                <p className="text-[14px] font-black text-white"><AnimatedNumber to={s.value} suffix={s.suffix} /></p>
+                <p className="mono text-[9px] uppercase tracking-wider text-slate-400">{s.label}</p>
               </div>
             </div>
           ))}

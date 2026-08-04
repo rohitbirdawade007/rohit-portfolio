@@ -48,44 +48,44 @@ const Navbar = () => {
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           className={cn(
-            "w-full max-w-4xl transition-all duration-500",
+            "w-full max-w-4xl transition-all duration-500 rounded-full",
             scrolled
-              ? "bg-white/85 backdrop-blur-2xl border border-slate-200/80 rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.08)]"
-              : "bg-white/60 backdrop-blur-lg border border-slate-200/50 rounded-2xl shadow-sm"
+              ? "bg-[#0B0F17]/85 backdrop-blur-2xl border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.6)]"
+              : "bg-[#0B0F17]/60 backdrop-blur-lg border border-white/10"
           )}
         >
-          <div className="px-4 h-14 flex items-center justify-between gap-4">
+          <div className="px-5 h-14 flex items-center justify-between gap-4">
 
             {/* Brand */}
             <Link to="/" className="flex items-center gap-2.5 group shrink-0">
               <motion.div
                 whileHover={{ rotate: 12, scale: 1.1 }}
-                className="w-8 h-8 rounded-xl flex items-center justify-center text-white shadow-md"
-                style={{ background: "linear-gradient(135deg, #4F46E5, #6366F1)" }}
+                className="w-8 h-8 rounded-full flex items-center justify-center text-white"
+                style={{ background: "linear-gradient(135deg, #6366F1, #8B5CF6)" }}
               >
                 <Cpu size={15} />
               </motion.div>
               <div>
-                <p className="text-[13px] font-bold tracking-tight leading-none text-slate-900">Rohit Birdawade</p>
-                <p className="text-[9px] font-semibold uppercase tracking-[0.12em] leading-none mt-0.5 text-indigo-600">AI Engineer</p>
+                <p className="text-[13px] font-bold tracking-tight leading-none text-white">Rohit Birdawade</p>
+                <p className="text-[9px] font-semibold uppercase tracking-[0.12em] leading-none mt-0.5 text-indigo-400">AI Engineer</p>
               </div>
             </Link>
 
             {/* Desktop nav pills */}
-            <nav className="hidden md:flex items-center gap-0.5 relative bg-slate-100/80 rounded-xl px-1 py-1 border border-slate-200/60">
+            <nav className="hidden md:flex items-center gap-0.5 relative bg-white/5 rounded-full px-1.5 py-1 border border-white/10">
               {ITEMS.map((item) => {
                 const isActive = active === item.id && location.pathname === "/";
                 return (
                   <button
                     key={item.id}
                     onClick={() => scroll(item.id)}
-                    className="relative px-3.5 py-1.5 text-[12.5px] font-medium rounded-lg transition-all duration-200 z-10"
-                    style={{ color: isActive ? "#0F172A" : "#64748B" }}
+                    className="relative px-3.5 py-1.5 text-[12.5px] font-medium rounded-full transition-all duration-200 z-10"
+                    style={{ color: isActive ? "#FFFFFF" : "rgba(255,255,255,0.6)" }}
                   >
                     {isActive && (
                       <motion.div
-                        layoutId="nav-pill-light"
-                        className="absolute inset-0 rounded-lg z-[-1] bg-white shadow-sm border border-slate-200/80"
+                        layoutId="nav-pill-dark"
+                        className="absolute inset-0 rounded-full z-[-1] bg-white/15 border border-white/20"
                         transition={{ type: "spring", stiffness: 400, damping: 35 }}
                       />
                     )}
@@ -98,20 +98,17 @@ const Navbar = () => {
             {/* Right */}
             <div className="flex items-center gap-2 shrink-0">
               <motion.button
-                whileHover={{ scale: 1.03, y: -1 }}
+                whileHover={{ scale: 1.05, y: -1 }}
                 whileTap={{ scale: 0.97 }}
-                onClick={() => scroll("contact")}
-                className="hidden sm:flex items-center gap-1.5 h-8 px-4 text-white text-[12px] font-semibold rounded-xl transition-all shadow-md"
-                style={{
-                  background: "linear-gradient(135deg, #4F46E5, #6366F1)",
-                }}
+                onClick={() => window.open("/resume.pdf", "_blank")}
+                className="hidden sm:flex items-center gap-1.5 h-8 px-4 text-white text-[12px] font-semibold rounded-full border border-white/15 bg-white/10 hover:bg-white/20 transition-all"
               >
-                <Zap size={11} /> Hire Me
+                <Zap size={11} /> Resume
               </motion.button>
 
               <button
                 onClick={() => setOpen(!open)}
-                className="md:hidden w-9 h-9 flex items-center justify-center rounded-xl transition-colors border border-slate-200 bg-slate-100 text-slate-700 hover:bg-slate-200"
+                className="md:hidden w-9 h-9 flex items-center justify-center rounded-full transition-colors border border-white/10 bg-white/10 text-white hover:bg-white/20"
               >
                 <AnimatePresence mode="wait">
                   {open
@@ -133,7 +130,7 @@ const Navbar = () => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -8, scale: 0.97 }}
             transition={{ duration: 0.2 }}
-            className="pointer-events-auto mx-4 mt-2 backdrop-blur-2xl rounded-2xl shadow-xl overflow-hidden border border-slate-200 bg-white/95"
+            className="pointer-events-auto mx-4 mt-2 backdrop-blur-2xl rounded-2xl shadow-2xl overflow-hidden border border-white/10 bg-[#0B0F17]/95"
           >
             <div className="p-3 space-y-1">
               {ITEMS.map((item, idx) => {
@@ -148,12 +145,12 @@ const Navbar = () => {
                     className={cn(
                       "w-full text-left px-4 py-3 rounded-xl text-sm font-medium transition-all flex items-center justify-between",
                       isActive
-                        ? "bg-indigo-50 text-indigo-700 font-semibold"
-                        : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
+                        ? "bg-indigo-500/20 text-indigo-300 font-semibold"
+                        : "text-slate-400 hover:text-white hover:bg-white/5"
                     )}
                   >
                     {item.label}
-                    {isActive && <div className="w-1.5 h-1.5 rounded-full bg-indigo-600" />}
+                    {isActive && <div className="w-1.5 h-1.5 rounded-full bg-indigo-400" />}
                   </motion.button>
                 );
               })}
@@ -161,8 +158,8 @@ const Navbar = () => {
             <div className="px-3 pb-3">
               <button
                 onClick={() => scroll("contact")}
-                className="w-full py-3 text-sm font-semibold text-white rounded-xl shadow-md"
-                style={{ background: "linear-gradient(135deg, #4F46E5, #6366F1)" }}
+                className="w-full py-3 text-sm font-semibold text-white rounded-xl shadow-lg"
+                style={{ background: "linear-gradient(135deg, #6366F1, #8B5CF6)" }}
               >
                 Hire Me <Zap size={14} className="inline ml-1" />
               </button>
