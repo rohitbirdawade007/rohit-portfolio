@@ -26,7 +26,6 @@ const ContactSection = () => {
     }
   };
 
-  // Helper to extract username from URLs
   const getUsername = (url: string | undefined, defaultName: string) => {
     if (!url) return defaultName;
     try {
@@ -38,16 +37,16 @@ const ContactSection = () => {
   };
 
   const socials = [
-    { icon: <Github size={16} />,   label: "GitHub",   sub: `@${getUsername(profile?.socialLinks?.github, "rohitbirdawade007")}`, url: profile?.socialLinks?.github || "https://github.com/rohitbirdawade007",  color: "#0A0A0A" },
+    { icon: <Github size={16} />,   label: "GitHub",   sub: `@${getUsername(profile?.socialLinks?.github, "rohitbirdawade007")}`, url: profile?.socialLinks?.github || "https://github.com/rohitbirdawade007",  color: "#24292e" },
     { icon: <Linkedin size={16} />, label: "LinkedIn", sub: getUsername(profile?.socialLinks?.linkedin, "rohitbirdawade007"), url: profile?.socialLinks?.linkedin || "https://linkedin.com/in/rohitbirdawade007", color: "#0A66C2" },
     { icon: <Mail size={16} />,     label: "Email",    sub: profile?.email || "rohitbirdawade007@gmail.com", url: `mailto:${profile?.email || "rohitbirdawade007@gmail.com"}`, color: "#EA4335" },
   ];
 
   return (
-    <section id="contact" className="py-28 relative overflow-hidden" style={{ background: "var(--canvas)" }}>
-      <div className="absolute inset-0 bg-dot-grid opacity-[0.2] pointer-events-none" />
-      <div className="absolute top-1/2 left-0 w-[400px] h-[400px] bg-blue-50/50 rounded-full blur-[140px] -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
-      <div className="absolute top-1/2 right-0 w-[400px] h-[400px] bg-violet-50/40 rounded-full blur-[140px] translate-x-1/2 -translate-y-1/2 pointer-events-none" />
+    <section id="contact" className="py-28 relative overflow-hidden" style={{ background: "#030712" }}>
+      <div className="absolute inset-0 bg-dot-grid opacity-[0.08] pointer-events-none" />
+      <div className="absolute top-1/2 left-0 w-[400px] h-[400px] bg-indigo-500/10 rounded-full blur-[140px] -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
+      <div className="absolute top-1/2 right-0 w-[400px] h-[400px] bg-purple-500/10 rounded-full blur-[140px] translate-x-1/2 -translate-y-1/2 pointer-events-none" />
 
       <div className="container relative z-10">
         {/* Label */}
@@ -57,13 +56,13 @@ const ContactSection = () => {
 
         {/* Headline */}
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.05 }} className="mb-14">
-          <h2 className="display-md font-black tracking-[-0.04em] leading-[1.05]">
+          <h2 className="display-md font-black tracking-[-0.04em] leading-[1.05] text-white">
             Let's Build{" "}
-            <span style={{ background: "linear-gradient(135deg,#6C63FF,#7C3AED)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
+            <span style={{ background: "linear-gradient(135deg,#6366F1,#8B5CF6)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
               Together
             </span>
           </h2>
-          <p className="text-[#737373] mt-3 text-[15px] max-w-lg">
+          <p className="text-slate-400 mt-3 text-[15px] max-w-lg">
             Open to AI projects, data science roles, research collaborations, or just a conversation.
           </p>
         </motion.div>
@@ -75,13 +74,13 @@ const ContactSection = () => {
             initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}
             className="lg:col-span-2 space-y-4"
           >
-            {/* Availability card — prominent */}
-            <div className="card-feature p-6">
+            {/* Availability card */}
+            <div className="rounded-2xl border p-6" style={{ background: "linear-gradient(135deg, rgba(16,185,129,0.08) 0%, rgba(17,24,39,0.6) 100%)", borderColor: "rgba(16,185,129,0.2)" }}>
               <div className="flex items-center gap-2 mb-4">
                 <div className="glow-dot" />
-                <p className="text-sm font-bold text-[#059669]">Currently Available</p>
+                <p className="text-sm font-bold text-emerald-400">Currently Available</p>
               </div>
-              <p className="text-[13px] text-[#525252] leading-relaxed mb-4">
+              <p className="text-[13px] text-slate-300 leading-relaxed mb-4">
                 Looking for AI/ML roles, research positions, and exciting freelance projects.
               </p>
               <div className="flex flex-wrap gap-2">
@@ -92,19 +91,19 @@ const ContactSection = () => {
             </div>
 
             {/* Quick info card */}
-            <div className="card p-5 space-y-4">
+            <div className="rounded-2xl border p-5 space-y-4" style={{ background: "rgba(17,24,39,0.6)", borderColor: "rgba(255,255,255,0.07)", backdropFilter: "blur(12px)" }}>
               {[
-                { icon: <MapPin size={14} className="text-[#6C63FF]" />,    label: "Location",      value: profile?.location || "Pune, Maharashtra, India",  color: "#6C63FF" },
-                { icon: <Clock size={14} className="text-emerald-500" />,   label: "Response Time", value: "Within 24 hours",           color: "#059669" },
-                { icon: <Rocket size={14} className="text-[#D97706]" />,    label: "Availability",  value: "Open to opportunities",     color: "#D97706" },
+                { icon: <MapPin size={14} className="text-indigo-400" />,    label: "Location",      value: profile?.location || "Pune, Maharashtra, India" },
+                { icon: <Clock size={14} className="text-emerald-400" />,   label: "Response Time", value: "Within 24 hours" },
+                { icon: <Rocket size={14} className="text-amber-400" />,    label: "Availability",  value: "Open to opportunities" },
               ].map((item, i) => (
                 <div key={i} className="flex items-start gap-3">
-                  <div className="w-8 h-8 rounded-lg bg-[#F5F5F5] border border-[#EBEBEB] flex items-center justify-center shrink-0">
+                  <div className="w-8 h-8 rounded-lg bg-slate-800 border border-slate-700 flex items-center justify-center shrink-0">
                     {item.icon}
                   </div>
                   <div>
-                    <p className="mono text-[10px] font-semibold text-[#A3A3A3] uppercase tracking-widest mb-0.5">{item.label}</p>
-                    <p className="text-[13px] font-medium text-[#404040]">{item.value}</p>
+                    <p className="mono text-[10px] font-semibold text-slate-500 uppercase tracking-widest mb-0.5">{item.label}</p>
+                    <p className="text-[13px] font-medium text-slate-200">{item.value}</p>
                   </div>
                 </div>
               ))}
@@ -119,7 +118,8 @@ const ContactSection = () => {
                   target="_blank"
                   rel="noreferrer"
                   whileHover={{ x: 4 }}
-                  className="flex items-center gap-3 p-4 card group hover:border-[#BFDBFE] shimmer-card transition-all hover-glow"
+                  className="flex items-center gap-3 p-4 rounded-2xl border group transition-all"
+                  style={{ background: "rgba(17,24,39,0.6)", borderColor: "rgba(255,255,255,0.07)", backdropFilter: "blur(12px)" }}
                 >
                   <div
                     className="w-8 h-8 rounded-lg flex items-center justify-center text-white shrink-0 transition-all"
@@ -128,10 +128,10 @@ const ContactSection = () => {
                     {s.icon}
                   </div>
                   <div className="min-w-0 flex-1">
-                    <p className="mono text-[9px] font-semibold text-[#A3A3A3] uppercase tracking-widest">{s.label}</p>
-                    <p className="text-[12px] font-semibold text-[#404040] truncate group-hover:text-[#6C63FF] transition-colors">{s.sub}</p>
+                    <p className="mono text-[9px] font-semibold text-slate-500 uppercase tracking-widest">{s.label}</p>
+                    <p className="text-[12px] font-semibold text-slate-200 truncate group-hover:text-indigo-400 transition-colors">{s.sub}</p>
                   </div>
-                  <ArrowUpRight size={13} className="text-[#A3A3A3] group-hover:text-[#6C63FF] shrink-0 transition-colors" />
+                  <ArrowUpRight size={13} className="text-slate-500 group-hover:text-indigo-400 shrink-0 transition-colors" />
                 </motion.a>
               ))}
             </div>
@@ -142,9 +142,9 @@ const ContactSection = () => {
             initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }}
             className="lg:col-span-3"
           >
-            <div className="card p-8">
+            <div className="rounded-2xl border p-8" style={{ background: "rgba(17,24,39,0.6)", borderColor: "rgba(255,255,255,0.07)", backdropFilter: "blur(12px)" }}>
               <div className="flex items-center gap-2 mb-6">
-                <h3 className="text-[15px] font-bold text-[#0A0A0A]">Send a message</h3>
+                <h3 className="text-[15px] font-bold text-white">Send a message</h3>
                 <div className="ml-auto glow-dot" />
               </div>
               <form onSubmit={handleSubmit} className="space-y-4">
@@ -154,26 +154,26 @@ const ContactSection = () => {
                     { label: "Email", value: form.email, key: "email", type: "email", placeholder: "your@email.com" },
                   ].map(f => (
                     <div key={f.key}>
-                      <label className="mono text-[10px] font-semibold text-[#A3A3A3] uppercase tracking-widest block mb-1.5">{f.label}</label>
+                      <label className="mono text-[10px] font-semibold text-slate-400 uppercase tracking-widest block mb-1.5">{f.label}</label>
                       <input
                         type={f.type}
                         value={f.value}
                         onChange={e => setForm(prev => ({ ...prev, [f.key]: e.target.value }))}
                         placeholder={f.placeholder}
                         required
-                        className="input-field"
+                        className="input-field bg-slate-900 border-slate-800 text-white placeholder:text-slate-600 focus:border-indigo-500"
                       />
                     </div>
                   ))}
                 </div>
                 <div>
-                  <label className="mono text-[10px] font-semibold text-[#A3A3A3] uppercase tracking-widest block mb-1.5">Message</label>
+                  <label className="mono text-[10px] font-semibold text-slate-400 uppercase tracking-widest block mb-1.5">Message</label>
                   <textarea
                     value={form.message}
                     onChange={e => setForm(prev => ({ ...prev, message: e.target.value }))}
                     placeholder="Tell me about your project or idea..."
                     required rows={5}
-                    className="input-field resize-none"
+                    className="input-field bg-slate-900 border-slate-800 text-white placeholder:text-slate-600 focus:border-indigo-500 resize-none"
                   />
                 </div>
                 <motion.button
@@ -181,7 +181,8 @@ const ContactSection = () => {
                   disabled={sending}
                   whileHover={{ scale: 1.01, y: -1 }}
                   whileTap={{ scale: 0.98 }}
-                  className="w-full btn-blue py-3.5 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
+                  className="w-full py-3.5 rounded-xl font-semibold text-white flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg transition-all"
+                  style={{ background: "linear-gradient(135deg, #6366F1, #8B5CF6)", boxShadow: "0 0 20px rgba(99,102,241,0.3)" }}
                 >
                   {sending
                     ? <><div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /> Sending...</>

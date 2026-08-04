@@ -15,7 +15,6 @@ interface Project {
   category: string;
 }
 
-/* Colored pill badge palette for tech tags — UPGRADE 3 */
 const TAG_PILL_COLORS: string[] = [
   "tag-pill-accent",
   "tag-pill-green",
@@ -32,6 +31,7 @@ const TAG_COLORS: Record<string, string> = {
   "Data": "tag-green",
   "Engineering": "tag-amber",
 };
+
 function getCategoryTag(cat: string) {
   const key = Object.keys(TAG_COLORS).find(k => cat?.toLowerCase().includes(k.toLowerCase()));
   return key ? TAG_COLORS[key] : "tag";
@@ -49,34 +49,35 @@ const ProjectsSection = () => {
   }, []);
 
   return (
-    <section id="projects" className="py-28 relative overflow-hidden" style={{ background: "var(--canvas)" }}>
+    <section id="projects" className="py-28 relative overflow-hidden" style={{ background: "#030712" }}>
       {/* Background Decor */}
-      <div className="absolute inset-0 bg-dot-grid opacity-[0.15]" />
-      <div className="absolute top-1/2 left-0 w-[500px] h-[500px] bg-blue-50/60 rounded-full blur-[120px] -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
-      <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-violet-50/50 rounded-full blur-[120px] translate-x-1/3 translate-y-1/3 pointer-events-none" />
+      <div className="absolute inset-0 bg-dot-grid opacity-[0.08] pointer-events-none" />
+      <div className="absolute top-1/2 left-0 w-[500px] h-[500px] bg-indigo-500/10 rounded-full blur-[120px] -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
+      <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-purple-500/10 rounded-full blur-[120px] translate-x-1/3 translate-y-1/3 pointer-events-none" />
 
       <div className="container relative z-10">
         {/* Section header */}
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="section-label reveal">
+        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="section-label">
           <span className="eyebrow"><span className="eyebrow-dot" />Case Studies</span>
         </motion.div>
 
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.05 }}>
-            <h2 className="display-md font-black tracking-[-0.04em] leading-[1.05] reveal">
+            <h2 className="display-md font-black tracking-[-0.04em] leading-[1.05] text-white">
               Featured{" "}
-              <span style={{ background: "linear-gradient(135deg,#6C63FF,#7C3AED)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
+              <span style={{ background: "linear-gradient(135deg,#6366F1,#8B5CF6)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
                 Projects
               </span>
             </h2>
-            <p className="text-[#737373] mt-3 text-[15px] max-w-lg">
+            <p className="text-slate-400 mt-3 text-[15px] max-w-lg">
               High-performance engineering deployments and ML modeling benchmarks.
             </p>
           </motion.div>
           <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }}>
             <Link
               to="/projects"
-              className="btn-secondary flex items-center gap-2 text-sm whitespace-nowrap"
+              className="flex items-center gap-2 text-sm font-semibold px-4 py-2.5 rounded-xl border transition-all"
+              style={{ background: "rgba(99,102,241,0.08)", borderColor: "rgba(99,102,241,0.2)", color: "#A5B4FC" }}
             >
               View All Projects <ArrowRight size={14} />
             </Link>
@@ -87,7 +88,7 @@ const ProjectsSection = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {loading
             ? Array.from({ length: 3 }).map((_, i) => (
-                <div key={i} className="card overflow-hidden">
+                <div key={i} className="rounded-2xl border overflow-hidden animate-pulse" style={{ background: "rgba(17,24,39,0.7)", borderColor: "rgba(255,255,255,0.07)" }}>
                   <div className="skeleton aspect-video w-full" />
                   <div className="p-6 space-y-3">
                     <div className="skeleton h-3 w-1/4" />
@@ -104,25 +105,26 @@ const ProjectsSection = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: idx * 0.08 }}
-                  className="project-card card shimmer-card overflow-hidden group flex flex-col reveal"
+                  className="rounded-2xl border overflow-hidden group flex flex-col transition-all duration-300 hover:-translate-y-2 shimmer-card"
+                  style={{ background: "rgba(17,24,39,0.7)", borderColor: "rgba(255,255,255,0.07)", backdropFilter: "blur(12px)" }}
                 >
-                  {/* Colored accent top border — UPGRADE 3 */}
-                  <div className="h-[3px] w-full bg-gradient-to-r from-[#6C63FF] via-[#1A56DB] to-[#7C3AED]" />
+                  {/* Colored accent top border */}
+                  <div className="h-[3px] w-full bg-gradient-to-r from-indigo-500 via-purple-500 to-sky-400" />
 
                   {/* Featured badge for first project */}
                   {idx === 0 && (
-                    <div className="absolute top-6 left-3 z-10 flex items-center gap-1.5 bg-[#6C63FF] text-white text-[10px] font-semibold px-2.5 py-1 rounded-full">
+                    <div className="absolute top-5 left-4 z-10 flex items-center gap-1.5 bg-indigo-600 text-white text-[10px] font-semibold px-2.5 py-1 rounded-full shadow-lg">
                       <Sparkles size={10} />
                       Featured
                     </div>
                   )}
 
                   {/* Image Container */}
-                  <div className="aspect-video overflow-hidden bg-[#F5F5F5] relative">
+                  <div className="aspect-video overflow-hidden bg-slate-900 relative">
                     <img
                       src={getAssetUrl(project.image)}
                       alt={project.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-80 group-hover:opacity-100"
                       onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
                     />
                     {/* Category overlay chip */}
@@ -134,17 +136,17 @@ const ProjectsSection = () => {
                   </div>
 
                   <div className="p-6 flex flex-col flex-1">
-                    {/* Line 1: Project name (bold, large) — UPGRADE 3 */}
-                    <h3 className="text-[16px] font-bold text-[#0A0A0A] mb-2 group-hover:text-[#6C63FF] transition-colors leading-tight">
+                    {/* Project name */}
+                    <h3 className="text-[16px] font-bold text-white mb-2 group-hover:text-indigo-300 transition-colors leading-tight">
                       {project.title}
                     </h3>
 
-                    {/* Line 2: One-sentence description */}
-                    <p className="text-[#737373] text-[13px] leading-relaxed mb-4 line-clamp-3 flex-1">
+                    {/* One-sentence description */}
+                    <p className="text-slate-400 text-[13px] leading-relaxed mb-4 line-clamp-3 flex-1">
                       {project.description}
                     </p>
 
-                    {/* Tech tags as colored pill badges — UPGRADE 3 */}
+                    {/* Tech tags */}
                     <div className="flex flex-wrap gap-1.5 mb-5">
                       {(project.tags || []).slice(0, 4).map((tag, tagIdx) => (
                         <span key={tag} className={TAG_PILL_COLORS[tagIdx % TAG_PILL_COLORS.length]}>
@@ -156,15 +158,15 @@ const ProjectsSection = () => {
                       )}
                     </div>
 
-                    {/* Action buttons — UPGRADE 3: GitHub ↗ and Live Demo ↗ */}
-                    <div className="flex items-center gap-3 pt-4 border-t border-[#F0F0EE]">
+                    {/* Action buttons */}
+                    <div className="flex items-center gap-3 pt-4 border-t border-slate-800">
                       {project.githubUrl && (
                         <motion.a
                           href={project.githubUrl}
                           target="_blank"
                           rel="noreferrer"
                           whileHover={{ scale: 1.05, y: -1 }}
-                          className="flex items-center gap-1.5 text-[11px] font-semibold px-3 py-1.5 rounded-lg bg-[#F5F5F5] border border-[#E5E5E5] text-[#525252] hover:bg-[#0A0A0A] hover:text-white hover:border-transparent transition-all"
+                          className="flex items-center gap-1.5 text-[11px] font-semibold px-3 py-1.5 rounded-lg bg-slate-800 border border-slate-700 text-slate-300 hover:bg-slate-700 hover:text-white transition-all"
                         >
                           <Github size={12} /> GitHub ↗
                         </motion.a>
@@ -175,14 +177,14 @@ const ProjectsSection = () => {
                           target="_blank"
                           rel="noreferrer"
                           whileHover={{ scale: 1.05, y: -1 }}
-                          className="flex items-center gap-1.5 text-[11px] font-semibold px-3 py-1.5 rounded-lg bg-[#EFF6FF] border border-[#BFDBFE] text-[#1A56DB] hover:bg-[#1A56DB] hover:text-white hover:border-transparent transition-all"
+                          className="flex items-center gap-1.5 text-[11px] font-semibold px-3 py-1.5 rounded-lg bg-indigo-500/10 border border-indigo-500/20 text-indigo-300 hover:bg-indigo-600 hover:text-white transition-all"
                         >
                           <ExternalLink size={11} /> Live Demo ↗
                         </motion.a>
                       )}
                       <Link
                         to={`/projects/${project._id}`}
-                        className="ml-auto text-[11px] font-semibold text-[#A3A3A3] hover:text-[#6C63FF] flex items-center gap-1 transition-colors"
+                        className="ml-auto text-[11px] font-semibold text-slate-400 hover:text-indigo-400 flex items-center gap-1 transition-colors"
                       >
                         Details <ArrowRight size={11} />
                       </Link>
