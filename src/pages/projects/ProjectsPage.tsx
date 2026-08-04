@@ -40,25 +40,12 @@ const DIFFICULTIES = ['All', 'Expert', 'Advanced', 'Intermediate', 'Beginner'];
 const STATUSES = ['All', 'Active', 'Completed', 'Research'];
 
 const CATEGORY_CONFIG: Record<string, { icon: React.ReactNode; border: string }> = {
-  'Generative AI':  { icon: <Brain size={14} className="text-purple-600" />,    border: 'border-purple-200' },
-  'AI & Security':  { icon: <Shield size={14} className="text-red-600" />,   border: 'border-red-200' },
-  'Computer Vision':{ icon: <Eye size={14} className="text-cyan-600" />,      border: 'border-cyan-200' },
-  'Machine Learning':{ icon: <Cpu size={14} className="text-emerald-600" />, border: 'border-emerald-200' },
-  'AI & IoT':       { icon: <Leaf size={14} className="text-green-600" />,    border: 'border-green-200' },
-  'Data Analytics': { icon: <BarChart3 size={14} className="text-amber-600" />, border: 'border-amber-200' },
-};
-
-const DIFFICULTY_CONFIG: Record<string, { color: string; bg: string }> = {
-  Expert:       { color: 'text-red-700',    bg: 'bg-red-50 border-red-200' },
-  Advanced:     { color: 'text-amber-700', bg: 'bg-amber-50 border-amber-200' },
-  Intermediate: { color: 'text-blue-700',   bg: 'bg-blue-50 border-blue-200' },
-  Beginner:     { color: 'text-green-700',  bg: 'bg-green-50 border-green-200' },
-};
-
-const STATUS_CONFIG: Record<string, { color: string; dot: string }> = {
-  Active:    { color: 'text-emerald-700', dot: 'bg-emerald-500 animate-pulse' },
-  Completed: { color: 'text-blue-700',    dot: 'bg-blue-500' },
-  Research:  { color: 'text-purple-700',  dot: 'bg-purple-500' },
+  'Generative AI':  { icon: <Brain size={14} className="text-purple-400" />,    border: 'border-purple-500/30' },
+  'AI & Security':  { icon: <Shield size={14} className="text-red-400" />,   border: 'border-red-500/30' },
+  'Computer Vision':{ icon: <Eye size={14} className="text-cyan-400" />,      border: 'border-cyan-500/30' },
+  'Machine Learning':{ icon: <Cpu size={14} className="text-emerald-400" />, border: 'border-emerald-500/30' },
+  'AI & IoT':       { icon: <Leaf size={14} className="text-green-400" />,    border: 'border-green-500/30' },
+  'Data Analytics': { icon: <BarChart3 size={14} className="text-amber-400" />, border: 'border-amber-500/30' },
 };
 
 const containerVariants = {
@@ -72,38 +59,36 @@ const cardVariants = {
 };
 
 const ProjectCard = ({ project }: { project: Project }) => {
-  const catConfig = CATEGORY_CONFIG[project.category] || { border: 'border-slate-200', icon: <Code2 size={14} className="text-slate-600" /> };
-  const diffConfig = DIFFICULTY_CONFIG[project.difficulty] || DIFFICULTY_CONFIG.Intermediate;
-  const statusConfig = STATUS_CONFIG[project.status] || STATUS_CONFIG.Completed;
+  const catConfig = CATEGORY_CONFIG[project.category] || { border: 'border-white/10', icon: <Code2 size={14} className="text-slate-400" /> };
 
   return (
     <motion.div
       variants={cardVariants}
       className={cn(
         "group relative flex flex-col rounded-2xl overflow-hidden border transition-all duration-300",
-        "bg-white hover:-translate-y-2 hover:shadow-xl",
+        "bg-[#12131C] hover:-translate-y-2 hover:shadow-2xl hover:border-indigo-500/40",
         catConfig.border
       )}
     >
       {/* Featured Badge */}
       {project.featured && (
-        <div className="absolute top-4 right-4 z-20 flex items-center gap-1.5 bg-amber-500 text-white rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider shadow-sm">
-          <Star size={10} className="fill-white" /> Featured
+        <div className="absolute top-4 right-4 z-20 flex items-center gap-1.5 bg-amber-500 text-slate-950 rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider shadow-md">
+          <Star size={10} className="fill-slate-950" /> Featured
         </div>
       )}
 
       {/* Image */}
-      <div className="relative h-52 overflow-hidden bg-slate-100">
+      <div className="relative h-52 overflow-hidden bg-slate-900">
         <img
           src={getAssetUrl(project.image)}
           alt={project.title}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-85 group-hover:opacity-100"
           onError={(e) => {
             (e.target as HTMLImageElement).src = `https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?w=800&auto=format&fit=crop`;
           }}
         />
         {/* Category pill */}
-        <div className="absolute bottom-3 left-3 flex items-center gap-1.5 bg-white/90 backdrop-blur-md border border-slate-200 rounded-full px-3 py-1 text-[10px] font-bold text-slate-800 uppercase tracking-wider shadow-sm">
+        <div className="absolute bottom-3 left-3 flex items-center gap-1.5 bg-slate-950/80 backdrop-blur-md border border-white/10 rounded-full px-3 py-1 text-[10px] font-bold text-white uppercase tracking-wider">
           {catConfig.icon} {project.category}
         </div>
       </div>
@@ -112,62 +97,26 @@ const ProjectCard = ({ project }: { project: Project }) => {
       <div className="p-6 flex flex-col flex-1">
         {/* Header */}
         <div className="flex items-start justify-between gap-2 mb-3">
-          <h2 className="text-base font-bold text-slate-900 leading-snug group-hover:text-indigo-600 transition-colors line-clamp-2 flex-1">
+          <h2 className="text-base font-bold text-white leading-snug group-hover:text-indigo-400 transition-colors line-clamp-2 flex-1">
             {project.title}
           </h2>
         </div>
 
-        {/* Meta badges */}
-        <div className="flex items-center gap-2 mb-4 flex-wrap">
-          {project.difficulty && (
-            <span className={cn("text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md border", diffConfig.bg, diffConfig.color)}>
-              {project.difficulty}
-            </span>
-          )}
-          {project.status && (
-            <span className={cn("flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider", statusConfig.color)}>
-              <span className={cn("w-1.5 h-1.5 rounded-full", statusConfig.dot)} />
-              {project.status}
-            </span>
-          )}
-        </div>
-
         {/* Description */}
-        <p className="text-slate-600 text-sm leading-relaxed mb-4 line-clamp-3 flex-1">
+        <p className="text-slate-400 text-sm leading-relaxed mb-4 line-clamp-3 flex-1">
           {project.description}
         </p>
-
-        {/* AI Models */}
-        {project.aiModels?.length > 0 && (
-          <div className="mb-4">
-            <p className="text-[10px] font-bold uppercase tracking-widest text-indigo-600 mb-2 flex items-center gap-1">
-              <Brain size={10} /> AI Models
-            </p>
-            <div className="flex flex-wrap gap-1.5">
-              {project.aiModels.slice(0, 3).map((m, i) => (
-                <span key={i} className="text-[10px] px-2 py-0.5 bg-indigo-50 border border-indigo-100 rounded text-indigo-700 font-medium">
-                  {m}
-                </span>
-              ))}
-              {project.aiModels.length > 3 && (
-                <span className="text-[10px] px-2 py-0.5 bg-slate-100 border border-slate-200 rounded text-slate-500">
-                  +{project.aiModels.length - 3}
-                </span>
-              )}
-            </div>
-          </div>
-        )}
 
         {/* Tech Stack */}
         {project.techStack?.length > 0 && (
           <div className="flex flex-wrap gap-1.5 mb-5">
             {project.techStack.slice(0, 4).map((t, i) => (
-              <span key={i} className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 bg-slate-100 border border-slate-200 rounded text-slate-700">
+              <span key={i} className="tag-blue text-[10px]">
                 {t}
               </span>
             ))}
             {project.techStack.length > 4 && (
-              <span className="text-[10px] px-2 py-0.5 bg-slate-100 border border-slate-200 rounded text-slate-500">
+              <span className="tag text-[10px]">
                 +{project.techStack.length - 4}
               </span>
             )}
@@ -176,29 +125,29 @@ const ProjectCard = ({ project }: { project: Project }) => {
 
         {/* Key Achievement */}
         {project.achievements?.length > 0 && (
-          <div className="flex items-start gap-2 mb-5 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2">
-            <Trophy size={12} className="text-amber-600 mt-0.5 shrink-0" />
-            <p className="text-[11px] text-amber-900 leading-snug line-clamp-2">{project.achievements[0]}</p>
+          <div className="flex items-start gap-2 mb-5 bg-amber-500/10 border border-amber-500/20 rounded-lg px-3 py-2">
+            <Trophy size={12} className="text-amber-400 mt-0.5 shrink-0" />
+            <p className="text-[11px] text-amber-200 leading-snug line-clamp-2">{project.achievements[0]}</p>
           </div>
         )}
 
         {/* Footer */}
-        <div className="flex items-center justify-between pt-4 border-t border-slate-100 mt-auto">
+        <div className="flex items-center justify-between pt-4 border-t border-white/08 mt-auto">
           <Link
             to={`/projects/${project._id}`}
-            className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-indigo-600 hover:text-indigo-800 transition-colors"
+            className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-indigo-400 hover:text-indigo-300 transition-colors"
           >
             View Details <ChevronRight size={14} />
           </Link>
           <div className="flex items-center gap-1">
             {project.githubUrl && (
-              <Button variant="ghost" size="sm" className="w-8 h-8 p-0 text-slate-500 hover:text-slate-900 hover:bg-slate-100"
+              <Button variant="ghost" size="sm" className="w-8 h-8 p-0 text-slate-400 hover:text-white hover:bg-white/10"
                 onClick={() => window.open(project.githubUrl, '_blank')}>
                 <Github size={15} />
               </Button>
             )}
             {project.demoUrl && (
-              <Button variant="ghost" size="sm" className="w-8 h-8 p-0 text-slate-500 hover:text-slate-900 hover:bg-slate-100"
+              <Button variant="ghost" size="sm" className="w-8 h-8 p-0 text-slate-400 hover:text-white hover:bg-white/10"
                 onClick={() => window.open(project.demoUrl, '_blank')}>
                 <ExternalLink size={15} />
               </Button>
@@ -259,7 +208,7 @@ const ProjectsPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#FAFAFC] text-slate-900 flex flex-col">
+    <div className="min-h-screen bg-[#090A0F] text-slate-100 flex flex-col">
       <SEO
         title="Projects Archive | Rohit Birdawade — AI & ML Engineer"
         description="Explore Rohit Birdawade's portfolio of AI, ML, GenAI, Computer Vision, IoT and Full-Stack projects."
@@ -267,20 +216,20 @@ const ProjectsPage = () => {
       <Navbar />
 
       {/* Hero Header */}
-      <section className="pt-32 pb-16 relative overflow-hidden bg-slate-50 border-b border-slate-200">
+      <section className="pt-32 pb-16 relative overflow-hidden bg-[#090A0F] border-b border-white/08">
         <div className="container max-w-7xl relative">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-            <Link to="/" className="group inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-slate-500 hover:text-indigo-600 transition-all mb-8">
+            <Link to="/" className="group inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-slate-400 hover:text-indigo-400 transition-all mb-8">
               <ArrowLeft size={14} className="group-hover:-translate-x-1 transition-transform" /> Back to Portfolio
             </Link>
 
             <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-10">
               <div className="max-w-3xl">
                 <span className="eyebrow mb-3"><span className="eyebrow-dot" />Project Archive</span>
-                <h1 className="text-5xl md:text-7xl font-black tracking-tighter mb-6 leading-none text-slate-900">
-                  All <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">Projects</span>
+                <h1 className="text-5xl md:text-7xl font-black tracking-tighter mb-6 leading-none text-white">
+                  All <span className="text-indigo-400">Projects</span>
                 </h1>
-                <p className="text-lg text-slate-600 leading-relaxed max-w-2xl">
+                <p className="text-lg text-slate-400 leading-relaxed max-w-2xl">
                   Production-grade AI systems, deep learning models, and full-stack applications built for real-world impact across healthcare, agriculture, security, and data analytics.
                 </p>
               </div>
@@ -288,14 +237,14 @@ const ProjectsPage = () => {
               {/* Stats Row */}
               <div className="flex gap-4 flex-wrap lg:flex-nowrap">
                 {[
-                  { label: 'Total Projects', value: projects.length, icon: <Layers size={16} />, color: 'text-indigo-600' },
-                  { label: 'Featured', value: featuredCount, icon: <Star size={16} />, color: 'text-amber-600' },
-                  { label: 'AI Projects', value: projects.filter(p => ['Generative AI', 'Machine Learning', 'Computer Vision', 'AI & IoT', 'AI & Security'].includes(p.category)).length, icon: <Brain size={16} />, color: 'text-purple-600' },
+                  { label: 'Total Projects', value: projects.length, icon: <Layers size={16} />, color: 'text-indigo-400' },
+                  { label: 'Featured', value: featuredCount, icon: <Star size={16} />, color: 'text-amber-400' },
+                  { label: 'AI Projects', value: projects.filter(p => ['Generative AI', 'Machine Learning', 'Computer Vision', 'AI & IoT', 'AI & Security'].includes(p.category)).length, icon: <Brain size={16} />, color: 'text-purple-400' },
                 ].map((stat, i) => (
-                  <div key={i} className="bg-white border border-slate-200 rounded-2xl p-5 text-center min-w-[120px] shadow-sm">
+                  <div key={i} className="card p-5 text-center min-w-[120px]">
                     <span className={cn("flex justify-center mb-2", stat.color)}>{stat.icon}</span>
-                    <div className="text-3xl font-black text-slate-900">{stat.value}</div>
-                    <div className="text-[10px] font-bold uppercase tracking-widest text-slate-500 mt-1">{stat.label}</div>
+                    <div className="text-3xl font-black text-white">{stat.value}</div>
+                    <div className="mono text-[10px] font-bold uppercase tracking-widest text-slate-400 mt-1">{stat.label}</div>
                   </div>
                 ))}
               </div>
@@ -305,21 +254,21 @@ const ProjectsPage = () => {
       </section>
 
       {/* Search + Filters */}
-      <div className="sticky top-16 z-30 bg-white/90 backdrop-blur-xl border-b border-slate-200">
+      <div className="sticky top-16 z-30 bg-[#090A0F]/90 backdrop-blur-xl border-b border-white/08">
         <div className="container max-w-7xl py-4">
           <div className="flex flex-col gap-4">
             {/* Search bar */}
             <div className="flex items-center gap-3">
               <div className="relative flex-1 max-w-lg">
-                <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
+                <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" />
                 <Input
                   value={search}
                   onChange={e => setSearch(e.target.value)}
                   placeholder="Search projects, technologies, categories..."
-                  className="pl-11 bg-slate-50 border-slate-200 text-slate-900 placeholder:text-slate-400 h-11 rounded-xl focus:border-indigo-600"
+                  className="pl-11 bg-slate-900 border-white/10 text-white placeholder:text-slate-500 h-11 rounded-xl focus:border-indigo-500"
                 />
                 {search && (
-                  <button onClick={() => setSearch('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-900">
+                  <button onClick={() => setSearch('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-white">
                     <X size={14} />
                   </button>
                 )}
@@ -328,8 +277,8 @@ const ProjectsPage = () => {
               <Button
                 variant="outline"
                 onClick={() => setShowFilters(!showFilters)}
-                className={cn("h-11 gap-2 border-slate-200 bg-white text-slate-700 hover:bg-slate-50 rounded-xl",
-                  showFilters && "border-indigo-600 text-indigo-600")}
+                className={cn("h-11 gap-2 border-white/10 bg-white/05 text-slate-300 hover:bg-white/10 rounded-xl",
+                  showFilters && "border-indigo-500 text-indigo-400")}
               >
                 <SlidersHorizontal size={15} />
                 Filters
@@ -345,15 +294,15 @@ const ProjectsPage = () => {
                 onClick={() => setShowFeatured(!showFeatured)}
                 className={cn("h-11 gap-2 rounded-xl",
                   showFeatured
-                    ? "bg-amber-500 hover:bg-amber-600 text-white border-amber-500"
-                    : "border-slate-200 bg-white text-slate-700 hover:bg-slate-50")}
+                    ? "bg-amber-500 hover:bg-amber-600 text-slate-950 border-amber-500 font-bold"
+                    : "border-white/10 bg-white/05 text-slate-300 hover:bg-white/10")}
               >
-                <Star size={14} className={showFeatured ? "fill-white" : ""} />
+                <Star size={14} className={showFeatured ? "fill-slate-950" : ""} />
                 Featured
               </Button>
 
               {activeFilters.length > 0 && (
-                <Button variant="ghost" onClick={clearFilters} className="h-11 text-slate-500 hover:text-slate-900 rounded-xl">
+                <Button variant="ghost" onClick={clearFilters} className="h-11 text-slate-400 hover:text-white rounded-xl">
                   <X size={14} className="mr-1" /> Clear
                 </Button>
               )}
@@ -369,7 +318,7 @@ const ProjectsPage = () => {
                     "shrink-0 flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all border",
                     activeCategory === cat
                       ? "bg-indigo-600 border-indigo-600 text-white shadow-md"
-                      : "bg-white border-slate-200 text-slate-600 hover:border-slate-300 hover:text-slate-900"
+                      : "bg-white/05 border-white/08 text-slate-400 hover:border-white/15 hover:text-white"
                   )}
                 >
                   {cat !== 'All' && CATEGORY_CONFIG[cat]?.icon}
@@ -377,47 +326,6 @@ const ProjectsPage = () => {
                 </button>
               ))}
             </div>
-
-            {/* Extended filters */}
-            <AnimatePresence>
-              {showFilters && (
-                <motion.div
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: 'auto' }}
-                  exit={{ opacity: 0, height: 0 }}
-                  className="flex flex-wrap gap-6 pt-2"
-                >
-                  <div>
-                    <p className="text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-2">Difficulty</p>
-                    <div className="flex gap-2">
-                      {DIFFICULTIES.map(d => (
-                        <button key={d} onClick={() => setActiveDifficulty(d)}
-                          className={cn("px-3 py-1.5 rounded-lg text-xs font-bold border transition-all",
-                            activeDifficulty === d
-                              ? "bg-indigo-600 border-indigo-600 text-white"
-                              : "bg-white border-slate-200 text-slate-600 hover:border-slate-300")}>
-                          {d}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                  <div>
-                    <p className="text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-2">Status</p>
-                    <div className="flex gap-2">
-                      {STATUSES.map(s => (
-                        <button key={s} onClick={() => setActiveStatus(s)}
-                          className={cn("px-3 py-1.5 rounded-lg text-xs font-bold border transition-all",
-                            activeStatus === s
-                              ? "bg-indigo-600 border-indigo-600 text-white"
-                              : "bg-white border-slate-200 text-slate-600 hover:border-slate-300")}>
-                          {s}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
           </div>
         </div>
       </div>
@@ -428,15 +336,15 @@ const ProjectsPage = () => {
           {loading ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {Array.from({ length: 6 }).map((_, i) => (
-                <div key={i} className="animate-pulse bg-white rounded-2xl h-[520px] border border-slate-200" />
+                <div key={i} className="animate-pulse card h-[520px]" />
               ))}
             </div>
           ) : filtered.length === 0 ? (
-            <div className="text-center py-32 bg-white rounded-2xl border border-slate-200">
-              <Code2 size={48} className="mx-auto mb-4 text-slate-300" />
-              <h3 className="text-xl font-bold text-slate-700 mb-2">No projects found</h3>
-              <p className="text-slate-500 mb-6">Try adjusting your search or filters</p>
-              <Button onClick={clearFilters} variant="outline" className="border-slate-200 text-slate-700">
+            <div className="text-center py-32 card">
+              <Code2 size={48} className="mx-auto mb-4 text-slate-500" />
+              <h3 className="text-xl font-bold text-white mb-2">No projects found</h3>
+              <p className="text-slate-400 mb-6">Try adjusting your search or filters</p>
+              <Button onClick={clearFilters} variant="outline" className="border-white/10 text-slate-300">
                 Clear all filters
               </Button>
             </div>
