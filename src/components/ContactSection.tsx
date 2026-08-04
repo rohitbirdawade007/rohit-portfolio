@@ -37,16 +37,14 @@ const ContactSection = () => {
   };
 
   const socials = [
-    { icon: <Github size={16} />,   label: "GitHub",   sub: `@${getUsername(profile?.socialLinks?.github, "rohitbirdawade007")}`, url: profile?.socialLinks?.github || "https://github.com/rohitbirdawade007",  color: "#24292e" },
+    { icon: <Github size={16} />,   label: "GitHub",   sub: `@${getUsername(profile?.socialLinks?.github, "rohitbirdawade007")}`, url: profile?.socialLinks?.github || "https://github.com/rohitbirdawade007",  color: "#0F172A" },
     { icon: <Linkedin size={16} />, label: "LinkedIn", sub: getUsername(profile?.socialLinks?.linkedin, "rohitbirdawade007"), url: profile?.socialLinks?.linkedin || "https://linkedin.com/in/rohitbirdawade007", color: "#0A66C2" },
     { icon: <Mail size={16} />,     label: "Email",    sub: profile?.email || "rohitbirdawade007@gmail.com", url: `mailto:${profile?.email || "rohitbirdawade007@gmail.com"}`, color: "#EA4335" },
   ];
 
   return (
-    <section id="contact" className="py-28 relative overflow-hidden" style={{ background: "#030712" }}>
-      <div className="absolute inset-0 bg-dot-grid opacity-[0.08] pointer-events-none" />
-      <div className="absolute top-1/2 left-0 w-[400px] h-[400px] bg-indigo-500/10 rounded-full blur-[140px] -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
-      <div className="absolute top-1/2 right-0 w-[400px] h-[400px] bg-purple-500/10 rounded-full blur-[140px] translate-x-1/2 -translate-y-1/2 pointer-events-none" />
+    <section id="contact" className="py-28 relative overflow-hidden" style={{ background: "#FAFAFC" }}>
+      <div className="absolute inset-0 bg-dot-grid opacity-[0.3] pointer-events-none" />
 
       <div className="container relative z-10">
         {/* Label */}
@@ -56,13 +54,13 @@ const ContactSection = () => {
 
         {/* Headline */}
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.05 }} className="mb-14">
-          <h2 className="display-md font-black tracking-[-0.04em] leading-[1.05] text-white">
+          <h2 className="display-md font-black tracking-[-0.04em] leading-[1.05] text-slate-900">
             Let's Build{" "}
-            <span style={{ background: "linear-gradient(135deg,#6366F1,#8B5CF6)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
+            <span style={{ background: "linear-gradient(135deg, #4F46E5, #7C3AED)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
               Together
             </span>
           </h2>
-          <p className="text-slate-400 mt-3 text-[15px] max-w-lg">
+          <p className="text-slate-500 mt-3 text-[15px] max-w-lg">
             Open to AI projects, data science roles, research collaborations, or just a conversation.
           </p>
         </motion.div>
@@ -75,12 +73,12 @@ const ContactSection = () => {
             className="lg:col-span-2 space-y-4"
           >
             {/* Availability card */}
-            <div className="rounded-2xl border p-6" style={{ background: "linear-gradient(135deg, rgba(16,185,129,0.08) 0%, rgba(17,24,39,0.6) 100%)", borderColor: "rgba(16,185,129,0.2)" }}>
+            <div className="card p-6 border-emerald-200/80 bg-emerald-50/40">
               <div className="flex items-center gap-2 mb-4">
-                <div className="glow-dot" />
-                <p className="text-sm font-bold text-emerald-400">Currently Available</p>
+                <div className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
+                <p className="text-sm font-bold text-emerald-800">Currently Available</p>
               </div>
-              <p className="text-[13px] text-slate-300 leading-relaxed mb-4">
+              <p className="text-[13px] text-slate-600 leading-relaxed mb-4">
                 Looking for AI/ML roles, research positions, and exciting freelance projects.
               </p>
               <div className="flex flex-wrap gap-2">
@@ -91,19 +89,19 @@ const ContactSection = () => {
             </div>
 
             {/* Quick info card */}
-            <div className="rounded-2xl border p-5 space-y-4" style={{ background: "rgba(17,24,39,0.6)", borderColor: "rgba(255,255,255,0.07)", backdropFilter: "blur(12px)" }}>
+            <div className="card p-5 space-y-4">
               {[
-                { icon: <MapPin size={14} className="text-indigo-400" />,    label: "Location",      value: profile?.location || "Pune, Maharashtra, India" },
-                { icon: <Clock size={14} className="text-emerald-400" />,   label: "Response Time", value: "Within 24 hours" },
-                { icon: <Rocket size={14} className="text-amber-400" />,    label: "Availability",  value: "Open to opportunities" },
+                { icon: <MapPin size={14} className="text-indigo-600" />,    label: "Location",      value: profile?.location || "Pune, Maharashtra, India" },
+                { icon: <Clock size={14} className="text-emerald-600" />,   label: "Response Time", value: "Within 24 hours" },
+                { icon: <Rocket size={14} className="text-amber-600" />,    label: "Availability",  value: "Open to opportunities" },
               ].map((item, i) => (
                 <div key={i} className="flex items-start gap-3">
-                  <div className="w-8 h-8 rounded-lg bg-slate-800 border border-slate-700 flex items-center justify-center shrink-0">
+                  <div className="w-8 h-8 rounded-lg bg-slate-100 border border-slate-200 flex items-center justify-center shrink-0">
                     {item.icon}
                   </div>
                   <div>
-                    <p className="mono text-[10px] font-semibold text-slate-500 uppercase tracking-widest mb-0.5">{item.label}</p>
-                    <p className="text-[13px] font-medium text-slate-200">{item.value}</p>
+                    <p className="mono text-[10px] font-semibold text-slate-400 uppercase tracking-widest mb-0.5">{item.label}</p>
+                    <p className="text-[13px] font-medium text-slate-800">{item.value}</p>
                   </div>
                 </div>
               ))}
@@ -118,20 +116,19 @@ const ContactSection = () => {
                   target="_blank"
                   rel="noreferrer"
                   whileHover={{ x: 4 }}
-                  className="flex items-center gap-3 p-4 rounded-2xl border group transition-all"
-                  style={{ background: "rgba(17,24,39,0.6)", borderColor: "rgba(255,255,255,0.07)", backdropFilter: "blur(12px)" }}
+                  className="flex items-center gap-3 p-4 card group transition-all"
                 >
                   <div
-                    className="w-8 h-8 rounded-lg flex items-center justify-center text-white shrink-0 transition-all"
+                    className="w-8 h-8 rounded-lg flex items-center justify-center text-white shrink-0 shadow-sm"
                     style={{ background: s.color }}
                   >
                     {s.icon}
                   </div>
                   <div className="min-w-0 flex-1">
-                    <p className="mono text-[9px] font-semibold text-slate-500 uppercase tracking-widest">{s.label}</p>
-                    <p className="text-[12px] font-semibold text-slate-200 truncate group-hover:text-indigo-400 transition-colors">{s.sub}</p>
+                    <p className="mono text-[9px] font-semibold text-slate-400 uppercase tracking-widest">{s.label}</p>
+                    <p className="text-[12px] font-semibold text-slate-800 truncate group-hover:text-indigo-600 transition-colors">{s.sub}</p>
                   </div>
-                  <ArrowUpRight size={13} className="text-slate-500 group-hover:text-indigo-400 shrink-0 transition-colors" />
+                  <ArrowUpRight size={13} className="text-slate-400 group-hover:text-indigo-600 shrink-0 transition-colors" />
                 </motion.a>
               ))}
             </div>
@@ -142,10 +139,10 @@ const ContactSection = () => {
             initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }}
             className="lg:col-span-3"
           >
-            <div className="rounded-2xl border p-8" style={{ background: "rgba(17,24,39,0.6)", borderColor: "rgba(255,255,255,0.07)", backdropFilter: "blur(12px)" }}>
+            <div className="card p-8">
               <div className="flex items-center gap-2 mb-6">
-                <h3 className="text-[15px] font-bold text-white">Send a message</h3>
-                <div className="ml-auto glow-dot" />
+                <h3 className="text-[15px] font-bold text-slate-900">Send a message</h3>
+                <div className="ml-auto w-2 h-2 rounded-full bg-emerald-500" />
               </div>
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -154,26 +151,26 @@ const ContactSection = () => {
                     { label: "Email", value: form.email, key: "email", type: "email", placeholder: "your@email.com" },
                   ].map(f => (
                     <div key={f.key}>
-                      <label className="mono text-[10px] font-semibold text-slate-400 uppercase tracking-widest block mb-1.5">{f.label}</label>
+                      <label className="mono text-[10px] font-semibold text-slate-500 uppercase tracking-widest block mb-1.5">{f.label}</label>
                       <input
                         type={f.type}
                         value={f.value}
                         onChange={e => setForm(prev => ({ ...prev, [f.key]: e.target.value }))}
                         placeholder={f.placeholder}
                         required
-                        className="input-field bg-slate-900 border-slate-800 text-white placeholder:text-slate-600 focus:border-indigo-500"
+                        className="input-field"
                       />
                     </div>
                   ))}
                 </div>
                 <div>
-                  <label className="mono text-[10px] font-semibold text-slate-400 uppercase tracking-widest block mb-1.5">Message</label>
+                  <label className="mono text-[10px] font-semibold text-slate-500 uppercase tracking-widest block mb-1.5">Message</label>
                   <textarea
                     value={form.message}
                     onChange={e => setForm(prev => ({ ...prev, message: e.target.value }))}
                     placeholder="Tell me about your project or idea..."
                     required rows={5}
-                    className="input-field bg-slate-900 border-slate-800 text-white placeholder:text-slate-600 focus:border-indigo-500 resize-none"
+                    className="input-field resize-none"
                   />
                 </div>
                 <motion.button
@@ -181,8 +178,7 @@ const ContactSection = () => {
                   disabled={sending}
                   whileHover={{ scale: 1.01, y: -1 }}
                   whileTap={{ scale: 0.98 }}
-                  className="w-full py-3.5 rounded-xl font-semibold text-white flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg transition-all"
-                  style={{ background: "linear-gradient(135deg, #6366F1, #8B5CF6)", boxShadow: "0 0 20px rgba(99,102,241,0.3)" }}
+                  className="w-full btn-primary py-3.5 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed shadow-md"
                 >
                   {sending
                     ? <><div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /> Sending...</>

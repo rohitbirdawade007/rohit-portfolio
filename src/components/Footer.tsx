@@ -18,33 +18,30 @@ const Footer = () => {
   const techStack = ["React", "TypeScript", "Vite", "Framer Motion", "Tailwind CSS", "Node.js"];
 
   return (
-    <footer style={{ background: "#030712", borderTop: "1px solid rgba(255,255,255,0.06)" }} className="relative overflow-hidden">
+    <footer className="relative overflow-hidden bg-white border-t border-slate-200">
       {/* Top gradient accent */}
-      <div className="gradient-line absolute top-0 inset-x-0 opacity-60" />
-
-      {/* Decorative blobs */}
-      <div className="absolute bottom-0 left-1/4 w-[300px] h-[300px] bg-indigo-500/5 rounded-full blur-[100px] pointer-events-none" />
+      <div className="gradient-line absolute top-0 inset-x-0 opacity-80" />
 
       <div className="container relative z-10">
         {/* Main grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 py-16 border-b border-slate-800/60">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 py-16 border-b border-slate-200">
 
           {/* Brand */}
           <div className="lg:col-span-2 space-y-6">
             <div className="flex items-center gap-3">
               <motion.div
                 whileHover={{ rotate: 10, scale: 1.1 }}
-                className="w-10 h-10 rounded-xl text-white flex items-center justify-center cursor-pointer shadow-lg"
-                style={{ background: "linear-gradient(135deg, #6366F1, #8B5CF6)" }}
+                className="w-10 h-10 rounded-xl text-white flex items-center justify-center cursor-pointer shadow-md"
+                style={{ background: "linear-gradient(135deg, #4F46E5, #6366F1)" }}
               >
                 <Cpu size={18} />
               </motion.div>
               <div>
-                <p className="text-[14px] font-bold text-white tracking-tight">Rohit Birdawade</p>
-                <p className="mono text-[9px] font-semibold text-indigo-400 uppercase tracking-widest">AI Engineer · Data Scientist</p>
+                <p className="text-[14px] font-bold text-slate-900 tracking-tight">Rohit Birdawade</p>
+                <p className="mono text-[9px] font-semibold text-indigo-600 uppercase tracking-widest">AI Engineer · Data Scientist</p>
               </div>
             </div>
-            <p className="text-slate-400 text-[14px] leading-relaxed max-w-sm">
+            <p className="text-slate-600 text-[14px] leading-relaxed max-w-sm">
               {profile?.bio || "Architecting next-generation intelligent systems — from ML pipelines to edge AI deployments."}
             </p>
             <div className="flex items-center gap-1.5">
@@ -66,7 +63,7 @@ const Footer = () => {
                   rel="noreferrer"
                   title={s.label}
                   whileHover={{ y: -3, scale: 1.1 }}
-                  className="w-9 h-9 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-400 hover:bg-indigo-600 hover:text-white hover:border-transparent transition-all"
+                  className="w-9 h-9 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-600 hover:bg-indigo-600 hover:text-white hover:border-transparent transition-all"
                 >
                   {s.icon}
                 </motion.a>
@@ -76,12 +73,12 @@ const Footer = () => {
 
           {/* Navigation */}
           <div className="space-y-4">
-            <h4 className="mono text-[10px] font-semibold text-slate-500 uppercase tracking-widest">Navigation</h4>
+            <h4 className="mono text-[10px] font-semibold text-slate-400 uppercase tracking-widest">Navigation</h4>
             <ul className="space-y-2.5">
               {nav.map(([label, href]) => (
                 <li key={href}>
-                  <a href={href} className="text-[13px] font-medium text-slate-400 hover:text-indigo-400 transition-colors flex items-center gap-1.5 group">
-                    <span className="w-0 group-hover:w-2 h-px bg-indigo-500 transition-all duration-200" />
+                  <a href={href} className="text-[13px] font-medium text-slate-600 hover:text-indigo-600 transition-colors flex items-center gap-1.5 group">
+                    <span className="w-0 group-hover:w-2 h-px bg-indigo-600 transition-all duration-200" />
                     {label}
                   </a>
                 </li>
@@ -91,12 +88,12 @@ const Footer = () => {
 
           {/* Resources */}
           <div className="space-y-4">
-            <h4 className="mono text-[10px] font-semibold text-slate-500 uppercase tracking-widest">Resources</h4>
+            <h4 className="mono text-[10px] font-semibold text-slate-400 uppercase tracking-widest">Resources</h4>
             <ul className="space-y-2.5">
               {resources.map(([label, href]) => (
                 <li key={href}>
-                  <a href={href} className="text-[13px] font-medium text-slate-400 hover:text-indigo-400 transition-colors flex items-center gap-1.5 group">
-                    <span className="w-0 group-hover:w-2 h-px bg-indigo-500 transition-all duration-200" />
+                  <a href={href} className="text-[13px] font-medium text-slate-600 hover:text-indigo-600 transition-colors flex items-center gap-1.5 group">
+                    <span className="w-0 group-hover:w-2 h-px bg-indigo-600 transition-all duration-200" />
                     {label}
                   </a>
                 </li>
@@ -106,8 +103,8 @@ const Footer = () => {
         </div>
 
         {/* Tech stack strip */}
-        <div className="py-4 border-b border-slate-800/60 flex items-center gap-3 overflow-hidden">
-          <span className="mono text-[9px] text-slate-500 uppercase tracking-widest shrink-0">Built with</span>
+        <div className="py-4 border-b border-slate-200 flex items-center gap-3 overflow-hidden">
+          <span className="mono text-[9px] text-slate-400 uppercase tracking-widest shrink-0">Built with</span>
           <div className="flex gap-2 flex-wrap">
             {techStack.map(t => (
               <span key={t} className="tag text-[9px]">{t}</span>
@@ -119,18 +116,18 @@ const Footer = () => {
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 py-8">
           <div className="flex items-center gap-2 flex-wrap justify-center">
             <p className="mono text-[11px] text-slate-500">© {year} Rohit Birdawade</p>
-            <span className="text-slate-700">·</span>
+            <span className="text-slate-300">·</span>
             <span className="mono text-[10px] text-slate-500 flex items-center gap-1">
               Designed & built by Rohit Sandip Birdawade
             </span>
           </div>
           <div className="flex items-center gap-4">
-            <span className="mono text-[10px] text-slate-500 uppercase tracking-widest">AI Dashboard v5.0</span>
+            <span className="mono text-[10px] text-slate-400 uppercase tracking-widest">AI Dashboard v5.0</span>
             <motion.button
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-              className="w-9 h-9 rounded-xl bg-indigo-600 flex items-center justify-center text-white hover:bg-indigo-500 transition-colors shadow-lg"
+              className="w-9 h-9 rounded-xl bg-indigo-600 flex items-center justify-center text-white hover:bg-indigo-700 transition-colors shadow-sm"
               aria-label="Back to top"
             >
               <ArrowUp size={15} />
