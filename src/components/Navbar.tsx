@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
-import { Menu, X, Cpu, ArrowUpRight } from "lucide-react";
+import { Menu, X, Code2, ArrowUpRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const ITEMS = [
@@ -20,19 +20,19 @@ const Navbar = () => {
   const location = useLocation();
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
+    const onScroll = () => {
+      setScrolled(window.scrollY > 24);
       const sections = ITEMS.map(i => document.getElementById(i.id)).filter(Boolean) as HTMLElement[];
-      const scrollY = window.scrollY + 100;
+      const y = window.scrollY + 120;
       for (let i = sections.length - 1; i >= 0; i--) {
-        if (sections[i].offsetTop <= scrollY) { setActive(ITEMS[i].id); break; }
+        if (sections[i].offsetTop <= y) { setActive(ITEMS[i].id); break; }
       }
     };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const scroll = (id: string) => {
+  const scrollTo = (id: string) => {
     setOpen(false);
     setActive(id);
     if (location.pathname !== "/") { window.location.href = `/#${id}`; return; }
@@ -40,60 +40,62 @@ const Navbar = () => {
     if (el) window.scrollTo({ top: el.offsetTop - 80, behavior: "smooth" });
   };
 
+  const isHome = location.pathname === "/";
+
   return (
     <header className="fixed top-0 left-0 w-full z-[100] pointer-events-none">
       <div className="flex justify-center pt-4 px-4 pointer-events-auto">
-        <motion.div
-          initial={{ y: -60, opacity: 0 }}
+        <motion.nav
+          initial={{ y: -70, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
           className={cn(
-            "w-full max-w-5xl transition-all duration-300 rounded-full border shadow-md",
+            "w-full max-w-5xl rounded-full transition-all duration-300",
             scrolled
-              ? "bg-white/90 backdrop-blur-xl border-slate-200 shadow-lg"
-              : "bg-white/75 backdrop-blur-md border-slate-200/80"
+              ? "bg-white/92 backdrop-blur-2xl border border-slate-200 shadow-lg shadow-slate-200/60"
+              : "bg-white/80 backdrop-blur-xl border border-slate-200/70"
           )}
         >
-          <div className="px-6 h-14 flex items-center justify-between gap-4">
+          <div className="px-5 h-[54px] flex items-center justify-between gap-4">
 
             {/* Brand */}
             <Link to="/" className="flex items-center gap-2.5 group shrink-0">
-              <div className="w-8 h-8 rounded-full flex items-center justify-center text-white bg-indigo-600 group-hover:bg-indigo-500 transition-colors shadow-sm">
-                <Cpu size={15} />
+              <div className="w-8 h-8 rounded-full bg-indigo-600 flex items-center justify-center text-white shadow-sm group-hover:bg-indigo-500 transition-colors">
+                <Code2 size={14} />
               </div>
-              <div>
-                <p className="text-[13.5px] font-bold tracking-tight leading-none text-slate-900">Rohit Birdawade</p>
-                <p className="text-[9.5px] font-semibold uppercase tracking-[0.1em] text-indigo-600 leading-none mt-0.5">AI Engineer</p>
+              <div className="hidden sm:block">
+                <p className="text-[13px] font-bold text-slate-900 leading-none tracking-tight">Rohit Birdawade</p>
+                <p className="mono text-[9px] text-indigo-600 font-semibold uppercase tracking-[0.1em] leading-none mt-0.5">AI · ML Engineer</p>
               </div>
             </Link>
 
-            {/* Desktop Navigation */}
-            <nav className="hidden md:flex items-center gap-1 bg-slate-100/80 rounded-full px-2 py-1 border border-slate-200/80">
-              {ITEMS.map((item) => {
-                const isActive = active === item.id && location.pathname === "/";
+            {/* Desktop Nav */}
+            <div className="hidden md:flex items-center gap-0.5 bg-slate-100/80 rounded-full px-1.5 py-1 border border-slate-200/60">
+              {ITEMS.map(item => {
+                const isAct = active === item.id && isHome;
                 return (
                   <button
                     key={item.id}
-                    onClick={() => scroll(item.id)}
+                    onClick={() => scrollTo(item.id)}
                     className={cn(
-                      "relative px-3.5 py-1.5 text-[13px] font-medium rounded-full transition-all duration-200",
-                      isActive
-                        ? "text-slate-900 font-bold"
+                      "relative px-3.5 py-1.5 text-[12.5px] font-medium rounded-full transition-all duration-200",
+                      isAct
+                        ? "text-slate-900 font-semibold"
                         : "text-slate-600 hover:text-slate-900"
                     )}
                   >
-                    {isActive && (
+                    {isAct && (
                       <motion.div
-                        layoutId="active-nav-pill-stylish"
-                        className="absolute inset-0 rounded-full bg-white border border-slate-200/90 z-[-1] shadow-xs"
-                        transition={{ type: "spring", stiffness: 400, damping: 35 }}
+                        layoutId="nav-active"
+                        className="absolute inset-0 bg-white border border-slate-200 rounded-full z-[-1] shadow-sm"
+                        transition={{ type: "spring", stiffness: 450, damping: 38 }}
                       />
                     )}
                     {item.label}
                   </button>
                 );
               })}
-            </nav>
+            </div>
 
             {/* Right CTAs */}
             <div className="flex items-center gap-2 shrink-0">
@@ -101,47 +103,61 @@ const Navbar = () => {
                 href="/resume.pdf"
                 target="_blank"
                 rel="noreferrer"
-                className="hidden sm:inline-flex items-center gap-1 px-4 py-1.5 text-xs font-semibold text-white rounded-full bg-indigo-600 hover:bg-indigo-500 transition-all shadow-sm"
+                className="hidden sm:inline-flex items-center gap-1.5 px-4 py-1.5 text-[12px] font-semibold text-white rounded-full bg-indigo-600 hover:bg-indigo-500 transition-all shadow-sm"
               >
-                Resume <ArrowUpRight size={13} />
+                Resume <ArrowUpRight size={12} />
               </a>
-
               <button
                 onClick={() => setOpen(!open)}
-                className="md:hidden w-9 h-9 flex items-center justify-center rounded-full border border-slate-200 bg-slate-100 text-slate-700 hover:bg-slate-200"
+                className="md:hidden w-9 h-9 flex items-center justify-center rounded-full border border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100 transition-all"
               >
                 {open ? <X size={16} /> : <Menu size={16} />}
               </button>
             </div>
           </div>
-        </motion.div>
+        </motion.nav>
       </div>
 
-      {/* Mobile Drawer */}
+      {/* Mobile Menu */}
       <AnimatePresence>
         {open && (
           <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            className="pointer-events-auto mx-4 mt-2 backdrop-blur-2xl rounded-2xl border border-slate-200 bg-white/95 p-4 space-y-1 shadow-2xl"
+            initial={{ opacity: 0, scale: 0.97, y: -8 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.97, y: -8 }}
+            transition={{ duration: 0.2 }}
+            className="pointer-events-auto mx-4 mt-2 bg-white/96 backdrop-blur-2xl rounded-2xl border border-slate-200 shadow-2xl overflow-hidden"
           >
-            {ITEMS.map((item) => {
-              const isActive = active === item.id && location.pathname === "/";
-              return (
-                <button
-                  key={item.id}
-                  onClick={() => scroll(item.id)}
-                  className={cn(
-                    "w-full text-left px-4 py-3 rounded-xl text-sm font-medium transition-all flex items-center justify-between",
-                    isActive ? "bg-indigo-50 text-indigo-700 font-semibold" : "text-slate-600 hover:text-slate-900"
-                  )}
+            <div className="p-3 space-y-0.5">
+              {ITEMS.map(item => {
+                const isAct = active === item.id && isHome;
+                return (
+                  <button
+                    key={item.id}
+                    onClick={() => scrollTo(item.id)}
+                    className={cn(
+                      "w-full text-left px-4 py-3 rounded-xl text-[13.5px] font-medium transition-all flex items-center justify-between",
+                      isAct
+                        ? "bg-indigo-50 text-indigo-700 font-semibold"
+                        : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
+                    )}
+                  >
+                    {item.label}
+                    {isAct && <span className="w-1.5 h-1.5 rounded-full bg-indigo-500" />}
+                  </button>
+                );
+              })}
+              <div className="px-4 pt-2 pb-1">
+                <a
+                  href="/resume.pdf"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="btn-primary w-full text-sm justify-center"
                 >
-                  {item.label}
-                  {isActive && <div className="w-1.5 h-1.5 rounded-full bg-indigo-600" />}
-                </button>
-              );
-            })}
+                  Download Resume <ArrowUpRight size={14} />
+                </a>
+              </div>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

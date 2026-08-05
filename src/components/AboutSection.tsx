@@ -1,11 +1,10 @@
 import { useProfile } from "@/context/ProfileContext";
 import { motion } from "framer-motion";
-import { Terminal, Github, Linkedin, Mail, Target, Cpu, Award, TrendingUp, Code2, BookOpen } from "lucide-react";
+import { Terminal, Github, Linkedin, Mail, Target, Cpu, Award, TrendingUp, Code2, BookOpen, MapPin, Zap } from "lucide-react";
 
-const resolveImage = (path?: string | null): string => {
+const resolveImage = (path?: string | null) => {
   if (!path) return "/profile.png";
-  if (path.startsWith("http://") || path.startsWith("https://")) return path;
-  if (path.startsWith("/")) return path;
+  if (path.startsWith("http") || path.startsWith("/")) return path;
   return "/profile.png";
 };
 
@@ -18,144 +17,165 @@ const fadeUp = (delay = 0) => ({
 
 const AboutSection = () => {
   const { profile } = useProfile();
-  const name = profile?.name || "Rohit Birdawade";
-  const about = profile?.about || "Highly motivated Computer Science Engineer with a strong foundation in software development, data analytics, and deep learning models.";
+  const name   = profile?.name  || "Rohit Birdawade";
+  const about  = profile?.about || "Highly motivated Computer Science Engineer with a strong foundation in AI, ML, and software development. Passionate about solving real-world problems with intelligent systems.";
   const imgSrc = resolveImage(profile?.profileImage);
 
-  const fields = [
+  const META = [
     { k: "name",      v: name },
     { k: "role",      v: profile?.title || "Data Scientist / AI Engineer" },
-    { k: "location",  v: profile?.location || "Pune, Maharashtra, IN" },
-    { k: "expertise", v: "ML · Deep Learning · IoT · Edge AI" },
-    { k: "status",    v: "Active · Open to Opportunities", highlight: true },
-    { k: "email",     v: profile?.email || "rohitbirdawade007@gmail.com" },
+    { k: "location",  v: profile?.location || "Pune, Maharashtra, India" },
+    { k: "expertise", v: "ML · GenAI · Edge AI · Computer Vision" },
+    { k: "status",    v: "Active · Open to Opportunities", green: true },
   ];
 
-  const highlights = [
-    { icon: <Target size={18} />, t: "Precision Models",      d: "95%+ accuracy production architectures", color: "#4F46E5" },
-    { icon: <Cpu size={18} />,    t: "Edge AI & IoT",         d: "ESP32, Raspberry Pi, sensor integration", color: "#7C3AED" },
-    { icon: <Award size={18} />,  t: "National Recognition",  d: "1st Prize, NLPC-2025 competition",        color: "#D97706" },
+  const HIGHLIGHTS = [
+    { icon: <Target size={16} />,  t: "Precision Models",     d: "95%+ accuracy in production ML architectures", color: "#4F46E5", bg: "#EEF2FF" },
+    { icon: <Cpu size={16} />,     t: "Edge AI & IoT",        d: "ESP32, Raspberry Pi, embedded sensor systems",  color: "#7C3AED", bg: "#F5F3FF" },
+    { icon: <Award size={16} />,   t: "Award Winner",         d: "🥇 1st Prize · NLPC-2025 National Competition",  color: "#D97706", bg: "#FFFBEB" },
+    { icon: <Zap size={16} />,     t: "GenAI Systems",        d: "RAG pipelines, LLM fine-tuning, ChromaDB",      color: "#059669", bg: "#ECFDF5" },
   ];
 
-  const bioStats = [
-    { value: "6+",   label: "Projects",       icon: <Code2 size={16} />,     color: "#4F46E5" },
-    { value: "500+", label: "Commits",         icon: <TrendingUp size={16} />, color: "#7C3AED" },
-    { value: "8.7",  label: "CGPA",            icon: <BookOpen size={16} />,  color: "#059669" },
-    { value: "2",    label: "Certifications",  icon: <Award size={16} />,     color: "#D97706" },
+  const STATS = [
+    { value: "6+",   label: "Projects",        icon: <Code2 size={14} />,    color: "#4F46E5" },
+    { value: "500+", label: "Git Commits",      icon: <TrendingUp size={14}/>, color: "#7C3AED" },
+    { value: "8.7",  label: "CGPA",             icon: <BookOpen size={14} />, color: "#059669" },
+    { value: "2",    label: "Certifications",   icon: <Award size={14} />,    color: "#D97706" },
+  ];
+
+  const SOCIAL = [
+    { href: profile?.socialLinks?.github   || "https://github.com/rohitbirdawade007",         icon: <Github size={14} />,   label: "GitHub" },
+    { href: profile?.socialLinks?.linkedin || "https://linkedin.com/in/rohitbirdawade007",    icon: <Linkedin size={14} />, label: "LinkedIn" },
+    { href: `mailto:${profile?.email      || "rohitbirdawade007@gmail.com"}`,                 icon: <Mail size={14} />,     label: "Email" },
   ];
 
   return (
-    <section id="about" className="py-24 relative overflow-hidden bg-white">
-      <div className="container relative">
+    <section id="about" className="py-24 bg-[#F8FAFC] relative overflow-hidden">
+      <div className="container relative z-10">
 
-        {/* Section Header */}
+        {/* Section Label */}
         <motion.div {...fadeUp()} className="section-label">
-          <span className="eyebrow"><span className="eyebrow-dot" />System Metadata</span>
+          <span className="eyebrow"><span className="eyebrow-dot" />About Me</span>
         </motion.div>
 
+        {/* Headline */}
         <motion.div {...fadeUp(0.05)} className="mb-14">
-          <h2 className="display-md font-black text-slate-900">
-            About the <span className="text-indigo-600">Engineer</span>
+          <h2 className="display-md text-slate-900 font-black">
+            The <span className="gradient-text">Engineer</span> Behind the AI
           </h2>
+          <p className="text-slate-500 mt-2 text-[15px] max-w-xl">
+            Turning research-grade AI into real-world applications.
+          </p>
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
 
-          {/* Left Column: Photo & Social */}
+          {/* ── Left: Photo + Social ── */}
           <motion.div {...fadeUp(0.1)} className="lg:col-span-4 space-y-4">
-            {/* Profile Photo Card */}
+
+            {/* Photo */}
             <div className="card overflow-hidden">
               <div className="relative aspect-[4/5] bg-slate-100">
                 <img
                   src={imgSrc}
                   alt={name}
-                  className="w-full h-full object-cover object-top hover:scale-[1.02] transition-transform duration-500"
-                  onError={(e) => { (e.currentTarget as HTMLImageElement).src = "/profile.png"; }}
+                  className="w-full h-full object-cover object-top"
+                  onError={e => { (e.currentTarget as HTMLImageElement).src = "/profile.png"; }}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent z-10" />
-                <div className="absolute bottom-0 left-0 right-0 p-5 z-20">
-                  <p className="mono text-[10px] text-indigo-300 font-semibold uppercase tracking-widest mb-1">AI Researcher</p>
-                  <p className="text-white font-bold text-lg">{name}</p>
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/75 via-transparent to-transparent" />
+                <div className="absolute bottom-0 inset-x-0 p-5">
+                  <p className="mono text-[9.5px] text-indigo-300 uppercase tracking-widest font-semibold mb-1">AI Researcher</p>
+                  <p className="text-white font-bold text-base leading-snug">{name}</p>
+                  <div className="flex items-center gap-1 mt-1.5">
+                    <MapPin size={10} className="text-slate-400" />
+                    <span className="mono text-[9px] text-slate-400 uppercase tracking-wider">Pune, India</span>
+                  </div>
                 </div>
               </div>
             </div>
 
-            {/* Social Links Row */}
-            <div className="flex gap-2">
-              {[
-                { href: profile?.socialLinks?.github || "https://github.com/rohitbirdawade007",       icon: <Github size={15} />,   label: "GitHub" },
-                { href: profile?.socialLinks?.linkedin || "https://linkedin.com/in/rohitbirdawade007", icon: <Linkedin size={15} />, label: "LinkedIn" },
-                { href: `mailto:${profile?.email || "rohitbirdawade007@gmail.com"}`,                   icon: <Mail size={15} />,     label: "Email" },
-              ].map((s, i) => (
+            {/* Social Links */}
+            <div className="grid grid-cols-3 gap-2">
+              {SOCIAL.map((s, i) => (
                 <a key={i} href={s.href} target="_blank" rel="noreferrer"
-                  className="flex-1 flex items-center justify-center gap-2 py-3 card bg-white text-slate-700 hover:text-indigo-600 hover:border-indigo-300 transition-all text-xs font-semibold shadow-xs">
+                  className="card flex flex-col items-center justify-center gap-1.5 py-3.5 text-slate-600 hover:text-indigo-600 hover:border-indigo-200 transition-all text-[11px] font-semibold"
+                >
                   {s.icon}
                   {s.label}
                 </a>
               ))}
             </div>
+
+            {/* Quick Stats */}
+            <div className="grid grid-cols-2 gap-2">
+              {STATS.map((s, i) => (
+                <div key={i} className="card p-4 text-center">
+                  <div className="flex justify-center mb-1.5" style={{ color: s.color }}>{s.icon}</div>
+                  <p className="text-xl font-black text-slate-900">{s.value}</p>
+                  <p className="mono text-[8.5px] text-slate-500 uppercase tracking-widest">{s.label}</p>
+                </div>
+              ))}
+            </div>
           </motion.div>
 
-          {/* Right Column: Bio & Metadata */}
+          {/* ── Right: Bio + Metadata + Highlights ── */}
           <motion.div {...fadeUp(0.15)} className="lg:col-span-8 space-y-5">
 
-            {/* Terminal Metadata Card */}
-            <div className="card">
-              <div className="flex items-center gap-2 px-5 py-3 border-b border-slate-200 bg-slate-50">
+            {/* Terminal JSON Metadata */}
+            <div className="card overflow-hidden">
+              <div className="flex items-center gap-2 px-5 py-3 bg-slate-900 border-b border-slate-800">
                 <div className="flex gap-1.5">
-                  <div className="w-2.5 h-2.5 rounded-full bg-red-500/80" />
-                  <div className="w-2.5 h-2.5 rounded-full bg-amber-500/80" />
-                  <div className="w-2.5 h-2.5 rounded-full bg-emerald-500/80" />
+                  <div className="w-2.5 h-2.5 rounded-full bg-red-500" />
+                  <div className="w-2.5 h-2.5 rounded-full bg-amber-400" />
+                  <div className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
                 </div>
                 <div className="flex items-center gap-1.5 ml-2">
-                  <Terminal size={12} className="text-slate-400" />
-                  <span className="mono text-[10.5px] text-slate-500">metadata.json</span>
+                  <Terminal size={11} className="text-slate-400" />
+                  <span className="mono text-[10px] text-slate-400">metadata.json</span>
                 </div>
+                <div className="ml-auto mono text-[8.5px] text-emerald-400 font-semibold">● ACTIVE</div>
               </div>
-              <div className="p-5 divide-y divide-slate-100">
-                {fields.map((f, i) => (
-                  <div key={i} className="flex gap-4 py-2.5 first:pt-0 last:pb-0">
-                    <span className="mono text-[11px] font-semibold text-indigo-600 w-[95px] shrink-0">{f.k}</span>
-                    <span className={`text-[13px] font-medium ${f.highlight ? "text-emerald-600 font-bold" : "text-slate-700"}`}>
-                      {f.v}
+              <div className="bg-slate-950 px-5 py-4 divide-y divide-slate-800/50">
+                {META.map((f, i) => (
+                  <div key={i} className="flex gap-4 py-2 first:pt-0 last:pb-0">
+                    <span className="mono text-[11px] font-semibold text-indigo-400 w-[90px] shrink-0">{f.k}:</span>
+                    <span className={`text-[12.5px] font-medium mono ${f.green ? "text-emerald-400" : "text-slate-300"}`}>
+                      "{f.v}"
                     </span>
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* Bio & Stats */}
+            {/* Bio Text */}
             <div className="card p-6">
-              <p className="text-slate-700 leading-relaxed text-[15px] mb-4">{about}</p>
-              <p className="text-slate-500 leading-relaxed text-[14px]">
-                Specialized in deploying edge AI solutions and deep learning architectures with full production pipelines from research to deployment.
+              <p className="mono text-[10px] font-semibold text-indigo-600 uppercase tracking-widest mb-3">// Biography</p>
+              <p className="text-slate-700 leading-[1.8] text-[14.5px] mb-4">{about}</p>
+              <p className="text-slate-500 leading-[1.8] text-[13.5px]">
+                Specialized in deploying edge AI solutions and deep learning architectures with complete ML pipelines — from data ingestion to model serving in production environments.
               </p>
-
-              {/* Stats Row */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-6 pt-6 border-t border-slate-100">
-                {bioStats.map((s, i) => (
-                  <div key={i} className="text-center p-3 rounded-xl bg-slate-50 border border-slate-200/80">
-                    <div className="flex justify-center mb-1" style={{ color: s.color }}>{s.icon}</div>
-                    <p className="text-lg font-black text-slate-900">{s.value}</p>
-                    <p className="mono text-[8.5px] text-slate-500 uppercase tracking-widest">{s.label}</p>
-                  </div>
-                ))}
-              </div>
             </div>
 
             {/* Highlights Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              {highlights.map((h, i) => (
-                <div key={i} className="card p-5 bg-white border-slate-200">
-                  <div className="w-9 h-9 rounded-xl flex items-center justify-center mb-3" style={{ background: `${h.color}15`, color: h.color }}>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {HIGHLIGHTS.map((h, i) => (
+                <motion.div
+                  key={i} {...fadeUp(0.2 + i * 0.05)}
+                  className="card p-5 flex items-start gap-4"
+                >
+                  <div
+                    className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
+                    style={{ background: h.bg, color: h.color }}
+                  >
                     {h.icon}
                   </div>
-                  <p className="text-[13.5px] font-bold text-slate-900 mb-1">{h.t}</p>
-                  <p className="text-[12px] text-slate-500 leading-snug">{h.d}</p>
-                </div>
+                  <div>
+                    <p className="text-[13px] font-bold text-slate-900 mb-0.5">{h.t}</p>
+                    <p className="text-[12px] text-slate-500 leading-relaxed">{h.d}</p>
+                  </div>
+                </motion.div>
               ))}
             </div>
-
           </motion.div>
         </div>
       </div>

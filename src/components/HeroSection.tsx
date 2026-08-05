@@ -1,24 +1,25 @@
-import { ArrowRight, Download, Sparkles, Layers, Star, Code2, Activity } from "lucide-react";
+import { ArrowRight, Download, Sparkles, Layers, Star, Code2, Activity, Github, Linkedin } from "lucide-react";
 import { motion, animate } from "framer-motion";
 import TechMarquee from "./TechMarquee";
 import { useEffect, useRef, useState } from "react";
+import { useProfile } from "@/context/ProfileContext";
 
-/* ── Animated number counter ── */
+/* ── Animated Number ── */
 function AnimatedNumber({ to, suffix = "" }: { to: number; suffix?: string }) {
-  const nodeRef = useRef<HTMLSpanElement>(null);
+  const ref = useRef<HTMLSpanElement>(null);
   useEffect(() => {
-    const node = nodeRef.current;
-    if (!node) return;
-    const controls = animate(0, to, {
+    if (!ref.current) return;
+    const node = ref.current;
+    const c = animate(0, to, {
       duration: 1.8, ease: "easeOut",
-      onUpdate(value) { node.textContent = Math.round(value) + suffix; },
+      onUpdate(v) { node.textContent = Math.round(v) + suffix; },
     });
-    return () => controls.stop();
+    return () => c.stop();
   }, [to, suffix]);
-  return <span ref={nodeRef}>0{suffix}</span>;
+  return <span ref={ref}>0{suffix}</span>;
 }
 
-/* ── Typing effect ── */
+/* ── Typing Text ── */
 function TypingText({ phrases }: { phrases: string[] }) {
   const [idx, setIdx] = useState(0);
   const [text, setText] = useState("");
@@ -26,224 +27,250 @@ function TypingText({ phrases }: { phrases: string[] }) {
 
   useEffect(() => {
     const phrase = phrases[idx];
-    let timeout: ReturnType<setTimeout>;
+    let t: ReturnType<typeof setTimeout>;
     if (!deleting && text === phrase) {
-      timeout = setTimeout(() => setDeleting(true), 2200);
+      t = setTimeout(() => setDeleting(true), 2400);
     } else if (deleting && text === "") {
       setDeleting(false);
-      setIdx((i) => (i + 1) % phrases.length);
+      setIdx(i => (i + 1) % phrases.length);
     } else {
-      timeout = setTimeout(() => {
-        setText(deleting ? phrase.slice(0, text.length - 1) : phrase.slice(0, text.length + 1));
-      }, deleting ? 40 : 80);
+      t = setTimeout(() => {
+        setText(deleting
+          ? phrase.slice(0, text.length - 1)
+          : phrase.slice(0, text.length + 1)
+        );
+      }, deleting ? 35 : 75);
     }
-    return () => clearTimeout(timeout);
+    return () => clearTimeout(t);
   }, [text, deleting, idx, phrases]);
 
-  return (
-    <span>
-      {text}
-      <span className="typed-cursor">&nbsp;</span>
-    </span>
-  );
+  return <span>{text}<span className="typed-cursor">&nbsp;</span></span>;
 }
 
-const CODE_LINES = [
-  { tokens: [{ t: "const ", c: "#C792EA" }, { t: "developer", c: "#82AAFF" }, { t: " = {", c: "#89DDFF" }] },
-  { tokens: [{ t: "  name: ", c: "#89DDFF" }, { t: '"Rohit Birdawade"', c: "#C3E88D" }, { t: ",", c: "#89DDFF" }] },
-  { tokens: [{ t: "  role: ", c: "#89DDFF" }, { t: '"AI & ML Engineer"', c: "#C3E88D" }, { t: ",", c: "#89DDFF" }] },
-  { tokens: [{ t: "  focus: ", c: "#89DDFF" }, { t: "[", c: "#89DDFF" }] },
-  { tokens: [{ t: "    ", c: "#fff" }, { t: '"RAG Systems & GenAI"', c: "#C3E88D" }, { t: ",", c: "#89DDFF" }] },
-  { tokens: [{ t: "    ", c: "#fff" }, { t: '"Computer Vision & Edge AI"', c: "#C3E88D" }] },
-  { tokens: [{ t: "  ]", c: "#89DDFF" }, { t: ",", c: "#89DDFF" }] },
-  { tokens: [{ t: "  stack: ", c: "#89DDFF" }, { t: "[", c: "#89DDFF" }] },
-  { tokens: [{ t: "    ", c: "#fff" }, { t: '"Python / PyTorch / TensorFlow"', c: "#C3E88D" }, { t: ",", c: "#89DDFF" }] },
-  { tokens: [{ t: "    ", c: "#fff" }, { t: '"FastAPI / LangChain / React"', c: "#C3E88D" }] },
-  { tokens: [{ t: "  ]", c: "#89DDFF" }, { t: ",", c: "#89DDFF" }] },
-  { tokens: [{ t: "  award: ", c: "#89DDFF" }, { t: '"🥇 1st Prize — NLPC-2025"', c: "#C3E88D" }] },
-  { tokens: [{ t: "}", c: "#89DDFF" }] },
+/* ── Code Snippet ── */
+const CODE = [
+  [{ t: "const ", c: "#7C3AED" }, { t: "engineer", c: "#1D4ED8" }, { t: " = {", c: "#475569" }],
+  [{ t: "  name:", c: "#475569" }, { t: ' "Rohit Birdawade"', c: "#059669" }, { t: ",", c: "#475569" }],
+  [{ t: "  role:", c: "#475569" }, { t: ' "AI & ML Engineer"', c: "#059669" }, { t: ",", c: "#475569" }],
+  [{ t: "  focus:", c: "#475569" }, { t: " [", c: "#475569" }],
+  [{ t: '    "RAG Systems"', c: "#059669" }, { t: ",", c: "#475569" }],
+  [{ t: '    "Computer Vision"', c: "#059669" }, { t: ",", c: "#475569" }],
+  [{ t: '    "Edge AI"', c: "#059669" }],
+  [{ t: "  ]", c: "#475569" }, { t: ",", c: "#475569" }],
+  [{ t: "  stack:", c: "#475569" }, { t: " [", c: "#475569" }],
+  [{ t: '    "Python / PyTorch"', c: "#059669" }, { t: ",", c: "#475569" }],
+  [{ t: '    "FastAPI / LangChain"', c: "#059669" }],
+  [{ t: "  ]", c: "#475569" }, { t: ",", c: "#475569" }],
+  [{ t: "  award:", c: "#475569" }, { t: ' "🥇 NLPC-2025"', c: "#D97706" }],
+  [{ t: "}", c: "#475569" }],
 ];
 
-const TECH_STACK = [
-  { name: "Python", icon: "🐍" }, { name: "PyTorch", icon: "🔥" }, { name: "TensorFlow", icon: "🧠" },
-  { name: "FastAPI", icon: "⚡" }, { name: "LangChain", icon: "🔗" }, { name: "React", icon: "⚛️" },
+const STACK = [
+  { name: "Python", icon: "🐍" },
+  { name: "PyTorch", icon: "🔥" },
+  { name: "TensorFlow", icon: "🧠" },
+  { name: "FastAPI", icon: "⚡" },
+  { name: "LangChain", icon: "🔗" },
+  { name: "React", icon: "⚛️" },
   { name: "Docker", icon: "🐳" },
 ];
 
+const STATS = [
+  { label: "Avg Precision",    value: 96.4, suffix: "%",  icon: <Activity size={14} /> },
+  { label: "Production Repos", value: 6,    suffix: "",   icon: <Layers size={14} /> },
+  { label: "GitHub Stars",     value: 48,   suffix: "",   icon: <Star size={14} /> },
+  { label: "Lines of Code",    value: 120,  suffix: "K+", icon: <Code2 size={14} /> },
+];
+
 const HeroSection = () => {
-  const stats = [
-    { label: "Avg Precision", value: 96.4, suffix: "%", icon: <Activity size={13} /> },
-    { label: "Production Repos", value: 6, suffix: "", icon: <Layers size={13} /> },
-    { label: "GitHub Stars", value: 48, suffix: "", icon: <Star size={13} /> },
-    { label: "Lines of Code", value: 120, suffix: "K+", icon: <Code2 size={13} /> },
-  ];
+  const { profile } = useProfile();
 
   return (
-    <section id="home" className="relative min-h-screen pt-32 pb-0 overflow-hidden flex flex-col bg-white">
+    <section id="home" className="relative min-h-screen flex flex-col overflow-hidden bg-white">
 
-      {/* Stylish Ambient Light Gradients */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-10 left-1/4 w-[600px] h-[350px] opacity-40 rounded-full"
-          style={{ background: "radial-gradient(circle, rgba(99,102,241,0.12) 0%, transparent 70%)", filter: "blur(60px)" }} />
-        <div className="absolute top-40 right-10 w-[500px] h-[300px] opacity-30 rounded-full"
-          style={{ background: "radial-gradient(circle, rgba(139,92,246,0.12) 0%, transparent 70%)", filter: "blur(60px)" }} />
-        <div className="absolute inset-0 bg-dot-grid opacity-[0.4]" />
+      {/* Ambient gradient blobs */}
+      <div className="absolute inset-0 pointer-events-none select-none overflow-hidden">
+        <div className="absolute -top-32 -right-32 w-[700px] h-[700px] rounded-full opacity-[0.07]"
+          style={{ background: "radial-gradient(circle, #4F46E5, transparent 65%)" }} />
+        <div className="absolute top-1/2 -left-48 w-[500px] h-[500px] rounded-full opacity-[0.05]"
+          style={{ background: "radial-gradient(circle, #7C3AED, transparent 65%)" }} />
+        <div className="absolute inset-0 bg-dot-grid opacity-[0.35]" />
       </div>
 
-      <div className="container flex-1 flex flex-col justify-center py-8 lg:py-16 relative z-10">
+      <div className="container flex-1 flex flex-col justify-center pt-32 pb-10 lg:pt-36 lg:pb-16 relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
 
-        {/* 2-Column Grid Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+          {/* ── LEFT ── */}
+          <div className="lg:col-span-7 flex flex-col gap-7">
 
-          {/* LEFT: Text & Intro */}
-          <div className="lg:col-span-7 flex flex-col gap-6">
-
-            {/* Status Pill */}
+            {/* Status + Location */}
             <motion.div
               initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="flex items-center gap-3"
+              className="flex items-center gap-3 flex-wrap"
             >
-              <span className="status-online shadow-xs">
-                Available for Roles & Projects
-              </span>
-              <span className="mono text-[10px] font-semibold text-slate-400 uppercase tracking-widest">PUNE, IN</span>
+              <span className="status-online">Available for Opportunities</span>
+              <span className="mono text-[10px] font-semibold text-slate-400 uppercase tracking-widest">Pune, India</span>
             </motion.div>
 
-            {/* Headline */}
+            {/* Name & Title */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
+              initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.55, delay: 0.08 }}
             >
-              <h1 className="font-black tracking-[-0.04em] leading-[1.02] text-slate-900 text-4xl sm:text-6xl lg:text-7xl">
-                Hi, I'm{" "}
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-500">
-                  Rohit Birdawade
-                </span>
+              <p className="mono text-xs font-semibold text-indigo-500 uppercase tracking-widest mb-3">
+                👋 Hi, I'm
+              </p>
+              <h1 className="display-xl text-slate-900 leading-[1.01]">
+                Rohit{" "}
+                <span className="gradient-text">Birdawade</span>
               </h1>
-              <p className="mt-4 text-lg sm:text-xl font-semibold text-indigo-600">
-                <TypingText phrases={["AI & ML Engineer", "Generative AI Architect", "Edge AI Builder"]} />
+              <p className="mt-4 text-lg sm:text-xl font-semibold text-slate-700">
+                <TypingText phrases={["AI & ML Engineer", "Generative AI Architect", "Computer Vision Builder", "Edge AI Specialist"]} />
               </p>
             </motion.div>
 
-            {/* Subtitle */}
+            {/* Bio */}
             <motion.p
               initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="text-base sm:text-lg leading-relaxed text-slate-600 max-w-xl font-[450]"
+              transition={{ duration: 0.5, delay: 0.16 }}
+              className="text-[15px] sm:text-base leading-[1.75] text-slate-500 max-w-lg"
             >
-              Building production-grade <span className="text-slate-900 font-semibold">RAG systems</span>,{" "}
-              <span className="text-slate-900 font-semibold">computer vision models</span>, and{" "}
-              <span className="text-slate-900 font-semibold">edge AI deployments</span> for healthcare, security, and precision agriculture.
+              Building production-grade{" "}
+              <span className="text-slate-800 font-semibold">RAG systems</span>,{" "}
+              <span className="text-slate-800 font-semibold">computer vision pipelines</span>, and{" "}
+              <span className="text-slate-800 font-semibold">edge AI models</span>{" "}
+              for healthcare, security, and precision agriculture.
             </motion.p>
 
-            {/* Action Buttons */}
+            {/* CTA Buttons */}
             <motion.div
               initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-              className="flex flex-wrap gap-3.5 items-center pt-1"
+              transition={{ duration: 0.5, delay: 0.22 }}
+              className="flex flex-wrap gap-3 items-center"
             >
               <button
                 onClick={() => document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })}
-                className="btn-primary shadow-md"
+                className="btn-primary text-sm"
               >
                 View Projects <ArrowRight size={15} />
               </button>
-
-              <a
-                href="/resume.pdf"
-                target="_blank"
-                rel="noreferrer"
-                className="btn-secondary"
-              >
-                <Download size={15} /> Resume
+              <a href="/resume.pdf" target="_blank" rel="noreferrer" className="btn-secondary text-sm">
+                <Download size={15} /> Download Resume
               </a>
+              <div className="flex items-center gap-2 ml-1">
+                <a
+                  href={profile?.socialLinks?.github || "https://github.com/rohitbirdawade007"}
+                  target="_blank" rel="noreferrer"
+                  className="w-9 h-9 rounded-xl border border-slate-200 bg-white flex items-center justify-center text-slate-600 hover:border-indigo-300 hover:text-indigo-700 transition-all shadow-xs"
+                >
+                  <Github size={15} />
+                </a>
+                <a
+                  href={profile?.socialLinks?.linkedin || "https://linkedin.com/in/rohitbirdawade007"}
+                  target="_blank" rel="noreferrer"
+                  className="w-9 h-9 rounded-xl border border-slate-200 bg-white flex items-center justify-center text-slate-600 hover:border-indigo-300 hover:text-indigo-700 transition-all shadow-xs"
+                >
+                  <Linkedin size={15} />
+                </a>
+              </div>
             </motion.div>
 
             {/* Tech Stack Pills */}
             <motion.div
-              initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.4 }}
-              className="flex flex-wrap gap-2 pt-4 border-t border-slate-200"
+              initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+              className="flex flex-wrap gap-2 pt-2 border-t border-slate-100"
             >
-              {TECH_STACK.map((tech) => (
-                <span key={tech.name} className="tech-stack-pill">
-                  <span>{tech.icon}</span>
-                  {tech.name}
+              <span className="mono text-[10px] font-semibold text-slate-400 uppercase tracking-widest self-center mr-1">Stack:</span>
+              {STACK.map(t => (
+                <span key={t.name} className="tech-stack-pill">
+                  <span>{t.icon}</span>{t.name}
                 </span>
               ))}
             </motion.div>
           </div>
 
-          {/* RIGHT: Stylish Code Card */}
+          {/* ── RIGHT — Code window ── */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            initial={{ opacity: 0, x: 30, scale: 0.97 }} animate={{ opacity: 1, x: 0, scale: 1 }}
+            transition={{ duration: 0.65, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
             className="lg:col-span-5 relative"
           >
-            <div className="rounded-2xl bg-[#0F172A] border border-slate-800 shadow-2xl overflow-hidden text-white">
-              {/* Header */}
-              <div className="flex items-center gap-2 px-4 py-3 border-b border-slate-800 bg-slate-950/80">
+            {/* Outer glow */}
+            <div className="absolute inset-0 rounded-2xl opacity-30"
+              style={{ background: "radial-gradient(circle at center, rgba(79,70,229,0.15), transparent 70%)", filter: "blur(20px)", transform: "scale(1.05)" }} />
+
+            <div className="rounded-2xl overflow-hidden border border-slate-200 shadow-2xl relative">
+              {/* Window chrome */}
+              <div className="flex items-center gap-2 px-4 py-3 bg-slate-900 border-b border-slate-800">
                 <div className="flex gap-1.5">
-                  <div className="w-2.5 h-2.5 rounded-full bg-red-500/80" />
-                  <div className="w-2.5 h-2.5 rounded-full bg-amber-500/80" />
-                  <div className="w-2.5 h-2.5 rounded-full bg-emerald-500/80" />
+                  <div className="w-3 h-3 rounded-full bg-red-500" />
+                  <div className="w-3 h-3 rounded-full bg-amber-400" />
+                  <div className="w-3 h-3 rounded-full bg-emerald-500" />
                 </div>
                 <div className="flex-1 text-center">
                   <span className="mono text-[11px] text-slate-400">profile_overview.ts</span>
                 </div>
-                <span className="mono text-[9.5px] text-emerald-400 font-semibold">● live</span>
+                <span className="mono text-[9px] text-emerald-400 font-semibold tracking-wider">● LIVE</span>
               </div>
 
-              {/* Code lines */}
-              <div className="p-5 font-mono text-[12px] leading-6 text-slate-300">
-                {CODE_LINES.map((line, lineIdx) => (
-                  <div key={lineIdx} className="flex items-center gap-3">
-                    <span className="w-4 text-[10px] text-right shrink-0 text-slate-600">{lineIdx + 1}</span>
+              {/* Code body */}
+              <div className="bg-slate-950 p-5 font-mono text-[11.5px] leading-[1.7]">
+                {CODE.map((line, li) => (
+                  <div key={li} className="flex gap-3">
+                    <span className="w-4 text-[9px] text-slate-700 text-right shrink-0 select-none pt-0.5">{li + 1}</span>
                     <span>
-                      {line.tokens.map((token, ti) => (
-                        <span key={ti} style={{ color: token.c }}>{token.t}</span>
+                      {line.map((tk, ti) => (
+                        <span key={ti} style={{ color: tk.c }}>{tk.t}</span>
                       ))}
                     </span>
                   </div>
                 ))}
+                <div className="flex gap-3 mt-0.5">
+                  <span className="w-4 text-[9px] text-slate-700 text-right shrink-0 select-none">{CODE.length + 1}</span>
+                  <span className="typed-cursor" style={{ borderColor: "#6366F1" }}>&nbsp;</span>
+                </div>
               </div>
             </div>
 
             {/* Award Chip */}
             <motion.div
-              initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5 }}
-              className="absolute -bottom-4 -left-3 flex items-center gap-2 px-3.5 py-1.5 rounded-xl border border-amber-300 bg-amber-50 shadow-md"
+              initial={{ opacity: 0, scale: 0.8, y: 10 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              transition={{ delay: 0.55, type: "spring", stiffness: 200 }}
+              className="absolute -bottom-4 -left-4 flex items-center gap-2 px-3 py-1.5 rounded-xl bg-amber-50 border border-amber-200 shadow-md"
             >
               <Sparkles size={13} className="text-amber-600" />
-              <span className="text-amber-900 text-xs font-bold">🥇 1st Prize — NLPC-2025</span>
+              <span className="text-[11.5px] font-bold text-amber-800">🥇 1st Prize · NLPC-2025</span>
             </motion.div>
           </motion.div>
         </div>
 
-        {/* Bottom Stats Grid */}
+        {/* ── Stats Row ── */}
         <motion.div
           initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5 }}
-          className="mt-14 grid grid-cols-2 sm:grid-cols-4 gap-4"
+          transition={{ delay: 0.4, duration: 0.5 }}
+          className="mt-16 grid grid-cols-2 sm:grid-cols-4 gap-4"
         >
-          {stats.map((s, i) => (
+          {STATS.map((s, i) => (
             <div key={i} className="card p-4 flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0 text-indigo-600 bg-indigo-50 border border-indigo-100">
+              <div className="w-10 h-10 rounded-xl bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600 shrink-0">
                 {s.icon}
               </div>
               <div>
-                <p className="text-base font-black text-slate-900"><AnimatedNumber to={s.value} suffix={s.suffix} /></p>
-                <p className="mono text-[9.5px] uppercase tracking-wider text-slate-500">{s.label}</p>
+                <p className="text-lg font-black text-slate-900 leading-none">
+                  <AnimatedNumber to={s.value} suffix={s.suffix} />
+                </p>
+                <p className="mono text-[9px] font-semibold uppercase tracking-widest text-slate-400 mt-1">{s.label}</p>
               </div>
             </div>
           ))}
         </motion.div>
       </div>
 
-      {/* Tech Marquee */}
-      <div className="relative z-10 mt-8">
+      {/* Marquee */}
+      <div className="relative z-10 mt-6">
         <TechMarquee />
       </div>
     </section>

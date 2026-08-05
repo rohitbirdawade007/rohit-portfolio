@@ -1,59 +1,122 @@
-import { Cpu, Github, Linkedin, Mail, ArrowUp } from "lucide-react";
+import { Cpu, Github, Linkedin, Mail, ArrowUp, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useProfile } from "@/context/ProfileContext";
+
+const NAV = [
+  { label: "About",      id: "about" },
+  { label: "Skills",     id: "skills" },
+  { label: "Projects",   id: "projects" },
+  { label: "Experience", id: "experience" },
+  { label: "Contact",    id: "contact" },
+];
 
 const Footer = () => {
   const { profile } = useProfile();
   const year = new Date().getFullYear();
-
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
+  const scroll = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
 
   return (
-    <footer className="bg-slate-50 border-t border-slate-200 py-12 relative">
-      <div className="container">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-
-          {/* Brand */}
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-full bg-indigo-600 flex items-center justify-center text-white shadow-xs">
-              <Cpu size={15} />
+    <footer className="bg-slate-900 text-white">
+      {/* CTA Strip */}
+      <div className="border-b border-slate-800">
+        <div className="container py-14">
+          <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8">
+            <div className="max-w-lg">
+              <h2 className="text-3xl sm:text-4xl font-black tracking-tighter mb-3 text-white">
+                Let's Build Something{" "}
+                <span className="text-indigo-400">Exceptional</span>
+              </h2>
+              <p className="text-slate-400 text-[15px] leading-relaxed">
+                Open to AI engineering roles, technical collaborations, and innovative research projects.
+              </p>
             </div>
-            <div>
-              <p className="text-sm font-bold text-slate-900 leading-none">Rohit Birdawade</p>
-              <p className="mono text-[10px] text-slate-500 mt-1">AI & Machine Learning Engineer</p>
+            <div className="flex gap-3">
+              <button
+                onClick={() => scroll("contact")}
+                className="flex items-center gap-2 px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm rounded-xl transition-all shadow-sm"
+              >
+                Get in Touch <ArrowRight size={15} />
+              </button>
+              <a
+                href="/resume.pdf"
+                target="_blank"
+                rel="noreferrer"
+                className="flex items-center gap-2 px-5 py-2.5 bg-slate-800 hover:bg-slate-700 text-white font-semibold text-sm rounded-xl border border-slate-700 transition-all"
+              >
+                Resume
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Main Footer */}
+      <div className="container py-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+
+          {/* Brand Column */}
+          <div>
+            <div className="flex items-center gap-2.5 mb-4">
+              <div className="w-8 h-8 rounded-full bg-indigo-600 flex items-center justify-center">
+                <Cpu size={14} className="text-white" />
+              </div>
+              <div>
+                <p className="text-sm font-bold text-white">Rohit Birdawade</p>
+                <p className="mono text-[9px] text-slate-500 uppercase tracking-wider mt-0.5">AI · ML Engineer</p>
+              </div>
+            </div>
+            <p className="text-slate-400 text-[13px] leading-relaxed max-w-[240px]">
+              Building AI systems that solve real-world problems in healthcare, security, and agriculture.
+            </p>
+          </div>
+
+          {/* Nav Column */}
+          <div>
+            <p className="mono text-[10px] font-semibold text-slate-500 uppercase tracking-widest mb-4">Navigation</p>
+            <div className="space-y-2.5">
+              {NAV.map(n => (
+                <button
+                  key={n.id}
+                  onClick={() => scroll(n.id)}
+                  className="block text-[13px] font-medium text-slate-400 hover:text-white transition-colors"
+                >
+                  {n.label}
+                </button>
+              ))}
             </div>
           </div>
 
-          {/* Navigation Links */}
-          <div className="flex items-center gap-6 text-xs font-semibold text-slate-600">
-            <a href="#home" className="hover:text-indigo-600 transition-colors">Home</a>
-            <a href="#about" className="hover:text-indigo-600 transition-colors">About</a>
-            <a href="#projects" className="hover:text-indigo-600 transition-colors">Projects</a>
-            <a href="#skills" className="hover:text-indigo-600 transition-colors">Skills</a>
-            <a href="#contact" className="hover:text-indigo-600 transition-colors">Contact</a>
+          {/* Social Column */}
+          <div>
+            <p className="mono text-[10px] font-semibold text-slate-500 uppercase tracking-widest mb-4">Connect</p>
+            <div className="space-y-3">
+              {[
+                { href: profile?.socialLinks?.github || "https://github.com/rohitbirdawade007", icon: <Github size={14} />, label: "GitHub" },
+                { href: profile?.socialLinks?.linkedin || "https://linkedin.com/in/rohitbirdawade007", icon: <Linkedin size={14} />, label: "LinkedIn" },
+                { href: `mailto:${profile?.email || "rohitbirdawade007@gmail.com"}`, icon: <Mail size={14} />, label: profile?.email || "rohitbirdawade007@gmail.com" },
+              ].map((s, i) => (
+                <a key={i} href={s.href} target="_blank" rel="noreferrer"
+                  className="flex items-center gap-2.5 text-[13px] font-medium text-slate-400 hover:text-white transition-colors"
+                >
+                  <span className="w-7 h-7 rounded-lg bg-slate-800 flex items-center justify-center shrink-0">{s.icon}</span>
+                  {s.label}
+                </a>
+              ))}
+            </div>
           </div>
-
-          {/* Socials & Back To Top */}
-          <div className="flex items-center gap-3">
-            <a href={profile?.socialLinks?.github || "https://github.com/rohitbirdawade007"} target="_blank" rel="noreferrer"
-              className="w-8 h-8 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-600 hover:text-indigo-600 hover:border-indigo-300 transition-all shadow-xs">
-              <Github size={14} />
-            </a>
-            <a href={profile?.socialLinks?.linkedin || "https://linkedin.com/in/rohitbirdawade007"} target="_blank" rel="noreferrer"
-              className="w-8 h-8 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-600 hover:text-indigo-600 hover:border-indigo-300 transition-all shadow-xs">
-              <Linkedin size={14} />
-            </a>
-            <button onClick={scrollToTop} className="w-8 h-8 rounded-full bg-indigo-600 text-white flex items-center justify-center hover:bg-indigo-500 transition-all shadow-xs">
-              <ArrowUp size={14} />
-            </button>
-          </div>
-
         </div>
 
-        <div className="mt-8 pt-6 border-t border-slate-200/60 text-center text-xs text-slate-500 font-medium">
-          © {year} Rohit Birdawade. Built with React, TypeScript & Tailwind CSS.
+        {/* Bottom Row */}
+        <div className="mt-12 pt-8 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <p className="text-[12px] text-slate-600">
+            © {year} Rohit Birdawade. Built with React, TypeScript & Vite.
+          </p>
+          <button
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            className="w-8 h-8 rounded-full bg-slate-800 hover:bg-indigo-600 flex items-center justify-center text-slate-400 hover:text-white transition-all"
+          >
+            <ArrowUp size={14} />
+          </button>
         </div>
       </div>
     </footer>
