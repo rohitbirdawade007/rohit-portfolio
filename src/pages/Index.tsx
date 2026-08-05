@@ -2,15 +2,10 @@ import { useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import AboutSection from "@/components/AboutSection";
-import ProjectModules from "@/components/ProjectModules";
 import SkillsSection from "@/components/SkillsSection";
+import ProjectModules from "@/components/ProjectModules";
 import ExperienceSection from "@/components/ExperienceSection";
 import EducationSection from "@/components/EducationSection";
-import CertificationsSection from "@/components/CertificationsSection";
-import AchievementsSection from "@/components/AchievementsSection";
-import ResearchSection from "@/components/ResearchSection";
-import BlogsSection from "@/components/BlogsSection";
-import ProfileExtensionsSection from "@/components/ProfileExtensionsSection";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
 import BackToTop from "@/components/BackToTop";
@@ -27,23 +22,8 @@ const Index = () => {
     }
   }, []);
 
-  /* ── UPGRADE 6: Global scroll animations via IntersectionObserver ── */
-  useEffect(() => {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
-      });
-    }, { threshold: 0.1 });
-
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-    return () => observer.disconnect();
-  }, []);
-
   return (
-    <div className="min-h-screen" style={{ background: "var(--canvas)" }}>
+    <div className="min-h-screen bg-white">
       <SEO />
       <Navbar />
       <main>
@@ -53,11 +33,6 @@ const Index = () => {
         <ProjectModules />
         <ExperienceSection />
         <EducationSection />
-        <CertificationsSection />
-        <AchievementsSection />
-        <ResearchSection />
-        <BlogsSection />
-        <ProfileExtensionsSection />
         <ContactSection />
       </main>
       <Footer />
