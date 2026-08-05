@@ -2,11 +2,8 @@ import { useProfile } from "@/context/ProfileContext";
 import { motion } from "framer-motion";
 import { Terminal, Github, Linkedin, Mail, Target, Cpu, Award, TrendingUp, Code2, BookOpen, MapPin, Zap } from "lucide-react";
 
-const resolveImage = (path?: string | null) => {
-  if (!path) return "/profile.png";
-  if (path.startsWith("http") || path.startsWith("/")) return path;
-  return "/profile.png";
-};
+// Always use the local profile photo — do not rely on database URLs
+const resolveImage = (_path?: string | null) => "/profile.png";
 
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 20 },
